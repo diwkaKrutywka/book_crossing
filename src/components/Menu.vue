@@ -2,7 +2,7 @@
     <div class="menu-box-area">
         <div class="menus">
             <!-- <div class="align-center justify-center" style="border-bottom: #933ee2 1px solid; margin: 20px auto">
-                <img style="width: 80%; padding: 20px 0" src="@/assets/images/jana-logo.svg" />
+                <img style="width: 80%; padding: 20px 0" src="@/assets/images/logo.svg" />
             </div> -->
             <div class="menus-item" v-for="(item, index) in menuList" :key="index">
                 <div class="row" :class="{
@@ -36,7 +36,7 @@
                 </span>
                 <router-link style="color: black" v-else to="/login">{{
                 $t("l_Login")
-                    }}</router-link>
+            }}</router-link>
             </div>
         </div>
     </div>

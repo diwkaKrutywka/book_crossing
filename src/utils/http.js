@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useAppStore } from '@/store'
+import { useAppStore } from '@/stores'
 const store = useAppStore()
 import router from '@/router'
 import { notification } from 'ant-design-vue'

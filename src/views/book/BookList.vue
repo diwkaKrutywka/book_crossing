@@ -1,5 +1,5 @@
 <template>
-    dfawsefqwef
+    This is book list
 </template>
 <script>
 </script>
