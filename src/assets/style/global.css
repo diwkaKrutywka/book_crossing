@@ -1,3 +1,8 @@
+@font-face {
+  font-family: Poppins;
+  src: url('./Poppins/Poppins-Medium.ttf');
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -389,4 +394,9 @@
   background-color: #6c6cce;
   font-size: 15px;
   font-weight: 500;
+}
+.ant-form-item-required {
+  font-weight: bolder;
+  font-size: 24px;
+  font-family: Poppins;
 }

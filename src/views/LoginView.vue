@@ -1,24 +1,65 @@
 <template>
     <div class="login-area">
         <a-card class="login-box">
-            <a-tabs value="login">
-                <a-tab-pane :tab="$t('l_Login')" key="login">
+            <a-tabs value="login" size="large" v-model:value="activeTab" @change="onTabChange">
+                <a-tab-pane :tab="$t('l_Signup')" key="signup">
                     <a-form ref="form" layout="vertical" :model="info">
                         <a-form-item :label="$t('l_Username')" :rules="[{ required: true }]">
                             <a-input v-model:value="info.username"></a-input>
                         </a-form-item>
-                        <a-form-item :label="$t('l_Password')" :rules="[{ required: true }]">
+                        <a-form-item :label="$t('l_Email')" :rules="[{ required: true }]">
+                            <a-input v-model:value="info.email"></a-input>
+                        </a-form-item>
+                        <a-form-item :label="$t('l_User_password')" :rules="[{ required: true }]">
                             <a-input-password v-model:value="info.password"></a-input-password>
                         </a-form-item>
-                        <a-button type="primary" html-type="submit" style="width: 100%; margin-top: 15px"
-                            @click="onLogin()"> {{ $t("l_Login")
+                        <a-form-item :label="$t('l_Repeat_password')" :rules="[{ required: true }]">
+                            <a-input-password v-model:value="info.password2"></a-input-password>
+                        </a-form-item>
+                        <a-button class="confirm" type="primary" html-type="submit"
+                            style="width: 100%; margin-top: 15px" @click="onLogin()"> {{ $t("l_Signup")
+                            }} </a-button>
+
+                    </a-form>
+                </a-tab-pane>
+                <a-tab-pane :tab="$t('l_Login')" key="login">
+                    <a-form ref="form" layout="vertical" :model="info">
+                        <a-form-item :label="$t('l_Email')" :rules="[{ required: true }]">
+                            <a-input v-model:value="info.email"></a-input>
+                        </a-form-item>
+                        <a-form-item :label="$t('l_User_password')" :rules="[{ required: true }]">
+                            <a-input-password v-model:value="info.password"></a-input-password>
+                        </a-form-item>
+                        <a-form-item name="remember" :wrapper-col="{ offset: 0, span: 24 }">
+                            <a-checkbox v-model:checked="remember">Remember me</a-checkbox>
+                        </a-form-item>
+                        <a-button class="confirm" type="primary" html-type="submit"
+                            style="width: 100%; margin-top: 15px" @click="onLogin()"> {{ $t("l_Login")
                             }} </a-button>
 
                     </a-form>
                 </a-tab-pane>
             </a-tabs>
         </a-card>
-        <img v-if="$store.isBigWin" style="max-height: 400px; margin: auto;" src="../assets/images/edu.svg">
+        <div style="background-color: #006B61; width: 50%;position: relative; display: flex; flex-direction: column;">
+            <div style="position:absolute; margin: auto; top: 50%; left: 50%;  transform: translate(-50%, -50%); ">
+                <img v-if="$store.isBigWin" style="max-width: 600px;" src="../assets/images/login-logo.svg">
+                <div v-if="activeTab === 'signup'" style=" margin-bottom: 50px;">
+                    <h2>HELLO, FRIEND!</h2>
+                    <p>Enter your personal details and <br> start your journey with us</p>
+                    <a-button class="confirm" type="primary" html-type="submit"
+                        style="width: 100%; margin-top: 15px; text-align: center;" @click="onLogin()"> {{ $t("l_Login")
+                        }} </a-button>
+                </div>
+                <div v-else style=" margin-bottom: 50px;">
+                    <h2>WELCOME BACK!</h2>
+                    <p>To keep connected with us please <br> login with your personal info</p>
+                    <a-button class="confirm" type="primary" html-type="submit" style="width: 100%; margin-top: 15px"
+                        @click="onLogin()"> {{ $t("l_Signup")
+                        }} </a-button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -28,14 +69,21 @@ import { notification } from 'ant-design-vue';
 export default {
     data() {
         return {
+            activeTab: 'signup',
             info: {
                 username: "+7",
                 password: "",
+                email: '',
+                password2: ''
             },
+            remember: true,
             passwordCheck: '',
         }
     },
     methods: {
+        onTabChange(key) {
+            this.activeTab = key;
+        },
         onLogin() {
         },
 
@@ -46,7 +94,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .login-area {
     position: fixed;
     left: 0;
@@ -54,14 +102,58 @@ export default {
     width: 100%;
     height: 100vh;
     display: flex;
-    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(132, 47, 194, 1) 74%, rgba(98, 0, 255, 0.1658788515406162) 100%);
+    // background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(132, 47, 194, 1) 74%, rgba(98, 0, 255, 0.1658788515406162) 100%);
+    background-color: #FEF7EB;
 
     .login-box {
         margin: auto;
-        width: 90%;
-        max-width: 500px;
+        width: 100%;
+        max-width: 400px;
         min-height: 300px;
 
     }
+
+    .confirm {
+        width: 400px;
+        max-width: 460px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        border-radius: 16px;
+        background: #F89E0F;
+        font-family: Poppins;
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 30px;
+        color: #FEF7EB;
+        align-items: center;
+        padding: 20px;
+        margin: auto;
+    }
+
+}
+
+
+
+h2 {
+    color: #F89E0F;
+    font-family: Poppins;
+    font-size: 50px;
+    font-weight: 600;
+    line-height: 75px;
+    letter-spacing: -0.02em;
+    text-align: center;
+
+
+}
+
+p {
+    font-family: Poppins;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 33px;
+    letter-spacing: -0.02em;
+    text-align: center;
+    color: #FEF7EB;
 }
 </style>
