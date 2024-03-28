@@ -12,6 +12,31 @@ const routes = [
         path: '/books/all',
         name: 'BookList',
         component: () => import('../views/book/BookList.vue')
+      },
+      {
+        path: '/home/welcome',
+        name: 'HomePage',
+        component: () => import('../views/home/HomePage.vue')
+      },
+      {
+        path: '/home/about-us',
+        name: 'AboutUs',
+        component: () => import('../views/about/AboutPage.vue')
+      },
+      {
+        path: '/home/my-books',
+        name: 'MyBooks',
+        component: () => import('../views/user/books/MyBooks.vue')
+      },
+      {
+        path: '/home/new-book/add-edit',
+        name: 'AddEditBooks',
+        component: () => import('../views/user/books/AddEditBook.vue')
+      },
+      {
+        path: 'home/user/profile',
+        name: 'Profile',
+        component: () => import('../views/user/settings/Profile.vue')
       }
     ]
   },

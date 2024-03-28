@@ -151,6 +151,9 @@
   width: 100%;
   opacity: 0;
 }
+:where(.css-dev-only-do-not-override-1j2hudi).ant-btn-primary {
+  background-color: #f89e0f;
+}
 
 .date-area .text {
   position: absolute;

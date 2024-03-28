@@ -1,90 +1,84 @@
 <template>
   <div class="home" :class="{ 'g-mobile': !$store.$state.isBigWin }">
-    <!-- dev mobile -->
-    <a-drawer v-if="!$store.$state.isBigWin" v-model:open="collapsed" width="250" class="custom-class" :title="null"
-      :closable="false" placement="left" :bodyStyle="{
-    background: '#f1f1f1',
-    padding: 0,
-    overflowY: 'auto',
-    height: '100vh',
-  }">
-      <menu @select="collapsed = !collapsed"></menu>
-    </a-drawer>
-    <!-- end -->
     <a-layout :style="{ height: 100 + '%' }">
-      <a-layout-sider width="250" v-if="$store.$state.isBigWin" v-model:collapsed="collapsed" theme="light"
-        :trigger="null" collapsible>
-        <menu></menu>
-        <div class="bt-h"></div>
-      </a-layout-sider>
       <a-layout class="layout-content">
         <a-layout-header class="header" style="height: 60px">
-          <div v-if="!$store.$state.isBigWin" class="header-left-icon"
-            :class="{ 'mobile-icon-size': this.$store.$state.isBigWin == false }" style="margin-right: 5px">
-            <menu-unfold-outlined v-if="collapsed" @click="() => (collapsed = !collapsed)" />
-            <menu-fold-outlined v-else @click="() => (collapsed = !collapsed)" />
-          </div>
+          <div style="width: 40%; display: flex; align-items: center;">
+            <img style="padding: 10px; margin: 0 40px; height: 50px;" src="@/assets/images/logo.svg">
 
-          <div class="flex-1" style="min-width: 10px"></div>
-          <div class="align-center pointer" @click.prevent>
-            <span style="color:white" class="icon material-symbols-outlined">
-              person
-            </span>
-            <div v-if="$store.hasLogin" class="ellipsis" style="max-width: 110px; color: white">
-              {{ $store.userInfo.user_info.fullname || "-" }}
-            </div>
+            <h2 style="margin-right: 40px; font-weight: 300" @click="goToPage(item.name)" v-for="item in navList">{{
+    item.label }}</h2>
           </div>
-          <div class="header-right active">
-            <div class="right-item">
-              <a-dropdown>
-                <span class="pointer" style="color: white; margin-right: 3px; white-space: nowrap">
-                  <span v-if="langTag == 'kz'">Қазақша</span>
-                  <span v-if="langTag == 'rus'">Русский</span>
-                  <span v-if="langTag == 'en'">English</span>
-                </span>
-                <template #overlay>
-                  <a-menu>
-                    <a-menu-item>
-                      <a :style="{ color: langTag == 'kz' ? '#40a9ff' : '#000' }" href="#"
-                        @click="setLanguage('kz')">Қазақша</a>
-                    </a-menu-item>
-                    <a-menu-item>
-                      <a :style="{
-    color: langTag == 'rus' ? '#40a9ff' : '#000',
-  }" href="#" @click="setLanguage('rus')">Русский</a>
-                    </a-menu-item>
-                    <a-menu-item>
-                      <a :style="{ color: langTag == 'en' ? '#40a9ff' : '#000' }" href="#"
-                        @click="setLanguage('en')">English</a>
-                    </a-menu-item>
-
-                  </a-menu>
-                </template>
-              </a-dropdown>
-            </div>
+          <div>
+            <a-button class='button'>
+              {{ $t('l_Signup') }}
+            </a-button>
+            <a-button class='button'>
+              {{ $t('l_Login') }}
+            </a-button>
           </div>
         </a-layout-header>
+        <div class="own">
+          <h2 v-for="item in ownList" @click="goToPage(item.name)">{{ item.name }}</h2>
+
+        </div>
         <a-layout-content class="router-area">
           <router-view></router-view>
+          <FooterPage>
+
+          </FooterPage>
         </a-layout-content>
+        <!-- <a-layout-footer>
+          <FooterPage></FooterPage>
+        </a-layout-footer> -->
+
       </a-layout>
     </a-layout>
   </div>
 </template>
 
 <script>
-import Menu from "@/components/Menu.vue"
-import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons-vue"
-
+import FooterPage from '@/components/FooterPage.vue'
 export default {
   components: {
-    MenuUnfoldOutlined,
-    MenuFoldOutlined,
-    Menu,
+    FooterPage
   },
   data() {
     return {
-      collapsed: false,
+      navList: [{
+        label: "Home",
+        name: "HomePage"
+      },
+      {
+        label: "Books",
+        name: 'BookList'
+      },
+      {
+        label: "About",
+        name: 'AboutUs'
+      },
+      {
+        label: "Quizzess",
+        name: 'Quizzess'
+      }
+      ],
+      ownList: [{
+        label: "My books",
+        name: "MyBooks"
+      },
+      {
+        label: "My collections",
+        name: 'BookList'
+      },
+      {
+        label: "My friends",
+        name: 'AboutUs'
+      },
+      {
+        label: "Settings",
+        name: 'Profile'
+      }
+      ]
     }
   },
   computed: {
@@ -97,6 +91,11 @@ export default {
       this.$i18n.locale = e
       localStorage.setItem("currentLang", e)
     },
+    goToPage(name) {
+      this.$router.push({
+        name: name
+      })
+    }
     // -- end --
   },
 }
@@ -113,12 +112,32 @@ export default {
   overflow: hidden;
   box-sizing: border-box;
 
+  .own {
+    display: flex;
+    width: 50%;
+    justify-content: space-around;
+    margin: 20px auto;
+
+    h2 {
+      font-weight: 700;
+      margin-right: 40px;
+      cursor: pointer;
+
+      &:hover {
+        color: #F89E0F;
+        text-decoration: underline;
+        // margin-top: 10px;
+      }
+    }
+  }
+
   .header {
-    background: #6e24b3;
+    background: #006B61;
     padding: 0 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    color: #ffffff;
 
     .header-right {
       display: flex;
@@ -127,6 +146,18 @@ export default {
       .right-item {
         margin-left: 15px;
       }
+    }
+  }
+
+  .button {
+    background-color: #006B61;
+    color: #ffffff;
+    font-weight: bolder;
+    margin-left: 10px;
+
+    :hover {
+      background-color: #F89E0F;
+      ;
     }
   }
 
@@ -193,6 +224,10 @@ export default {
 
   .layout-content {
     overflow-y: hidden;
+  }
+
+  .layout-footer {
+    position: relative;
   }
 
   .router-area {
