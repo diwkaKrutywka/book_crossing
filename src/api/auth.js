@@ -1,7 +1,7 @@
 import http from '@/utils/http'
 export function AuthApi(url, data, method) {
   let info = {
-    url: '/auth/' + url
+    url: '/' + url
   }
   if (method == 'GET') {
     info['method'] = 'GET'

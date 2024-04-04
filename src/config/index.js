@@ -3,7 +3,7 @@ const config = {
 }
 
 function getBaseUrl() {
-  return 'https://'
+  return 'https://bookers.kz'
 }
 
 export default config
