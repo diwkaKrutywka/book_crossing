@@ -13,11 +13,11 @@
                         <a-form-item :label="$t('l_User_password')" :rules="[{ required: true }]">
                             <a-input-password v-model:value="info.password"></a-input-password>
                         </a-form-item>
-                        <a-form-item :label="$t('l_Repeat_password')" :rules="[{ required: true }]">
+                        <!-- <a-form-item :label="$t('l_Repeat_password')" :rules="[{ required: true }]">
                             <a-input-password v-model:value="info.password2"></a-input-password>
-                        </a-form-item>
+                        </a-form-item> -->
                         <a-button class="confirm" type="primary" html-type="submit"
-                            style="width: 100%; margin-top: 15px" @click="onLogin()"> {{ $t("l_Signup")
+                            style="width: 100%; margin-top: 15px" @click="onSignUp()"> {{ $t("l_Signup")
                             }} </a-button>
 
                     </a-form>
@@ -65,7 +65,7 @@
 
 <script>
 import { AuthApi } from "@/api/auth"
-import { notification } from 'ant-design-vue';
+
 export default {
     data() {
         return {
@@ -73,22 +73,41 @@ export default {
             info: {
                 username: "+7",
                 password: "",
-                email: '',
-                password2: ''
+                 email: '',
+                // password2: ''
             },
             remember: true,
             passwordCheck: '',
         }
     },
     methods: {
+      
         onTabChange(key) {
             this.activeTab = key;
         },
         onLogin() {
+            this.$refs.form.validate().then(()=>{
+                AuthApi('auth',this.info).then(res=>{
+                 
+                        this.$store.setUserInfo(res.data);
+                        this.$router.replace({
+                            name: "HomePage"
+                        })
+                    console.log(this.$store?.userInfo)
+                }).catch(err=>{
+                    console.log(err)
+                })
+            }).catch(err=>{
+                console.log(err)
+            })
         },
 
         onSignUp() {
-
+           AuthApi('users', this.info).then((res)=>{
+           
+                console.log(res)
+           
+           })
         }
     }
 }
