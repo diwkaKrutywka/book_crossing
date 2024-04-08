@@ -10,16 +10,16 @@
     item.label }}</h2>
           </div>
           <div>
-            <a-button class='button'>
+            <a-button class='button' @click="goToPage('LoginView')">
               {{ $t('l_Signup') }}
             </a-button>
-            <a-button class='button'>
+            <a-button class='button' @click="goToPage('LoginView')">
               {{ $t('l_Login') }}
             </a-button>
           </div>
         </a-layout-header>
         <div class="own">
-          <h2 v-for="item in ownList" @click="goToPage(item.name)">{{ item.name }}</h2>
+          <h2 v-for="item in ownList" @click="goToPage(item.name)">{{ item.label }}</h2>
 
         </div>
         <a-layout-content class="router-area">

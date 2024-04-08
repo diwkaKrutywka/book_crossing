@@ -57,7 +57,7 @@
             <div class="subscription">
                 <h1>Subscribe to our newsletter</h1>
                 <div class="seek">
-
+                    <!-- <a-input placeholder="Please write what are you searching for"></a-input> -->
                 </div>
             </div>
         </div>
@@ -110,6 +110,7 @@ export default {
         border: 1px #006B61 solid;
         width: 76%;
         height: 40px;
+        margin: auto;
     }
 }
 
