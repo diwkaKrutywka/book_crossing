@@ -3,35 +3,39 @@
     <a-layout :style="{ height: 100 + '%' }">
       <a-layout class="layout-content">
         <a-layout-header class="header" style="height: 60px">
-          <div style="width: 40%; display: flex; align-items: center;">
-            <img style="padding: 10px; margin: 0 40px; height: 50px;" src="@/assets/images/logo.svg">
+          <div style="width: 40%; display: flex; align-items: center">
+            <img
+              style="padding: 10px; margin: 0 40px; height: 50px"
+              src="@/assets/images/logo.svg"
+            />
 
-            <h2 style="margin-right: 40px; font-weight: 300" @click="goToPage(item.name)" v-for="item in navList">{{
-    item.label }}</h2>
+            <h2
+              style="margin-right: 40px; font-weight: 300"
+              @click="goToPage(item.name)"
+              v-for="item in navList"
+            >
+              {{ item.label }}
+            </h2>
           </div>
           <div>
-            <a-button class='button' @click="goToPage('LoginView')">
+            <a-button class="button" @click="goToPage('LoginView')">
               {{ $t('l_Signup') }}
             </a-button>
-            <a-button class='button' @click="goToPage('LoginView')">
+            <a-button class="button" @click="goToPage('LoginView')">
               {{ $t('l_Login') }}
             </a-button>
           </div>
         </a-layout-header>
         <div class="own">
           <h2 v-for="item in ownList" @click="goToPage(item.name)">{{ item.label }}</h2>
-
         </div>
         <a-layout-content class="router-area">
           <router-view></router-view>
-          <FooterPage>
-
-          </FooterPage>
+          <FooterPage> </FooterPage>
         </a-layout-content>
         <!-- <a-layout-footer>
           <FooterPage></FooterPage>
         </a-layout-footer> -->
-
       </a-layout>
     </a-layout>
   </div>
@@ -45,51 +49,53 @@ export default {
   },
   data() {
     return {
-      navList: [{
-        label: "Home",
-        name: "HomePage"
-      },
-      {
-        label: "Books",
-        name: 'BookList'
-      },
-      {
-        label: "About",
-        name: 'AboutUs'
-      },
-      {
-        label: "Quizzess",
-        name: 'Quizzess'
-      }
+      navList: [
+        {
+          label: 'Home',
+          name: 'HomePage'
+        },
+        {
+          label: 'Books',
+          name: 'BookList'
+        },
+        {
+          label: 'About',
+          name: 'AboutUs'
+        },
+        {
+          label: 'Quizzess',
+          name: 'Quizzess'
+        }
       ],
-      ownList: [{
-        label: "My books",
-        name: "MyBooks"
-      },
-      {
-        label: "My collections",
-        name: 'BookList'
-      },
-      {
-        label: "My friends",
-        name: 'AboutUs'
-      },
-      {
-        label: "Settings",
-        name: 'Profile'
-      }
+      ownList: [
+        {
+          label: 'My books',
+          name: 'MyBooks'
+        },
+        {
+          label: 'My collections',
+          name: 'MyCollections'
+        },
+        {
+          label: 'My friends',
+          name: 'AboutUs'
+        },
+        {
+          label: 'Settings',
+          name: 'Profile'
+        }
       ]
     }
   },
   computed: {
     langTag() {
       return this.$i18n.locale
-    },
+    }
   },
   methods: {
     setLanguage(e) {
       this.$i18n.locale = e
-      localStorage.setItem("currentLang", e)
+      localStorage.setItem('currentLang', e)
     },
     goToPage(name) {
       this.$router.push({
@@ -97,7 +103,7 @@ export default {
       })
     }
     // -- end --
-  },
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -124,7 +130,7 @@ export default {
       cursor: pointer;
 
       &:hover {
-        color: #F89E0F;
+        color: #f89e0f;
         text-decoration: underline;
         // margin-top: 10px;
       }
@@ -132,7 +138,7 @@ export default {
   }
 
   .header {
-    background: #006B61;
+    background: #006b61;
     padding: 0 20px;
     display: flex;
     align-items: center;
@@ -150,14 +156,13 @@ export default {
   }
 
   .button {
-    background-color: #006B61;
+    background-color: #006b61;
     color: #ffffff;
     font-weight: bolder;
     margin-left: 10px;
 
     :hover {
-      background-color: #F89E0F;
-      ;
+      background-color: #f89e0f;
     }
   }
 
@@ -327,7 +332,7 @@ export default {
     white-space: nowrap;
 
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       left: 0;
       top: 0;

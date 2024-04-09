@@ -29,6 +29,16 @@ const routes = [
         component: () => import('../views/user/books/MyBooks.vue')
       },
       {
+        path: '/book/about',
+        name: 'AboutBook',
+        component: () => import('../views/book/AboutBook.vue')
+      },
+      {
+        path: '/book/my-collections',
+        name: 'MyCollections',
+        component: () => import('../views/collections/MyCollections.vue')
+      },
+      {
         path: '/home/new-book/add-edit',
         name: 'AddEditBooks',
         component: () => import('../views/user/books/AddEditBook.vue')
