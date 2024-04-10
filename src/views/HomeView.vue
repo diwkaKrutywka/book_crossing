@@ -78,7 +78,7 @@ export default {
         },
         {
           label: 'My friends',
-          name: 'AboutUs'
+          name: 'MyFriends'
         },
         {
           label: 'Settings',

@@ -40,7 +40,7 @@
           style="
             display: flex;
             width: 500px;
-            border: 1px #f1f1f1 solid;
+            box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
             padding: 20px;
             margin-right: 40px;
           "
@@ -170,8 +170,9 @@
                 style="
                   padding: 13px;
                   width: 200px;
-                  border-radius: 16px;
-                  border: 1px #f1f1f1 solid;
+                  box-shadow:
+                    rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+                    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
                   text-align: center;
                 "
               >
@@ -191,8 +192,9 @@
                 style="
                   padding: 13px;
                   width: 200px;
-                  border-radius: 16px;
-                  border: 1px #f1f1f1 solid;
+                  box-shadow:
+                    rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+                    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
                   text-align: center;
                 "
               >
@@ -212,8 +214,9 @@
                 style="
                   padding: 13px;
                   width: 200px;
-                  border-radius: 16px;
-                  border: 1px #f1f1f1 solid;
+                  box-shadow:
+                    rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+                    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
                   text-align: center;
                 "
               >
@@ -233,8 +236,9 @@
                 style="
                   padding: 13px;
                   width: 200px;
-                  border-radius: 16px;
-                  border: 1px #f1f1f1 solid;
+                  box-shadow:
+                    rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+                    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
                   text-align: center;
                 "
               >
@@ -254,8 +258,9 @@
                 style="
                   padding: 13px;
                   width: 200px;
-                  border-radius: 16px;
-                  border: 1px #f1f1f1 solid;
+                  box-shadow:
+                    rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+                    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
                   text-align: center;
                 "
               >
@@ -275,8 +280,9 @@
                 style="
                   padding: 13px;
                   width: 200px;
-                  border-radius: 16px;
-                  border: 1px #f1f1f1 solid;
+                  box-shadow:
+                    rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+                    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
                   text-align: center;
                 "
               >

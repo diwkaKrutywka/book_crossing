@@ -7,7 +7,10 @@
       </div>
       <div class="top">
         <div style="top: 0">
-          <h2>Available</h2>
+          <div style="display: flex; justify-content: space-between">
+            <h2>Available</h2>
+            <span class="material-symbols-outlined"> favorite </span>
+          </div>
           <h3><span>Author: </span>{{ item.author }}</h3>
           <h3><span>Genre: </span>{{ item.genre }}</h3>
           <p>{{ item.overview }}</p>

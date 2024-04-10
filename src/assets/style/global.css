@@ -3,6 +3,10 @@
   src: url('./Poppins/Poppins-Medium.ttf');
 }
 
+.boxed {
+  max-width: 1200px;
+  margin: auto;
+}
 * {
   margin: 0;
   padding: 0;
