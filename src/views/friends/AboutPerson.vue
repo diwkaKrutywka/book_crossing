@@ -1,9 +1,9 @@
 <template>
-  <div class="boxed">
+  <div style="max-width: 1200px; margin: 0 auto">
     <div class="card">
       <img src="@/assets/images/person.svg" />
       <div>
-        <h1>{{ info.name }} ({{ info.nickname }})</h1>
+        <h2>{{ info.name }} ({{ info.nickname }})</h2>
         <p>
           Favourite genre of books: <span v-for="fav in info.favs">{{ fav }}, </span>
         </p>
@@ -27,6 +27,8 @@
       <img style="height: 200px" src="@/assets/images/book5.svg" />
       <h3 style="color: #393280; display: flex; justify-content: center">Atomy habits</h3>
     </div>
+
+    <h1>Чтобы обменяться написать в</h1>
   </div>
 </template>
 <script>
@@ -51,6 +53,7 @@ export default {
   display: flex;
   border: 1px black solid;
   width: 500px;
+  margin: auto;
   justify-content: space-around;
   border-radius: 16px;
 
@@ -58,10 +61,16 @@ export default {
     font-weight: 500;
   }
 }
-
+h1 {
+  margin: 100px auto;
+  font-size: 24px;
+  font-weight: 800;
+  text-align: center;
+}
 .book {
   padding: 13px;
   width: 200px;
+  margin: auto;
   box-shadow:
     rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;

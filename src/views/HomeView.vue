@@ -17,7 +17,7 @@
               {{ item.label }}
             </h2>
           </div>
-          <div>
+          <div v-if="!hasLogin">
             <a-button class="button" @click="goToPage('LoginView')">
               {{ $t('l_Signup') }}
             </a-button>
@@ -25,8 +25,9 @@
               {{ $t('l_Login') }}
             </a-button>
           </div>
+          <div v-if="hasLogin">Hi, {{ this.$store.userInfo.user.username }}</div>
         </a-layout-header>
-        <div class="own">
+        <div class="own" v-if="hasLogin">
           <h2 v-for="item in ownList" @click="goToPage(item.name)">{{ item.label }}</h2>
         </div>
         <a-layout-content class="router-area">
@@ -64,7 +65,7 @@ export default {
         },
         {
           label: 'Quizzess',
-          name: 'Quizzess'
+          name: 'LendingPage'
         }
       ],
       ownList: [
@@ -90,6 +91,9 @@ export default {
   computed: {
     langTag() {
       return this.$i18n.locale
+    },
+    hasLogin() {
+      return this.$store.hasLogin
     }
   },
   methods: {

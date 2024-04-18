@@ -29,6 +29,21 @@ const routes = [
         component: () => import('../views/user/books/MyBooks.vue')
       },
       {
+        path: '/quizz/lending',
+        name: 'LendingPage',
+        component: () => import('../views/quizz/HomeLending.vue')
+      },
+      {
+        path: '/quizz/take/:id',
+        name: 'TakeQuizz',
+        component: () => import('../views/quizz/SeeQuizz.vue')
+      },
+      {
+        path: '/quizz/create-new',
+        name: 'CreateQuizz',
+        component: () => import('../views/quizz/CreateQuizz.vue')
+      },
+      {
         path: '/book/about',
         name: 'AboutBook',
         component: () => import('../views/book/AboutBook.vue')

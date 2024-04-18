@@ -14,16 +14,15 @@ app.config.globalProperties.$store = useAppStore()
 app.config.globalProperties.$componentSize = 'small'
 app.use(router).use(i18n).use(Antd).mount('#app')
 
-app.config.globalProperties.$dateFormat = 'DD/MM/YYYY'
-app.config.globalProperties.$timeFormat = timeFormat
-app.config.globalProperties.$getFileName = getFileName
-app.config.globalProperties.$toTimeStamp = toTimeStamp
-app.config.globalProperties.$timeLocaleFormat = timeLocaleFormat
-app.config.globalProperties.$dayjs = dayjs
-app.config.globalProperties.$getFileUrl = getFileUrl
-app.config.globalProperties.$firstUpperCase = firstUpperCase
+// app.config.globalProperties.$dateFormat = 'DD/MM/YYYY'
+// app.config.globalProperties.$timeFormat = timeFormat
+// app.config.globalProperties.$getFileName = getFileName
+// app.config.globalProperties.$toTimeStamp = toTimeStamp
+// app.config.globalProperties.$timeLocaleFormat = timeLocaleFormat
+// app.config.globalProperties.$getFileUrl = getFileUrl
+// app.config.globalProperties.$firstUpperCase = firstUpperCase
 
-app.use(i18n).use(router).use(store).use(Antd).use(createPinia()).mount('#app')
+// app.use(i18n).use(router).use(store).use(Antd).use(createPinia()).mount('#app')
 
 function timeFormat(t, hm, s) {
   if (!t) {
