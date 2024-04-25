@@ -34,9 +34,19 @@ const routes = [
         component: () => import('../views/quizz/HomeLending.vue')
       },
       {
+        path: 'user/quizz/list',
+        name: 'MyQuizz',
+        component: () => import('../views/quizz/MyQuizz.vue')
+      },
+      {
         path: '/quizz/take/:id',
         name: 'TakeQuizz',
         component: () => import('../views/quizz/SeeQuizz.vue')
+      },
+      {
+        path: '/quizz/pass-quizz/:id',
+        name: 'AnswerQuestion',
+        component: () => import('../views/quizz/TakeQuizz.vue')
       },
       {
         path: '/quizz/create-new',

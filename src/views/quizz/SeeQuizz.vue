@@ -1,12 +1,19 @@
 <template>
-  <div>
+  <div style="max-width: 1200px; margin: auto">
     <div class="card">
       <div class="head">
-        <h1>Quizz of book {{}}</h1>
-        <a-rate value="5" allow-half />
+        <h1 v-if="info.book">Quizz of book " {{ info.book.title }} "</h1>
+        <a-rate :value="value" allow-half />
       </div>
       <h3>Read the following instructions</h3>
-      <div class="about"></div>
+      <div v-if="info.book" class="about">
+        <img :src="info.book.image" />
+        <div v-if="info.book">
+          <h2>Date: {{ $timeFormat(info.created_at, 1) }}</h2>
+          <h2>Language: {{ info.book.language }}</h2>
+          <h2>Attemts: Once</h2>
+        </div>
+      </div>
       <div class="instruction">
         <h2>Instructions</h2>
         <p>
@@ -34,7 +41,8 @@ export default {
   data() {
     return {
       qId: null,
-      info: {}
+      info: {},
+      value: 5
     }
   },
   mounted() {
@@ -46,21 +54,29 @@ export default {
   },
   methods: {
     onLoad() {
-      let path = 'quizzes/' + this.qId
-      console.log(path)
-      AuthApi(path, '', 'GET').then((res) => {
+      let path = 'quizzes/' + this.qId + '/view'
+      AuthApi(path, {}, 'GET').then((res) => {
         if (res.data.message === 'success') {
-          this.info = res.data
+          this.info = res.data.result
+          // console.log(this.info)
         }
       })
     },
-    onStart() {}
+    onStart() {
+      this.$router.push({
+        name: 'AnswerQuestion',
+        params: {
+          id: this.qId
+        }
+      })
+    }
   }
 }
 </script>
 <style scoped lang="scss">
 .card {
   max-width: 900px;
+  margin: auto;
   border-radius: 20px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   padding: 30px;
@@ -70,10 +86,36 @@ export default {
     h1 {
       font-size: 25px;
       font-weight: 900;
+      color: #696f79;
+    }
+    h3 {
+      color: #696f79;
     }
   }
   .instruction {
+    margin-top: 20px;
+    br {
+      margin-top: 20px;
+    }
     h2 {
+      font-size: 20px;
+      color: #696f79;
+    }
+    p {
+      color: #696f79;
+    }
+  }
+  .about {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    img {
+      width: 130px;
+    }
+    h2 {
+      font-size: 15px;
+      color: #696f79;
+      margin-right: 150px;
     }
   }
 }

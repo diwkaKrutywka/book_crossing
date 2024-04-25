@@ -111,6 +111,16 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+h2 {
+  cursor: pointer;
+
+  &:hover {
+    color: #f89e0f;
+    text-decoration: underline;
+    font-weight: 900;
+    // margin-top: 10px;
+  }
+}
 .home {
   position: fixed;
   left: 0;
@@ -242,7 +252,7 @@ export default {
   .router-area {
     overflow-y: auto;
     margin: 15px;
-    padding: 10px;
+    //padding: 10px;
     background: #fff;
     min-height: 280px;
     box-sizing: border-box;

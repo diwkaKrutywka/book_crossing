@@ -29,7 +29,7 @@ export default {
   methods: {
     createQuizz() {
       this.$router.push({
-        name: 'CreateQuizz'
+        name: 'LoginView'
       })
     },
     takeQuizz() {}

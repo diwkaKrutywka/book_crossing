@@ -152,6 +152,8 @@ export default {
                 })
                 //   console.log(res)
                 console.log(this.$store?.userInfo)
+              } else if (res.data.status_code === 404) {
+                message.error(res.data)
               }
             })
             .catch((err) => {

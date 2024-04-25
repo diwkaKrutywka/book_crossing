@@ -1,189 +1,274 @@
 <template>
-    <div style="height: 250vh;">
-        <div class="search">
-            <div>
-                <img style="width: 600px;" src="@/assets/images/crossing.svg">
-                <div style="display: flex; margin-top: 80px;">
-                    <img style="height: 150px;" src="@/assets/images/word.svg">
-                    <div style="margin-left: 40px;">
-                        <h2>Our collection will help your home looks better <br> and we provide the best product for
-                            you.
-                        </h2>
-                        <hr>
-                        <a-button style="margin-top: 50px; width: 170px; height: 40px;" type="primary">Search
-                            book</a-button>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <img style="width: 500px;" src="@/assets/images/books.jpeg">
-            </div>
+  <div style="height: 250vh">
+    <div class="search">
+      <div>
+        <img style="width: 600px" src="@/assets/images/crossing.svg" />
+        <div style="display: flex; margin-top: 80px">
+          <img style="height: 150px" src="@/assets/images/word.svg" />
+          <div style="margin-left: 40px">
+            <h2>
+              Our collection will help your home looks better <br />
+              and we provide the best product for you.
+            </h2>
+            <hr />
+            <a-button style="margin-top: 50px; width: 170px; height: 40px" type="primary"
+              >Search book</a-button
+            >
+          </div>
         </div>
-        <div class="best">
-            <h1>New <br> Best book <br> 2024.</h1>
-
-        </div>
-        <div class="bestseller">
-            <div style="display: flex; justify-content: space-between;">
-                <h1>Top-10 best seller book</h1>
-                <h2 style="color: #005555;">See all</h2>
-            </div>
-            <div class="cards">
-                <div class="card" v-for="item in bestSellers">
-                    <img src="@/assets/images/book1.svg">
-                    <div style="margin-left: 20px; padding: 10px;">
-                        <h2>{{ item.title }}</h2>
-                        <h3>{{ item.author }}</h3>
-                        <h2>About the author</h2>
-                        <h4>{{ item.abt }}</h4>
-                        <h2>Overview</h2>
-                        <h4>{{ item.overview }}</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="offers">
-                <div style="display: flex; justify-content: space-between;">
-                    <h1>Offers</h1>
-                    <h2 style="color: #005555;">See all</h2>
-                </div>
-                <div style="display: flex; justify-content: space-between;">
-                    <img style="border-radius: 0 0 50% 50%;" src="@/assets/images/offer1.svg">
-                    <img style="border-radius:  50% 50% 0 0;" src="@/assets/images/offer2.svg">
-                    <img style="border-radius: 0 0 50% 50%;" src="@/assets/images/offer3.svg">
-                    <img style="border-radius: 50% 50%  0 0;" src="@/assets/images/offer4.svg">
-                </div>
-            </div>
-
-            <div class="subscription">
-                <h1>Subscribe to our newsletter</h1>
-                <div class="seek">
-                    <!-- <a-input placeholder="Please write what are you searching for"></a-input> -->
-                </div>
-            </div>
-        </div>
+      </div>
+      <div>
+        <img style="width: 500px" src="@/assets/images/books.jpeg" />
+      </div>
     </div>
+    <div class="best">
+      <h1>
+        New <br />
+        Best book <br />
+        2024.
+      </h1>
+      <div class="scroll">
+        <div class="each"></div>
+      </div>
+    </div>
+    <div class="bestseller">
+      <div style="display: flex; justify-content: space-between">
+        <h1>Top-10 best seller book</h1>
+        <h2 style="color: #005555">See all</h2>
+      </div>
+      <div class="scroll">
+        <div class="card" v-for="item in bookList">
+          <img :src="item.image" />
+          <div style="margin-left: 20px; padding: 10px">
+            <h2>{{ item.title }}</h2>
+            <h3 v-for="i in item.authors">{{ i.name }}</h3>
+            <h2>Writen date</h2>
+            <h4>{{ item.pub_date }}</h4>
+            <h2>Overview</h2>
+            <h4>{{ item.description }}</h4>
+          </div>
+        </div>
+      </div>
+      <div class="offers">
+        <div style="display: flex; justify-content: space-between">
+          <h1>Offers</h1>
+          <h2 style="color: #005555">See all</h2>
+        </div>
+        <div style="display: flex; justify-content: space-between">
+          <img style="border-radius: 0 0 50% 50%" src="@/assets/images/offer1.svg" />
+          <img style="border-radius: 50% 50% 0 0" src="@/assets/images/offer2.svg" />
+          <img style="border-radius: 0 0 50% 50%" src="@/assets/images/offer3.svg" />
+          <img style="border-radius: 50% 50% 0 0" src="@/assets/images/offer4.svg" />
+        </div>
+      </div>
+
+      <div class="subscription">
+        <h1>Recommended books from <br />you to review</h1>
+        <div class="seek">
+          <!-- <a-input placeholder="Please write what are you searching for"></a-input> -->
+        </div>
+      </div>
+
+      <div class="questions">
+        <h2>Frequently Asked Questions?</h2>
+
+        <div>
+          <div class="question" v-for="(q, index) in currentQuestionList" :key="index">
+            <div style="width: 80%; margin: 30px auto; color: white">
+              <div
+                style="display: flex; justify-content: space-between"
+                @click="toggleAnswer(index)"
+              >
+                <h2 style="color: white">{{ q.question }}</h2>
+                <span class="material-symbols-outlined"> add_circle </span>
+              </div>
+              <p style="color: white; font-size: 20px" v-if="selectedQuestionIndex === index">
+                {{ q.answer }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
-
+import { AuthApi } from '@/api/auth'
 export default {
-    components: {
-
-    },
-    data() {
-        return {
-            bestSellers: [
-                {
-                    img: "@/assets/images/book1.svg",
-                    title: "Catcher in the Rye",
-                    author: "J.D Salinger",
-                    abt: "J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publi cation, Salinger published several short stories in Story magazine",
-                    overview: "The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adu"
-                },
-                {
-                    img: "@/assets/images/book2.svg",
-                    title: "Catcher in the Rye",
-                    author: "J.D Salinger",
-                    abt: "J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publi cation, Salinger published several short stories in Story magazine",
-                    overview: "The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adu"
-                },
-                {
-                    img: "@/assets/images/book3.svg",
-                    title: "Catcher in the Rye",
-                    author: "J.D Salinger",
-                    abt: "J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publi cation, Salinger published several short stories in Story magazine",
-                    overview: "The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adu"
-                },
-            ]
-        }
+  components: {},
+  data() {
+    return {
+      bookList: [],
+      selectedQuestionIndex: null,
+      questionList: {
+        rus: [
+          {
+            question: 'ТББ  (Тапсырысты беру бөлімшесі) ашатын орынды шешу',
+            answer:
+              'ТББ кіріс көзі дұрыс таңдалған орынға байланысты. ТББ ашылуы керек аймақтарды картадан көре аласыз. Бөлімше ашуға ең тиімді шешім – жаяу жүргіншілері көп орын: сауда орталықтары, аялдамалардың жанындағы Үй-жайлар, ірі және орта тұрғын үй кешендері, өңірлерге қаладан шығу нүктелері.'
+          },
+          {
+            question: 'ТББ ашуға таңдаған орынды аймақтық менеджермен мақұлдау',
+            answer:
+              'Белгілі бір орында ТББ ашуға өтінім қосымшаның жеке кабинеті немесе сайт арқылы жіберіледі. BTI жоспары құжатының сканерлеуін, қасбеттің күндізгі және түнгі фотосуреттерін, ішіндегі бөлмені, кіреберісін жіберіңіз. Содан кейін монтажсыз бір рет видео түсіруге тырысыңыз. Жалпы кіру жоспарынан алыс бұрыштарға дейін бүкіл бөлмені көрсету маңызды. Жауап әдетте 3 күн ішінде келеді. Егер өтінім мақұлданса, 14 күн ішінде бөлімшені ашу қажет болады.'
+          },
+          {
+            question: 'ЖК немесе ЖШС ашу',
+            answer:
+              'Мәртебе алу үшін барлық құжаттарды онлайн жіберуге болады. ЭҚЖЖ қажетті коды: 53200 басқа почта және курьерлік қызмет. Есеп айырысу шотын интернетте де ашуға болады.'
+          },
+          {
+            question: 'ТББ ашатын орынға талапқа сәйкес жөндеу жүргізу',
+            answer:
+              'Жөндеу брендбукке сәйкес жүзеге асырылады: еден ақ керамикалық плиткамен жабылған, төбесі мен қабырғалары ақ түсті. Клиенттік аймақ пен қойма аймағын бөлу қажет. Жөндеу аяқталғаннан кейін компания тарапынан сізге негізгі жабдықтар беріледі: жарықтандырылған белгі, бренд қабырғасының логотипі, жұмыс кестесі және есік белгілері. Брендбукке сәйкес барлық заттар ақ түсті болуы керек. Қойма аймағында тапсырыстарды сақтау үшін сөрелерді орналастыру қажет. Менеджердің жұмысы үшін сканерді сатып алу керек. Бөлімшенің барлық бөлмелеріне дыбыс жазылатын, жақсы сападағы камера орнату қажет - кіреберіс, қабылдау бөлмесі, тексеру үстелі және қойма көрінетін етіп орналастыру керек. Жазбаларды 90 күн бойы сақталуы қажет, сонымен қатар компанияның аймақтық менеджері үшін кез-келген камераға онлайн қосылу мүмкіндігін ұйымдастыру қажет.'
+          },
+          {
+            question: 'Жұмыс жүргізу тәртібімен танысу',
+            answer:
+              'Біздің серіктестеріміздің жұмыс стандарттарын білу үшін оқудан өтіп, тест тапсыру.'
+          },
+          {
+            question: 'ТББ жұмысын іске қосу',
+            answer:
+              'Бөлімше жұмысын іске қосу үшін видео жіберіңіз: есік алдын, маңдайшаны, жұмыс режимінің белгілерін, клиенттік және қойма аймақтарын нақтылап түсіріңіз. Белсендіру бір күн ішінде расталады, жақын жерде тұратын JanaPost қосымшасының клиенттері ашылу туралы хабарлама алады.'
+          }
+        ]
+      }
     }
-
+  },
+  computed: {
+    isBigWin() {
+      return this.$store.state.isBigWin
+    },
+    currentQuestionList() {
+      console.log(this.$i18n.locale)
+      return this.questionList[this.$i18n.locale] || []
+    }
+  },
+  mounted() {
+    this.onLoad()
+  },
+  methods: {
+    onLoad() {
+      if (this.bookList.length == 0) {
+        AuthApi('books', { query: { limit: 10, offset: 0 } }, 'GET').then((res) => {
+          if (res.data.message === 'success') {
+            this.bookList = res.data.result.books
+            console.log(this.bookList)
+          }
+        })
+      }
+    },
+    toggleAnswer(index) {
+      if (this.selectedQuestionIndex === index) {
+        this.selectedQuestionIndex = null
+      } else {
+        this.selectedQuestionIndex = index
+      }
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
 .subscription {
-    margin: 100px 0;
-    text-align: center;
-    align-items: center;
+  margin: 100px 0;
+  text-align: center;
+  align-items: center;
 
-    .seek {
-        border-radius: 20px;
-        border: 1px #006B61 solid;
-        width: 76%;
-        height: 40px;
-        margin: auto;
-    }
+  .seek {
+    border-radius: 20px;
+    border: 1px #006b61 solid;
+    width: 76%;
+    height: 40px;
+    margin: auto;
+  }
 }
-
+// .questions {
+//   height: max-content;
+//   .question {
+//     background-color: #006b61;
+//   }
+// }
 .search {
-    padding: 30px;
-    margin-bottom: 30px;
-    display: flex;
-    justify-content: space-between;
+  padding: 30px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .bestseller {
-    padding: 30px;
-    height: 400px;
+  padding: 30px;
+  height: 400px;
 
-    .cards {
-        display: flex;
-        width: max-content;
+  .scroll {
+    display: flex;
+    //width: max-content;
+    border-radius: 16px;
+    padding: 40px;
+    gap: var(--ds-small);
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox: 隐藏滚动条 */
+    -ms-overflow-style: none; /* IE/Edge: 隐藏滚动条 */
+    padding: var(--ds-medium);
+    flex-shrink: 0;
 
-        .card {
-            background-color: #006B61;
-            color: #ffffff;
-            margin-right: 20px;
-            padding: 20px;
-            align-items: center;
-            display: flex;
-            max-height: 260px;
-            max-width: 500px;
-
-            img {
-                height: 200px;
-
-            }
-
-            h1 {
-                color: white;
-            }
-
-            h2 {
-                color: #ffffff;
-            }
-        }
+    &::-webkit-scrollbar {
+      display: none;
     }
+    .card {
+      background-color: #006b61;
+      color: #ffffff;
+      margin-right: 20px;
+      padding: 20px;
+      align-items: center;
+      display: flex;
+      max-height: 260px;
+      max-width: 500px;
 
-    h1 {
-        font-size: 50px;
-        font-weight: bolder;
-    }
+      img {
+        height: 200px;
+      }
 
-    h2 {
-        color: #006B61;
-        font-weight: 900;
+      h1 {
+        color: white;
+      }
+
+      h2 {
+        color: #ffffff;
+      }
     }
+  }
+
+  h1 {
+    font-size: 50px;
+    font-weight: bolder;
+  }
+
+  h2 {
+    color: #006b61;
+    font-weight: 900;
+  }
 }
 
 .offers {
-    margin: 40px 0;
+  margin: 40px 0;
 
-    img {
-        height: 350px;
-        max-height: 350px;
-        width: 270px;
-    }
+  img {
+    height: 350px;
+    max-height: 350px;
+    width: 270px;
+  }
 }
 
 .best {
-    height: 400px;
-    background-color: #006B61;
-    padding: 30px;
+  height: 400px;
+  background-color: #006b61;
+  padding: 30px;
 
-    h1 {
-        color: #ffffff;
-        font-size: 50px;
-        font-weight: bolder;
-    }
+  h1 {
+    color: #ffffff;
+    font-size: 50px;
+    font-weight: bolder;
+  }
 }
 </style>
