@@ -152,7 +152,7 @@ export default {
       this.customRequest(file, tag)
     },
     async checkImgType(file) {
-      if (!/\.(jpg|jpeg|png||JPG|PNG|JPEG)$/.test(file.name)) {
+      if (!/\.(jpg|jpeg|png|JPG|PNG|JPEG)$/.test(file.name)) {
         return false
       } else {
         return true
@@ -164,29 +164,32 @@ export default {
         console.log('file is empty')
         return
       }
-      console.log(file.name)
-      let param = new FormData()
-      param.append('image', file || file.name)
-      param.append('book_id', this.id)
-      let res = await http({
-        url: '/books/stock/upload',
-        method: 'POST',
-        data: param,
-        onUploadProgress: function (e) {
-          file.onProgress = (e.loaded / e.total) * 100
-        }
-      })
-      if (res) {
-        file.onProgress = 100
-        // this.info[key] = '/public/get_resource?name=' + res.data.path
-        if (file.onSuccess) {
-          file.onSuccess(res.data, file)
-        }
 
-        return true
-      } else {
-        return false
+      let param = new FormData()
+      param.append('image', file)
+      param.append('book_id', this.id)
+
+      try {
+        let res = await http({
+          url: '/books/stock/upload',
+          method: 'POST',
+          data: param,
+          onUploadProgress: function (e) {
+            file.onProgress = (e.loaded / e.total) * 100
+          }
+        })
+        if (res) {
+          file.onProgress = 100
+          // this.info[key] = '/public/get_resource?name=' + res.data.path
+          if (file.onSuccess) {
+            file.onSuccess(res.data, file)
+          }
+          return true
+        }
+      } catch (error) {
+        console.error('Upload failed:', error)
       }
+      return false
     },
     filterOption(input, option) {
       return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
