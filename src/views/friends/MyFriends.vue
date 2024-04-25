@@ -1,18 +1,18 @@
 <template>
   <div class="box">
-    <h2>{{ total }} Friends</h2>
+    <h2>{{ this.friends.length }} Friends</h2>
     <div class="out">
-      <div v-for="item in dataList" class="card">
+      <div v-for="item in this.friends" class="card">
         <div style="display: flex">
           <img
             style="height: 70px; width: 70px; border-radius: 50%"
             src="@/assets/images/person.svg"
           />
           <div style="margin: 0 30px">
-            <h1>{{ item.name }} ({{ item.nickname }})</h1>
+            <h1>{{ item.email }} ({{ item.username }})</h1>
             <p>
-              has 10 books for exchange <br />
-              favourite genre: drama
+              Город <br />
+              {{ item.city }}
             </p>
           </div>
         </div>
@@ -24,10 +24,12 @@
   </div>
 </template>
 <script>
+import http from '@/utils/http';
 export default {
+
   data() {
     return {
-      total: 16,
+      friends: [],
       dataList: [
         {
           name: 'Diana Omarbayeva',
@@ -44,11 +46,23 @@ export default {
       ]
     }
   },
+  mounted(){
+    this.fetchFriends()
+  },
   methods: {
     goTo() {
       this.$router.push({
         name: 'AboutPerson'
       })
+    },
+    async fetchFriends(){
+      let res = await http({
+        url: '/users/friends',
+        method: 'GET',
+      })
+      if(res){
+        this.friends = res.data.result.friends
+      }
     }
   }
 }

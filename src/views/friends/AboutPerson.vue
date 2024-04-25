@@ -1,34 +1,81 @@
 <template>
-  <div style="max-width: 1200px; margin: 0 auto">
-    <div class="card">
-      <img src="@/assets/images/person.svg" />
-      <div>
-        <h2>{{ info.name }} ({{ info.nickname }})</h2>
-        <p>
-          Favourite genre of books: <span v-for="fav in info.favs">{{ fav }}, </span>
-        </p>
-        <p>Friends: {{ info.friends }}</p>
-        <p>Last login: <span style="color: #006b61"> now online</span></p>
-        <p>Registered: 7 month ago</p>
-        <p>Books: {{ info.books }}</p>
-        <p>Exchanged with others: {{ info.exchange }} times</p>
+  <div style="max-width: 1200px; position: relative;" class="friend">
+      <div class="bg-friends"></div>
+      <div class="card">
+        <div class="friend-info">
+          <div class="friend-profile">
+            <img src="@/assets/images/person.svg" />
+            <h4>{{ info.name }}</h4>
+            <h4>{{ info.nickname }}</h4>
+            <button class="btn">Add To Friends</button>
+          </div>
+          <div style="display: flex; flex-direction: column;">
+            <span style="display: flex; justify-content: space-between;">
+              <b>Favourite genre of books:</b>
+              <span> <span v-for="fav in info.favs">{{ fav }}, </span></span>
+            </span>
+            <span style="display: flex; justify-content: space-between;">
+              <b>Friends:</b> 
+              <span>{{ info.friends }}</span>
+            </span>
+          
+          </div>
+          <div>
+            <h3>Книжная полка <img src="@/assets/images/book-square.svg" style="width: 25px;"></h3>
+            <table>
+              <tr>
+                <td></td>
+                <td>Всего</td>
+                <td>in month</td>
+              </tr>
+              <tr>
+                <td>Uploaded books</td>
+                <td>{{ info.books }}</td>
+                <td>4</td>
+              </tr>
+              <tr style="background-color: #F89E0F; height: 5px; margin: 5px 0;"></tr>
+              <tr>
+                <td>Exchange books</td>
+                <td>{{ info.exchange }}</td>
+                <td>15</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="friend-active">
+            <p>Last login: <span style="color: #006b61"> now online</span></p>
+            <p>Registered: 7 month ago</p>
+        </div>
       </div>
-    </div>
 
-    <h1>Книга, которая вы рассматриваете сейчас</h1>
-
-    <div class="book">
-      <span
-        style="color: black; display: flex; justify-content: end"
-        class="material-symbols-outlined"
-      >
-        favorite
-      </span>
-      <img style="height: 200px" src="@/assets/images/book5.svg" />
-      <h3 style="color: #393280; display: flex; justify-content: center">Atomy habits</h3>
-    </div>
-
-    <h1>Чтобы обменяться написать в</h1>
+      <div class="friend-book">
+        <div></div>
+        <div class="friend-book__current">
+          <h1>Книга, которая вы рассматриваете сейчас</h1>
+          <div class="book">
+            <span
+              style="color: black; display: flex; justify-content: end"
+              class="material-symbols-outlined"
+            >
+              favorite
+            </span>
+            <img style="height: 200px" src="@/assets/images/book5.svg" />
+            <h3 style="color: #393280; display: flex; justify-content: center">Atomy habits</h3>
+          </div>
+          <button class="btn">Отправить запрос на обмен</button>
+        </div>
+        <div class="friend-book__collections">
+          <h1>Еще больше книг этого пользователя:</h1>
+          <div class="friend-book__list">
+            <div class="book" v-for="index in [1, 2, 3, 4]">
+              <span style="color: #393280;">Michelle Obama</span>
+              <img style="height: 200px" src="@/assets/images/book5.svg" />
+              <h3>Go To Exchange</h3>
+            </div>
+          </div>
+          <button class="btn" style="align-self: flex-end;">See more</button>
+        </div>
+      </div>
   </div>
 </template>
 <script>
@@ -48,24 +95,95 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+.bg-friends{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background-image: url("@/assets/images/bg_friends.jpg");
+  width: 100vw;
+  height: 350px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .card {
-  padding: 30px;
   display: flex;
-  border: 1px black solid;
-  width: 500px;
-  margin: auto;
-  justify-content: space-around;
-  border-radius: 16px;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: rgba(244, 249, 249, 0.5);
+  border-radius: 8px;
+  z-index: 4;
+}
 
-  p {
-    font-weight: 500;
+.friend{
+  display: grid;
+  grid-template-columns: 40% 60%;
+  gap: 20px;
+  z-index: 4;
+
+  &-info{
+    display: grid;
+    grid-template-rows: 4fr 1fr 1fr;
+    gap: 50px;
+  }
+
+  &-profile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  &-book{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    padding: 30px;
+    z-index: 5;
+    align-items: center;
+
+    &__current{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    &__list{
+      display: flex;
+      justify-content: space-around;
+      gap: 20px;
+    }
+
+    &__collections{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 10px;
+      gap: 10px;
+    }
   }
 }
-h1 {
-  margin: 100px auto;
-  font-size: 24px;
-  font-weight: 800;
-  text-align: center;
+
+table:first-child{
+  td{
+    margin: 0;
+  }
+}
+
+table:last-child {
+  tr{
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 5px;
+  }
+}
+.btn{
+  background-color: #F89E0F;
+  color: #FFF;
+  border-radius: 5px;
+  padding: 10px 20px;
+  border: none;
 }
 .book {
   padding: 13px;
@@ -75,5 +193,6 @@ h1 {
     rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   text-align: center;
+  z-index: 5;
 }
 </style>
