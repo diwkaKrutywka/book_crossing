@@ -1,28 +1,26 @@
 <template>
-  <div style="max-width: 1300px; margin: auto; padding: 100px 0">
-    <div>
-      <h2>Recently Viewed</h2>
+  <div style="max-width: 1300px; margin: auto; padding: 100px 0; min-height: 100vh">
+    <div style="text-align: center">
+      <h2 style="color: black; font-size: 25px; font-weight: 900">Recently Viewed</h2>
       <div class="carousel-container">
         <div class="carousel" :style="{ transform: `translateX(-${currentIndex * 200}px)` }">
           <div
-            v-for="(item, index) in bestSellers"
+            v-for="(item, index) in bookList"
             :key="index"
             class="carousel-item"
-            @click="aboutBook()"
+            @click="aboutBook(index)"
           >
             <div
               style="
-                border: 1px #f1f1f1 solid;
-                padding: 10px;
-                box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+                padding: 20px;
+                box-shadow:
+                  rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+                  rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
               "
             >
-              <!-- <img :src="getImgUrl(item.img)" alt="Book Image" /> -->
-              <!-- <img :src="require(`@/assets/images/${item.img}`)" alt="Book Image" /> -->
-
-              <img style="height: 170px" src="@/assets/images/book1.svg" alt="Book Image" />
+              <img style="height: 170px" :src="item.image" alt="Book Image" />
             </div>
-            <h3>{{ item.title }}</h3>
+            <h3 style="color: #006b61; margin-top: 20px">{{ item.title }}</h3>
           </div>
         </div>
       </div>
@@ -198,14 +196,15 @@
                   text-align: center;
                 "
               >
-                <span
+                <LikedBooks :bookId="5"></LikedBooks>
+                <!-- <span
                   style="color: black; display: flex; justify-content: end"
                   class="material-symbols-outlined"
                 >
                   favorite
-                </span>
+                </span> -->
                 <img style="height: 200px" src="@/assets/images/book3.svg" />
-                <h3 style="color: #393280; display: flex; justify-content: center">Atomy habits</h3>
+                <h3 style="color: #393280; display: flex; justify-content: center">Test</h3>
                 <h4 style="color: #f89e0f; display: flex; justify-content: end">Go to exchanges</h4>
               </div>
             </a-col>
@@ -321,12 +320,18 @@
 </template>
 
 <script>
+import LikedBooks from '@/components/LikedBooks.vue'
+import { AuthApi } from '@/api/auth'
 export default {
+  components: {
+    LikedBooks
+  },
   data() {
     return {
       currentIndex: 0,
       current: 0,
       book: '',
+      bookList: [],
       sort: 'genre',
       categories: [],
       plainOptions: ['Drama', 'Comedy'],
@@ -406,7 +411,20 @@ export default {
       ]
     }
   },
+  mounted() {
+    this.onLoad()
+  },
   methods: {
+    onLoad() {
+      if (this.bookList.length == 0) {
+        AuthApi('books', { query: { limit: 20, offset: 0 } }, 'GET').then((res) => {
+          if (res.data.message === 'success') {
+            this.bookList = res.data.result.books
+            console.log(this.bookList)
+          }
+        })
+      }
+    },
     handleButtonClick(e) {
       console.log(e)
     },
@@ -424,9 +442,12 @@ export default {
         this.currentIndex--
       }
     },
-    aboutBook() {
+    aboutBook(index) {
       this.$router.push({
-        name: 'AboutBook'
+        name: 'AboutBook',
+        params: {
+          id: this.bookList[index].id
+        }
       })
     }
   }
@@ -456,8 +477,8 @@ h1 {
 
 .carousel-item {
   flex: 0 0 auto;
-  height: 240px;
-  width: 170px;
+  height: 260px;
+  max-width: 170px;
   display: block;
   text-align: center;
   // background-color: aqua;

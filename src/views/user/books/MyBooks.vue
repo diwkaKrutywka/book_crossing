@@ -5,19 +5,26 @@
         <div class="card">
           <div>
             <div class="img-border">
-              <img style="height: 250px" src="@/assets/images/mybook1.svg" />
+              <img style="height: 250px" :src="item.book.image" />
             </div>
             <h2 class="h2">
-              {{ item.title }}
+              {{ item.book.title }}
             </h2>
           </div>
           <div>
-            <h2>{{ item.title }}</h2>
+            <h2>{{ item.book.title }}</h2>
             <h3>{{ item.author }}</h3>
-            <a-rate :value="5" />
-            <p style="margin-top: 20px">{{ item.abt }}</p>
-            <p>{{ item.overview }}</p>
+            <a-rate :value="item.book.rating" />
+
+            <p style="margin-top: 20px">
+              <span>Language: {{ item.book.language }}</span>
+            </p>
+
+            <p>{{ item.book.description }}</p>
             <a-button type="primary" @click="onEdit()">Edit</a-button>
+            <a-button style="margin-left: 20px" type="primary" @click="onDelete(item.id)"
+              >Delete</a-button
+            >
           </div>
         </div>
       </a-col>
@@ -27,61 +34,48 @@
         >Upload new book</a-button
       >
     </div>
+    <AddEditBook ref="modalView"></AddEditBook>
   </div>
 </template>
 <script>
+import { AuthApi } from '@/api/auth'
+import AddEditBook from './AddEditBook.vue'
+import { message } from 'ant-design-vue'
 export default {
+  components: {
+    AddEditBook
+  },
   data() {
     return {
-      dataList: [
-        {
-          img: '',
-          title: 'Great Travel At Desert',
-          author: 'Sanchit Howdy',
-          abt: 'J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publi cation, Salinger published several short stories in Story magazine',
-          overview:
-            'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adu lts but is often read by adolescents for its theme of angst, alienation and as a critique......'
-        },
-        {
-          img: '',
-          title: 'Great Travel At Desert',
-          author: 'Sanchit Howdy',
-          abt: 'J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publi cation, Salinger published several short stories in Story magazine',
-          overview:
-            'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adu lts but is often read by adolescents for its theme of angst, alienation and as a critique......'
-        },
-        {
-          img: '',
-          title: 'Great Travel At Desert',
-          author: 'Sanchit Howdy',
-          abt: 'J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publi cation, Salinger published several short stories in Story magazine',
-          overview:
-            'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adu lts but is often read by adolescents for its theme of angst, alienation and as a critique......'
-        },
-        {
-          img: '',
-          title: 'Great Travel At Desert',
-          author: 'Sanchit Howdy',
-          abt: 'J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publi cation, Salinger published several short stories in Story magazine',
-          overview:
-            'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adu lts but is often read by adolescents for its theme of angst, alienation and as a critique......'
-        },
-        {
-          img: '',
-          title: 'Great Travel At Desert',
-          author: 'Sanchit Howdy',
-          abt: 'J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publi cation, Salinger published several short stories in Story magazine',
-          overview:
-            'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adu lts but is often read by adolescents for its theme of angst, alienation and as a critique......'
-        }
-      ]
+      open: false,
+      dataList: []
     }
+  },
+  mounted() {
+    this.onLoad()
   },
   methods: {
     onEdit() {},
     onUpload() {
-      this.$router.push({
-        name: 'AddEditBooks'
+      this.$refs.modalView.show()
+    },
+    onCloseModal() {
+      this.open = false
+    },
+    onDelete(e) {
+      let path = 'books/stock/' + e
+      AuthApi(path, {}, 'DELETE').then((res) => {
+        if (res.data.message == 'success') {
+          message.success('You have deleted successfully')
+          this.onLoad()
+        }
+      })
+    },
+    onLoad() {
+      AuthApi('books/stock', {}, 'GET').then((res) => {
+        if (res) {
+          this.dataList = JSON.parse(JSON.stringify(res.data.result))
+        }
       })
     }
   }

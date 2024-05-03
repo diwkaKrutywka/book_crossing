@@ -4,21 +4,20 @@
       <div>
         <div class="about">
           <div class="img-box">
-            <img style="height: 300px" src="@/assets/images/book8.svg" />
+            <img style="height: 300px" :src="info.image" />
           </div>
           <div style="display: block; padding: 20px">
-            <h1>Куриный бульон</h1>
+            <h1>{{ info.title }}</h1>
             <div style="height: 5px; background-color: #f89e0f; margin-bottom: 10px"></div>
-            <h3>Michael Josh</h3>
-            <p style="margin-top: 20px">
-              <span style="color: #006b61; font-weight: 600; font-size: 15px">Genre: </span>Drama
+            <h3 v-for="item in info.authors">{{ item.name }}</h3>
+            <p style="margin-top: 20px" v-for="item2 in info.categories">
+              <span style="color: #006b61; font-weight: 600; font-size: 15px">Genre: </span
+              >{{ item2.name }}
             </p>
 
             <h2>Overview</h2>
             <p>
-              ibulum nisl efficitur. Praesent ultrices diam enim. In ut tellus sed sem placerat
-              sollicitudin. Donec quis mollis dolor. Etiam viverra, arcu cursus porttitor porttitor,
-              diam nunc auctor nisl, quis placerat magna erat et odio.
+              {{ info.description }}
             </p>
           </div>
         </div>
@@ -28,44 +27,16 @@
     <div class="available">
       <p>Available books for exchanging:</p>
       <a-row :gutter="[16, 16]">
-        <a-col :xs="6" :lg="6" :md="6">
+        <a-col :xs="6" :lg="6" :md="6" v-for="(item, index) in bookList">
           <div class="card">
-            <img class="book" src="@/assets/images/book2.svg" />
+            <img class="book" :src="item.book.image" />
             <div class="bottom">
-              <h3>@saiman</h3>
-              <img class="img" src="@/assets/images/person.jpg" />
+              <h3>@{{ item.user.username }}</h3>
+              <img class="img" :src="item.book.image" />
             </div>
-            <a-button type="primary" class="w-100">Go to exchange</a-button>
-          </div>
-        </a-col>
-        <a-col :xs="6" :lg="6" :md="6">
-          <div class="card">
-            <img class="book" src="@/assets/images/book2.svg" />
-            <div class="bottom">
-              <h3>@saiman</h3>
-              <img class="img" src="@/assets/images/person.jpg" />
-            </div>
-            <a-button type="primary" class="w-100">Go to exchange</a-button>
-          </div>
-        </a-col>
-        <a-col :xs="6" :lg="6" :md="6">
-          <div class="card">
-            <img class="book" src="@/assets/images/book2.svg" />
-            <div class="bottom">
-              <h3>@saiman</h3>
-              <img class="img" src="@/assets/images/person.jpg" />
-            </div>
-            <a-button type="primary" class="w-100">Go to exchange</a-button>
-          </div>
-        </a-col>
-        <a-col :xs="6" :lg="6" :md="6">
-          <div class="card">
-            <img class="book" src="@/assets/images/book2.svg" />
-            <div class="bottom">
-              <h3>@saiman</h3>
-              <img class="img" src="@/assets/images/person.jpg" />
-            </div>
-            <a-button type="primary" class="w-100">Go to exchange</a-button>
+            <a-button type="primary" @click="goExchange(index)" class="w-100"
+              >Go to exchange</a-button
+            >
           </div>
         </a-col>
       </a-row>
@@ -134,33 +105,49 @@
   </div>
 </template>
 <script>
+import { AuthApi } from '@/api/auth'
 export default {
   data() {
     return {
       rate: 4.6,
-      dataList: [
-        {
-          rate: 5,
-          comment:
-            'You made it so simple. My new site is so much faster and easier to work with than my old site. I just choose the page, make the changes.',
-          user: 'Jenny Wilson',
-          createdAt: 'January28, 2021'
-        },
-        {
-          rate: 4.5,
-          comment:
-            'You made it so simple. My new site is so much faster and easier to work with than my old site. I just choose the page, make the changes.',
-          user: 'Jenny Wilson',
-          createdAt: 'January28, 2021'
-        },
-        {
-          rate: 5,
-          comment:
-            'You made it so simple. My new site is so much faster and easier to work with than my old site. I just choose the page, make the changes.',
-          user: 'Jenny Wilson',
-          createdAt: 'January28, 2021'
+      info: {},
+      id: null,
+      dataList: [],
+      bookList: []
+    }
+  },
+  mounted() {
+    let id = this.$route.params.id
+    if (id) {
+      this.id = id
+      this.getBook(), this.getStocks()
+    }
+  },
+  methods: {
+    getBook() {
+      let path = 'books/' + this.id
+      AuthApi(path, {}, 'GET').then((res) => {
+        if (res) {
+          this.info = JSON.parse(JSON.stringify(res.data.result))
         }
-      ]
+      })
+    },
+    getStocks() {
+      AuthApi('books/stock', {}, 'GET').then((res) => {
+        if (res) {
+          this.bookList = JSON.parse(JSON.stringify(res.data.result))
+        }
+      })
+    },
+    goExchange(index) {
+      console.log(this.bookList[index].book_id)
+      this.$router.push({
+        name: 'AboutPerson',
+        params: {
+          bookId: this.bookList[index].book_id,
+          userId: this.bookList[index].user_id
+        }
+      })
     }
   }
 }
@@ -185,13 +172,13 @@ h2 {
 }
 .about {
   display: flex;
-  width: 700px;
+  width: 1200px;
   border: 1px #f1f1f1 solid;
   padding: 20px;
-  margin-right: 40px;
+  margin: auto;
 
   .img-box {
-    padding: 20px 20px 20px 20px;
+    padding: 20px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     margin-right: 60px;
   }

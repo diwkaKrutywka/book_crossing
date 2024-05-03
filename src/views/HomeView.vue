@@ -25,7 +25,68 @@
               {{ $t('l_Login') }}
             </a-button>
           </div>
-          <div v-if="hasLogin">Hi, {{ this.$store.userInfo.user.username }}</div>
+
+          <!-- njj -->
+          <div style="display: flex">
+            <div class="align-center pointer" @click.prevent>
+              <div v-if="hasLogin" style="align-items: center">
+                Hi,
+                {{ this.$store.userInfo.user.username }}
+              </div>
+            </div>
+            <div class="header-right active">
+              <div class="right-item">
+                <a-dropdown>
+                  <span
+                    class="pointer"
+                    style="color: white; margin-right: 3px; white-space: nowrap"
+                  >
+                    <span v-if="langTag == 'kz'">Қазақша</span>
+                    <span v-if="langTag == 'rus'">Русский</span>
+                    <span v-if="langTag == 'en'">English</span>
+                  </span>
+                  <template #overlay>
+                    <a-menu>
+                      <a-menu-item>
+                        <a
+                          :style="{ color: langTag == 'kz' ? '#40a9ff' : '#000' }"
+                          href="#"
+                          @click="setLanguage('kz')"
+                          >Қазақша</a
+                        >
+                      </a-menu-item>
+                      <a-menu-item>
+                        <a
+                          :style="{
+                            color: langTag == 'rus' ? '#40a9ff' : '#000'
+                          }"
+                          href="#"
+                          @click="setLanguage('rus')"
+                          >Русский</a
+                        >
+                      </a-menu-item>
+                      <a-menu-item>
+                        <a
+                          :style="{ color: langTag == 'en' ? '#40a9ff' : '#000' }"
+                          href="#"
+                          @click="setLanguage('en')"
+                          >English</a
+                        >
+                      </a-menu-item>
+                    </a-menu>
+                  </template>
+                </a-dropdown>
+                <span
+                  @click="seeNotifications()"
+                  class="icon material-symbols-outlined"
+                  style="margin-left: 30px"
+                >
+                  notifications
+                </span>
+              </div>
+            </div>
+          </div>
+          <!-- hb -->
         </a-layout-header>
         <div class="own" v-if="hasLogin">
           <h2 v-for="item in ownList" @click="goToPage(item.name)">{{ item.label }}</h2>

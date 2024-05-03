@@ -45,35 +45,35 @@
             <h2>Writen date</h2>
             <h4>{{ item.pub_date }}</h4>
             <h2>Overview</h2>
-            <h4>{{ item.description }}</h4>
+            <h4>{{ truncatedDescription(item.description) }}</h4>
           </div>
         </div>
       </div>
-      <div class="offers">
-        <div style="display: flex; justify-content: space-between">
-          <h1>Offers</h1>
-          <h2 style="color: #005555">See all</h2>
-        </div>
-        <div style="display: flex; justify-content: space-between">
-          <img style="border-radius: 0 0 50% 50%" src="@/assets/images/offer1.svg" />
-          <img style="border-radius: 50% 50% 0 0" src="@/assets/images/offer2.svg" />
-          <img style="border-radius: 0 0 50% 50%" src="@/assets/images/offer3.svg" />
-          <img style="border-radius: 50% 50% 0 0" src="@/assets/images/offer4.svg" />
-        </div>
+    </div>
+    <div class="offers">
+      <div style="display: flex; justify-content: space-between">
+        <h1>Offers</h1>
+        <h2 style="color: #005555">See all</h2>
       </div>
-
-      <div class="subscription">
-        <h1>Recommended books from <br />you to review</h1>
-        <div class="seek">
-          <!-- <a-input placeholder="Please write what are you searching for"></a-input> -->
-        </div>
+      <div style="display: flex; justify-content: space-between">
+        <img style="border-radius: 0 0 50% 50%" src="@/assets/images/offer1.svg" />
+        <img style="border-radius: 50% 50% 0 0" src="@/assets/images/offer2.svg" />
+        <img style="border-radius: 0 0 50% 50%" src="@/assets/images/offer3.svg" />
+        <img style="border-radius: 50% 50% 0 0" src="@/assets/images/offer4.svg" />
       </div>
+    </div>
+    <div class="subscription">
+      <h1>Recommended books from <br />you to review</h1>
+      <div class="seek">
+        <!-- <a-input placeholder="Please write what are you searching for"></a-input> -->
+      </div>
+    </div>
 
-      <div class="questions">
-        <h2>Frequently Asked Questions?</h2>
-
-        <div>
-          <div class="question" v-for="(q, index) in currentQuestionList" :key="index">
+    <div class="questions">
+      <h2>Frequently Asked Questions?</h2>
+      <a-row :gutter="[16, 16]">
+        <a-col :xs="12" :lg="12" :md="12" v-for="(q, index) in currentQuestionList" :key="index">
+          <div class="question">
             <div style="width: 80%; margin: 30px auto; color: white">
               <div
                 style="display: flex; justify-content: space-between"
@@ -87,8 +87,14 @@
               </p>
             </div>
           </div>
-        </div>
-      </div>
+        </a-col>
+      </a-row>
+    </div>
+    <div style="text-align: center">
+      <h2>
+        Остались вопросы? <br />
+        пишите bookers@gmail.com
+      </h2>
     </div>
   </div>
 </template>
@@ -165,6 +171,14 @@ export default {
       } else {
         this.selectedQuestionIndex = index
       }
+    },
+    truncatedDescription(description) {
+      const words = description.split(' ')
+      if (words.length > 20) {
+        return words.slice(0, 20).join(' ') + ' ...'
+      } else {
+        return description
+      }
     }
   }
 }
@@ -174,7 +188,10 @@ export default {
   margin: 100px 0;
   text-align: center;
   align-items: center;
-
+  h1 {
+    font-size: 25px;
+    font-weight: 900;
+  }
   .seek {
     border-radius: 20px;
     border: 1px #006b61 solid;
@@ -183,12 +200,16 @@ export default {
     margin: auto;
   }
 }
-// .questions {
-//   height: max-content;
-//   .question {
-//     background-color: #006b61;
-//   }
-// }
+.questions {
+  height: max-content;
+  margin-bottom: 100px;
+  padding: 30px;
+  text-align: center;
+  .question {
+    background-color: #006b61;
+    padding: 15px;
+  }
+}
 .search {
   padding: 30px;
   margin-bottom: 30px;
@@ -222,8 +243,8 @@ export default {
       padding: 20px;
       align-items: center;
       display: flex;
-      max-height: 260px;
-      max-width: 500px;
+      // max-height: 260px;
+      min-width: 500px;
 
       img {
         height: 200px;
@@ -249,9 +270,16 @@ export default {
     font-weight: 900;
   }
 }
-
+h2 {
+  font-weight: 900;
+}
 .offers {
   margin: 40px 0;
+  padding: 30px;
+  h1 {
+    font-size: 50px;
+    font-weight: bolder;
+  }
 
   img {
     height: 350px;

@@ -54,7 +54,7 @@ const routes = [
         component: () => import('../views/quizz/CreateQuizz.vue')
       },
       {
-        path: '/book/about',
+        path: '/book/about/:id',
         name: 'AboutBook',
         component: () => import('../views/book/AboutBook.vue')
       },
@@ -64,7 +64,7 @@ const routes = [
         component: () => import('../views/friends/MyFriends.vue')
       },
       {
-        path: '/user/info',
+        path: '/user/info/:userId/:bookId',
         name: 'AboutPerson',
         component: () => import('../views/friends/AboutPerson.vue')
       },

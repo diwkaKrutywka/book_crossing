@@ -8,7 +8,7 @@ const store = useAppStore()
 const baseURL = config.baseURL + '/api/v1/'
 
 const Service = axios.create({
-  timeout: 1000 * 3,
+  timeout: 10000 * 3,
   baseURL: baseURL,
   headers: {
     'Content-Type': 'application/json;charset=UTF-8'

@@ -2,18 +2,18 @@
   <div style="max-width: 1200px; margin: auto">
     <div class="card" v-for="(item, index) in dataList">
       <div style="margin-right: 140px; text-align: center">
-        <img src="@/assets/images/book8.svg" />
+        <img :src="item.image" />
         <h1>{{ item.title }}</h1>
       </div>
       <div class="top">
         <div style="top: 0">
           <div style="display: flex; justify-content: space-between">
             <h2>Available</h2>
-            <span class="material-symbols-outlined"> favorite </span>
+            <LikedBooks :book-id="item.id"></LikedBooks>
           </div>
-          <h3><span>Author: </span>{{ item.author }}</h3>
-          <h3><span>Genre: </span>{{ item.genre }}</h3>
-          <p>{{ item.overview }}</p>
+          <h3><span>Author: </span>Denis Ramphil</h3>
+          <h3><span>Genre: </span>Драма</h3>
+          <p>{{ item.description }}</p>
         </div>
         <div class="bottom">
           <!-- <a-progress :percent="99" style="width: 80%" /> -->
@@ -25,38 +25,27 @@
   </div>
 </template>
 <script>
+import { AuthApi } from '@/api/auth'
+import LikedBooks from '@/components/LikedBooks.vue'
 export default {
+  components: {
+    LikedBooks
+  },
   data() {
     return {
-      dataList: [
-        {
-          img: 'book1.svg',
-          title: 'Catcher in the Rye',
-          genre: 'Drama',
-          author: 'J.D Salinger',
-          abt: 'J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publication, Salinger published several short stories in Story magazine',
-          overview:
-            'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adults'
-        },
-        {
-          img: 'book1.svg',
-          title: 'Catcher in the Rye',
-          genre: 'Drama',
-          author: 'J.D Salinger',
-          abt: 'J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publication, Salinger published several short stories in Story magazine',
-          overview:
-            'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adults'
-        },
-        {
-          img: 'book1.svg',
-          title: 'Catcher in the Rye',
-          genre: 'Drama',
-          author: 'J.D Salinger',
-          abt: 'J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publication, Salinger published several short stories in Story magazine',
-          overview:
-            'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adults'
+      dataList: []
+    }
+  },
+  mounted() {
+    this.onLoad()
+  },
+  methods: {
+    onLoad() {
+      AuthApi('users/liked-books', {}, 'GET').then((res) => {
+        if (res) {
+          this.dataList = JSON.parse(JSON.stringify(res.data.result))
         }
-      ]
+      })
     }
   }
 }
