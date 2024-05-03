@@ -8,7 +8,7 @@
             v-for="(item, index) in bookList"
             :key="index"
             class="carousel-item"
-            @click="aboutBook(index)"
+            @click="aboutBook(item.id)"
           >
             <div
               style="
@@ -43,53 +43,30 @@
             margin-right: 40px;
           "
         >
-          <img style="height: 350px; margin-right: 30px" src="@/assets/images/book3.svg" />
+          <img style="height: 350px; margin-right: 30px" :src="oneBook.image" />
           <div style="display: block">
-            <span
-              style="color: black; display: flex; justify-content: end"
-              class="material-symbols-outlined"
-            >
-              favorite
-            </span>
-            <h1>The stoun heart</h1>
-            <p>Drama</p>
+            <LikedBooks :bookId="oneBook.id"></LikedBooks>
+            <h1>{{ oneBook.title }}</h1>
+            <p v-for="i in oneBook.categories">{{ i.name }}</p>
             <div style="height: 5px; background-color: #f89e0f"></div>
             <h2>Overview</h2>
             <p>
-              ibulum nisl efficitur. Praesent ultrices diam enim. In ut tellus sed sem placerat
-              sollicitudin. Donec quis mollis dolor. Etiam viverra, arcu cursus porttitor porttitor,
-              diam nunc auctor nisl, quis placerat magna erat et odio.
+              {{ oneBook.description }}
             </p>
             <p>WRITTEN BY</p>
-            <h3>Michael Josh</h3>
+            <h3 v-for="i in oneBook.authors">{{ i.name }}</h3>
           </div>
         </div>
       </div>
       <div>
         <a-row :gutter="[16, 16]">
-          <a-col :xs="8" :lg="6" :md="8"
-            ><img style="height: 200px; margin-right: 30px" src="@/assets/images/book3.svg"
-          /></a-col>
-          <a-col :xs="8" :lg="6" :md="8"
-            ><img style="height: 200px; margin-right: 30px" src="@/assets/images/book2.svg"
-          /></a-col>
-          <a-col :xs="8" :lg="6" :md="8"
-            ><img style="height: 200px; margin-right: 30px" src="@/assets/images/book1.svg"
-          /></a-col>
-          <a-col :xs="8" :lg="6" :md="8"
-            ><img style="height: 200px; margin-right: 30px" src="@/assets/images/book3.svg"
-          /></a-col>
-          <a-col :xs="8" :lg="6" :md="8"
-            ><img style="height: 200px; margin-right: 30px" src="@/assets/images/book2.svg"
-          /></a-col>
-          <a-col :xs="8" :lg="6" :md="8"
-            ><img style="height: 200px; margin-right: 30px" src="@/assets/images/book1.svg"
-          /></a-col>
-          <a-col :xs="8" :lg="6" :md="8"
-            ><img style="height: 200px; margin-right: 30px" src="@/assets/images/book2.svg"
-          /></a-col>
-          <a-col :xs="8" :lg="6" :md="8"
-            ><img style="height: 200px; margin-right: 30px" src="@/assets/images/book1.svg"
+          <a-col
+            :xs="8"
+            :lg="6"
+            :md="8"
+            v-for="(item, index) in recList"
+            @click="aboutBook(item.id)"
+            ><img style="height: 200px; margin-right: 30px" :src="item.image"
           /></a-col>
         </a-row>
       </div>
@@ -117,15 +94,15 @@
             <a-menu @click="handleMenuClick">
               <a-menu-item key="1">
                 <UserOutlined />
-                1st menu item
+                Astana
               </a-menu-item>
               <a-menu-item key="2">
                 <UserOutlined />
-                2nd menu item
+                Taraz
               </a-menu-item>
               <a-menu-item key="3">
                 <UserOutlined />
-                3rd item
+                Shymkent
               </a-menu-item>
             </a-menu>
           </template>
@@ -139,15 +116,15 @@
               <a-menu @click="handleMenuClick">
                 <a-menu-item key="1">
                   <UserOutlined />
-                  1st menu item
+                  Author
                 </a-menu-item>
                 <a-menu-item key="2">
                   <UserOutlined />
-                  2nd menu item
+                  Date
                 </a-menu-item>
                 <a-menu-item key="3">
                   <UserOutlined />
-                  3rd item
+                  Language
                 </a-menu-item>
               </a-menu>
             </template>
@@ -163,7 +140,7 @@
         </div>
         <div style="margin-top: 30px">
           <a-row :gutter="[16, 16]">
-            <a-col :xs="8" :lg="8" :md="8">
+            <a-col :xs="8" :lg="8" :md="8" v-for="item in allList">
               <div
                 style="
                   padding: 13px;
@@ -174,132 +151,24 @@
                   text-align: center;
                 "
               >
-                <span
-                  style="color: black; display: flex; justify-content: end"
-                  class="material-symbols-outlined"
-                >
-                  favorite
-                </span>
-                <img style="height: 200px" src="@/assets/images/book3.svg" />
-                <h3 style="color: #393280; display: flex; justify-content: center">Atomy habits</h3>
-                <h4 style="color: #f89e0f; display: flex; justify-content: end">Go to exchanges</h4>
-              </div>
-            </a-col>
-            <a-col :xs="8" :lg="8" :md="8">
-              <div
-                style="
-                  padding: 13px;
-                  width: 200px;
-                  box-shadow:
-                    rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
-                    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-                  text-align: center;
-                "
-              >
-                <LikedBooks :bookId="5"></LikedBooks>
-                <!-- <span
-                  style="color: black; display: flex; justify-content: end"
-                  class="material-symbols-outlined"
-                >
-                  favorite
-                </span> -->
-                <img style="height: 200px" src="@/assets/images/book3.svg" />
-                <h3 style="color: #393280; display: flex; justify-content: center">Test</h3>
-                <h4 style="color: #f89e0f; display: flex; justify-content: end">Go to exchanges</h4>
-              </div>
-            </a-col>
-            <a-col :xs="8" :lg="8" :md="8">
-              <div
-                style="
-                  padding: 13px;
-                  width: 200px;
-                  box-shadow:
-                    rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
-                    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-                  text-align: center;
-                "
-              >
-                <span
-                  style="color: black; display: flex; justify-content: end"
-                  class="material-symbols-outlined"
-                >
-                  favorite
-                </span>
-                <img style="height: 200px" src="@/assets/images/book3.svg" />
-                <h3 style="color: #393280; display: flex; justify-content: center">Atomy habits</h3>
-                <h4 style="color: #f89e0f; display: flex; justify-content: end">Go to exchanges</h4>
-              </div>
-            </a-col>
-            <a-col :xs="8" :lg="8" :md="8">
-              <div
-                style="
-                  padding: 13px;
-                  width: 200px;
-                  box-shadow:
-                    rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
-                    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-                  text-align: center;
-                "
-              >
-                <span
-                  style="color: black; display: flex; justify-content: end"
-                  class="material-symbols-outlined"
-                >
-                  favorite
-                </span>
-                <img style="height: 200px" src="@/assets/images/book3.svg" />
-                <h3 style="color: #393280; display: flex; justify-content: center">Atomy habits</h3>
-                <h4 style="color: #f89e0f; display: flex; justify-content: end">Go to exchanges</h4>
-              </div>
-            </a-col>
-            <a-col :xs="8" :lg="8" :md="8">
-              <div
-                style="
-                  padding: 13px;
-                  width: 200px;
-                  box-shadow:
-                    rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
-                    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-                  text-align: center;
-                "
-              >
-                <span
-                  style="color: black; display: flex; justify-content: end"
-                  class="material-symbols-outlined"
-                >
-                  favorite
-                </span>
-                <img style="height: 200px" src="@/assets/images/book3.svg" />
-                <h3 style="color: #393280; display: flex; justify-content: center">Atomy habits</h3>
-                <h4 style="color: #f89e0f; display: flex; justify-content: end">Go to exchanges</h4>
-              </div>
-            </a-col>
-            <a-col :xs="8" :lg="8" :md="8">
-              <div
-                style="
-                  padding: 13px;
-                  width: 200px;
-                  box-shadow:
-                    rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
-                    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-                  text-align: center;
-                "
-              >
-                <span
-                  style="color: black; display: flex; justify-content: end"
-                  class="material-symbols-outlined"
-                >
-                  favorite
-                </span>
-                <img style="height: 200px" src="@/assets/images/book3.svg" />
-                <h3 style="color: #393280; display: flex; justify-content: center">Atomy habits</h3>
+                <LikedBooks :bookId="item.id"></LikedBooks>
+
+                <img style="height: 200px" :src="item.image" />
+                <h3 style="color: #393280; display: flex; justify-content: center">
+                  {{ item.title }}
+                </h3>
                 <h4 style="color: #f89e0f; display: flex; justify-content: end">Go to exchanges</h4>
               </div>
             </a-col>
           </a-row>
         </div>
         <div style="width: 100%; display: flex">
-          <a-pagination v-model:current="current" :total="500" style="margin: 40px auto">
+          <a-pagination
+            v-model:current="current"
+            :total="100"
+            style="margin: 40px auto"
+            @change="allLoad"
+          >
             <template #itemRender="{ type, originalElement }">
               <a style="border: 1px #f1f1f1 solid; padding: 5px" v-if="type === 'prev'">
                 Previous
@@ -333,82 +202,12 @@ export default {
       book: '',
       bookList: [],
       sort: 'genre',
+      recList: [],
+      oneBook: {},
+      allList: [],
       categories: [],
-      plainOptions: ['Drama', 'Comedy'],
-      bestSellers: [
-        {
-          img: 'book1.svg',
-          title: 'Catcher in the Rye',
-          author: 'J.D Salinger',
-          abt: 'J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publication, Salinger published several short stories in Story magazine',
-          overview:
-            'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adults'
-        },
-        {
-          img: 'book2.svg',
-          title: 'Catcher in the Rye',
-          author: 'J.D Salinger',
-          abt: 'J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publication, Salinger published several short stories in Story magazine',
-          overview:
-            'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adults'
-        },
-        {
-          img: 'book3.svg',
-          title: 'Catcher in the Rye',
-          author: 'J.D Salinger',
-          abt: 'J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publication, Salinger published several short stories in Story magazine',
-          overview:
-            'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adults'
-        },
-        {
-          img: 'book1.svg',
-          title: 'Catcher in the Rye',
-          author: 'J.D Salinger',
-          abt: 'J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publication, Salinger published several short stories in Story magazine',
-          overview:
-            'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adults'
-        },
-        {
-          img: 'book2.svg',
-          title: 'Catcher in the Rye',
-          author: 'J.D Salinger',
-          abt: 'J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publication, Salinger published several short stories in Story magazine',
-          overview:
-            'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adults'
-        },
-        {
-          img: 'book3.svg',
-          title: 'Catcher in the Rye',
-          author: 'J.D Salinger',
-          abt: 'J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publication, Salinger published several short stories in Story magazine',
-          overview:
-            'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adults'
-        },
-        {
-          img: 'book1.svg',
-          title: 'Catcher in the Rye',
-          author: 'J.D Salinger',
-          abt: 'J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publication, Salinger published several short stories in Story magazine',
-          overview:
-            'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adults'
-        },
-        {
-          img: 'book2.svg',
-          title: 'Catcher in the Rye',
-          author: 'J.D Salinger',
-          abt: 'J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publication, Salinger published several short stories in Story magazine',
-          overview:
-            'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adults'
-        },
-        {
-          img: 'book3.svg',
-          title: 'Catcher in the Rye',
-          author: 'J.D Salinger',
-          abt: 'J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publication, Salinger published several short stories in Story magazine',
-          overview:
-            'The Catcher in the Rye is a novel by J. D. Salinger, partially published in serial form in 1945–1946 and as a novel in 1951. It was originally intended for adults'
-        }
-      ]
+      plainOptions: ['Drama', 'Comedy', 'Horror'],
+      bestSellers: []
     }
   },
   mounted() {
@@ -420,11 +219,40 @@ export default {
         AuthApi('books', { query: { limit: 20, offset: 0 } }, 'GET').then((res) => {
           if (res.data.message === 'success') {
             this.bookList = res.data.result.books
-            console.log(this.bookList)
+            this.recLoad()
+            this.oneLoad()
+            this.allLoad()
           }
         })
       }
     },
+    recLoad() {
+      if (this.recList.length == 0) {
+        AuthApi('books', { query: { limit: 8, offset: 60 } }, 'GET').then((res) => {
+          if (res.data.message === 'success') {
+            this.recList = res.data.result.books
+          }
+        })
+      }
+    },
+    oneLoad() {
+      AuthApi('books', { query: { limit: 1, offset: 110 } }, 'GET').then((res) => {
+        if (res.data.message === 'success') {
+          this.oneBook = res.data.result.books[0]
+        }
+      })
+    },
+    allLoad() {
+      // Calculate the offset based on the current page
+      const offset = (this.current + 2) * 6
+      AuthApi('books', { query: { limit: 6, offset: offset } }, 'GET').then((res) => {
+        if (res.data.message === 'success') {
+          this.allList = res.data.result.books
+          console.log(this.allList)
+        }
+      })
+    },
+
     handleButtonClick(e) {
       console.log(e)
     },
@@ -442,11 +270,11 @@ export default {
         this.currentIndex--
       }
     },
-    aboutBook(index) {
+    aboutBook(id) {
       this.$router.push({
         name: 'AboutBook',
         params: {
-          id: this.bookList[index].id
+          id: id
         }
       })
     }
@@ -481,8 +309,7 @@ h1 {
   max-width: 170px;
   display: block;
   text-align: center;
-  // background-color: aqua;
-  margin-right: 30px; /* Adjust spacing between items */
+  margin-right: 30px;
 }
 
 .button {
