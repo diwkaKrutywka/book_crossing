@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 250vh">
+  <div>
     <div class="search">
       <div>
         <img style="width: 600px" src="@/assets/images/crossing.svg" />
@@ -68,29 +68,8 @@
         <!-- <a-input placeholder="Please write what are you searching for"></a-input> -->
       </div>
     </div>
-
-    <div class="questions">
-      <h2>Frequently Asked Questions?</h2>
-      <a-row :gutter="[16, 16]">
-        <a-col :xs="12" :lg="12" :md="12" v-for="(q, index) in currentQuestionList" :key="index">
-          <div class="question">
-            <div style="width: 80%; margin: 30px auto; color: white">
-              <div
-                style="display: flex; justify-content: space-between"
-                @click="toggleAnswer(index)"
-              >
-                <h2 style="color: white">{{ q.question }}</h2>
-                <span class="material-symbols-outlined"> add_circle </span>
-              </div>
-              <p style="color: white; font-size: 20px" v-if="selectedQuestionIndex === index">
-                {{ q.answer }}
-              </p>
-            </div>
-          </div>
-        </a-col>
-      </a-row>
-    </div>
-    <div style="text-align: center">
+    <FAQSection></FAQSection>
+    <div style="text-align: center; margin-top: 50px;">
       <h2>
         Остались вопросы? <br />
         пишите bookers@gmail.com
@@ -100,8 +79,11 @@
 </template>
 <script>
 import { AuthApi } from '@/api/auth'
+import FAQSection from '@/components/FAQSection.vue'
 export default {
-  components: {},
+  components: {
+    FAQSection
+  },
   data() {
     return {
       bookList: [],
