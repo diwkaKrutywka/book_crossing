@@ -165,12 +165,13 @@ export default {
         })
         if (res) {
           file.onProgress = 100
-
           this.path = res.data.result.image_url
           message.success('You added successfully')
+
           if (this.file.onSuccess) {
             this.file.onSuccess(res.data, this.file)
           }
+          this.onCancel()
           return true
         }
       } catch (error) {

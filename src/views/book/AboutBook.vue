@@ -121,6 +121,7 @@ export default {
     if (id) {
       this.id = id
       this.getBook(), this.getStocks()
+      // console.log(this.id)
     }
   },
   methods: {
@@ -132,8 +133,10 @@ export default {
         }
       })
     },
+
     getStocks() {
-      AuthApi('books/stock', {}, 'GET').then((res) => {
+      let path = 'books/' + this.id + '/stock'
+      AuthApi(path, {}, 'GET').then((res) => {
         if (res) {
           this.bookList = JSON.parse(JSON.stringify(res.data.result))
         }

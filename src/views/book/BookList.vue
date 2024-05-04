@@ -45,13 +45,17 @@
         >
           <img style="height: 350px; margin-right: 30px" :src="oneBook.image" />
           <div style="display: block">
-            <LikedBooks :bookId="oneBook.id"></LikedBooks>
+            <LikedBooks :book-id="oneBook.id"></LikedBooks>
             <h1>{{ oneBook.title }}</h1>
             <p v-for="i in oneBook.categories">{{ i.name }}</p>
             <div style="height: 5px; background-color: #f89e0f"></div>
             <h2>Overview</h2>
             <p>
-              {{ oneBook.description }}
+              {{
+                oneBook.description?.length > 220
+                  ? oneBook.description.slice(0, 220) + '...'
+                  : oneBook.description
+              }}
             </p>
             <p>WRITTEN BY</p>
             <h3 v-for="i in oneBook.authors">{{ i.name }}</h3>
@@ -76,34 +80,22 @@
         style="padding: 30px; border: 1px #f1f1f1 solid; border-radius: 16px; height: max-content"
       >
         <h1>Categories</h1>
-        <a-checkbox-group v-model:value="categories" name="checkboxgroup" :options="plainOptions" />
-        <br />
-        <a-checkbox-group v-model:value="categories" name="checkboxgroup" :options="plainOptions" />
-        <br />
-        <a-checkbox-group v-model:value="categories" name="checkboxgroup" :options="plainOptions" />
-        <br />
-        <a-checkbox-group v-model:value="categories" name="checkboxgroup" :options="plainOptions" />
-        <br />
-        <a-checkbox-group v-model:value="categories" name="checkboxgroup" :options="plainOptions" />
-        <br />
-        <a-checkbox-group v-model:value="categories" name="checkboxgroup" :options="plainOptions" />
+        <!-- <a-checkbox-group
+          v-model:value="categories"
+          name="checkboxgroup"
+          :options="plainOptions"
+          :label="'name'"
+          :value="'id'"
+        /> -->
+
         <h1 style="margin-top: 20px">City</h1>
         <a-dropdown-button @click="handleButtonClick" size="small">
           Almaty
           <template #overlay>
             <a-menu @click="handleMenuClick">
-              <a-menu-item key="1">
-                <UserOutlined />
-                Astana
-              </a-menu-item>
-              <a-menu-item key="2">
-                <UserOutlined />
-                Taraz
-              </a-menu-item>
-              <a-menu-item key="3">
-                <UserOutlined />
-                Shymkent
-              </a-menu-item>
+              <a-menu-item key="1"> Astana </a-menu-item>
+              <a-menu-item key="2"> Taraz </a-menu-item>
+              <a-menu-item key="3"> Shymkent </a-menu-item>
             </a-menu>
           </template>
         </a-dropdown-button>
@@ -114,18 +106,9 @@
             Sort by {{ sort }}
             <template #overlay>
               <a-menu @click="handleMenuClick">
-                <a-menu-item key="1">
-                  <UserOutlined />
-                  Author
-                </a-menu-item>
-                <a-menu-item key="2">
-                  <UserOutlined />
-                  Date
-                </a-menu-item>
-                <a-menu-item key="3">
-                  <UserOutlined />
-                  Language
-                </a-menu-item>
+                <a-menu-item key="1"> Author </a-menu-item>
+                <a-menu-item key="2"> Date </a-menu-item>
+                <a-menu-item key="3"> Language </a-menu-item>
               </a-menu>
             </template>
           </a-dropdown-button>
@@ -151,13 +134,18 @@
                   text-align: center;
                 "
               >
-                <LikedBooks :bookId="item.id"></LikedBooks>
+                <LikedBooks :bookId="item.book.id"></LikedBooks>
 
-                <img style="height: 200px" :src="item.image" />
+                <img style="height: 200px" :src="item.book.image" />
                 <h3 style="color: #393280; display: flex; justify-content: center">
-                  {{ item.title }}
+                  {{ item.book.title }}
                 </h3>
-                <h4 style="color: #f89e0f; display: flex; justify-content: end">Go to exchanges</h4>
+                <h4
+                  style="color: #f89e0f; display: flex; justify-content: end"
+                  @click="goExchange(item.book_id, item.user_id)"
+                >
+                  Go to exchanges
+                </h4>
               </div>
             </a-col>
           </a-row>
@@ -206,12 +194,13 @@ export default {
       oneBook: {},
       allList: [],
       categories: [],
-      plainOptions: ['Drama', 'Comedy', 'Horror'],
+      plainOptions: [],
       bestSellers: []
     }
   },
   mounted() {
     this.onLoad()
+    this.getCategories()
   },
   methods: {
     onLoad() {
@@ -226,6 +215,16 @@ export default {
         })
       }
     },
+    goExchange(id, user_id) {
+      this.$router.push({
+        name: 'AboutPerson',
+        params: {
+          bookId: id,
+          userId: user_id
+        }
+      })
+    },
+    handleMenuClick() {},
     recLoad() {
       if (this.recList.length == 0) {
         AuthApi('books', { query: { limit: 8, offset: 60 } }, 'GET').then((res) => {
@@ -243,16 +242,26 @@ export default {
       })
     },
     allLoad() {
-      // Calculate the offset based on the current page
-      const offset = (this.current + 2) * 6
-      AuthApi('books', { query: { limit: 6, offset: offset } }, 'GET').then((res) => {
+      // const offset = (this.current + 2) * 6
+      // AuthApi('books', { query: { limit: 6, offset: offset } }, 'GET').then((res) => {
+      //   if (res.data.message === 'success') {
+      //     this.allList = res.data.result.books
+      //   }
+      // })
+      AuthApi('books/stock', {}, 'GET').then((res) => {
         if (res.data.message === 'success') {
-          this.allList = res.data.result.books
-          console.log(this.allList)
+          this.allList = res.data.result
         }
       })
     },
-
+    getCategories() {
+      AuthApi('categories', {}, 'GET').then((res) => {
+        if (res) {
+          this.plainOptions = JSON.parse(JSON.stringify(res.data.categories))
+          console.log(this.plainOptions)
+        }
+      })
+    },
     handleButtonClick(e) {
       console.log(e)
     },
@@ -271,6 +280,7 @@ export default {
       }
     },
     aboutBook(id) {
+      console.log(id)
       this.$router.push({
         name: 'AboutBook',
         params: {

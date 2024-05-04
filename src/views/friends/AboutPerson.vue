@@ -5,16 +5,16 @@
       <div class="friend-info">
         <div class="friend-profile">
           <img src="@/assets/images/person.svg" />
-          <h4>{{ info.name }}</h4>
-          <h4>{{ info.nickname }}</h4>
+          <h4>{{ info.username }}</h4>
+          <h4>{{ info.email }}</h4>
           <button @click="addFriend()" class="btn">Add To Friends</button>
         </div>
         <div style="display: flex; flex-direction: column">
           <span style="display: flex; justify-content: space-between">
             <b>Favourite genre of books:</b>
-            <span>
+            <!-- <span>
               <span v-for="fav in info.favs">{{ fav }}, </span></span
-            >
+            >-->
           </span>
           <span style="display: flex; justify-content: space-between">
             <b>Friends:</b>
@@ -31,13 +31,13 @@
             </tr>
             <tr>
               <td>Uploaded books</td>
-              <td>{{ info.books }}</td>
+              <td>{{ info.books_count }}</td>
               <td>4</td>
             </tr>
             <tr style="background-color: #f89e0f; height: 5px; margin: 5px 0"></tr>
             <tr>
               <td>Exchange books</td>
-              <td>{{ info.exchange }}</td>
+              <td>{{ info.share_count }}</td>
               <td>15</td>
             </tr>
           </table>
@@ -60,18 +60,26 @@
           >
             favorite
           </span>
-          <img style="height: 200px" src="@/assets/images/book5.svg" />
-          <h3 style="color: #393280; display: flex; justify-content: center">Atomy habits</h3>
+          <img style="height: 200px; width: 150px" :src="bookL.image_url" />
+          <h3 style="color: #393280; display: flex; justify-content: center">
+            {{ bookL.booktitle }}
+          </h3>
         </div>
         <button @click="reqExchange()" class="btn">Отправить запрос на обмен</button>
       </div>
       <div class="friend-book__collections">
         <h1>Еще больше книг этого пользователя:</h1>
         <div class="friend-book__list">
-          <div class="book" v-for="index in [1, 2, 3, 4]">
+          <div class="book" v-for="item in stockList">
             <span style="color: #393280">Michelle Obama</span>
-            <img style="height: 200px" src="@/assets/images/book5.svg" />
-            <h3>Go To Exchange</h3>
+            <img
+              style="height: 200px; width: 150px"
+              :src="item.image_url"
+              @click="goExchange(item.book.id)"
+            />
+            <h3 style="color: #f89e0f; text-align: end" @click="goExchange(item.book.id)">
+              Go To Exchange
+            </h3>
           </div>
         </div>
         <button class="btn" style="align-self: flex-end">See more</button>
@@ -88,15 +96,23 @@ export default {
     return {
       userId: null,
       bookId: null,
-      info: {
-        // name: 'Aruzhan',
-        // nickname: '@arujka03',
-        // favs: ['fantasy', 'psychology'],
-        // friends: 10,
-        // books: 8,
-        // exchange: 4
-      },
-      book: {}
+      stockList: [],
+      bookL: [],
+      info: {}
+    }
+  },
+  watch: {
+    '$route.params': {
+      immediate: true,
+      handler(params) {
+        if (params.userId && params.bookId) {
+          this.userId = params.userId
+          this.bookId = params.bookId
+          this.onLoad()
+          this.getBook()
+          this.getUserInfo()
+        }
+      }
     }
   },
   mounted() {
@@ -114,17 +130,23 @@ export default {
       let path = 'users/' + this.userId + '/stock'
       AuthApi(path, {}, 'GET').then((res) => {
         if (res.data.message == 'success') {
+          this.stockList = JSON.parse(JSON.stringify(res.data.result))
+        }
+      })
+    },
+    getUserInfo() {
+      let path = 'users/' + this.userId
+      AuthApi(path, {}, 'GET').then((res) => {
+        if (res) {
           this.info = JSON.parse(JSON.stringify(res.data.result))
-          console.log(this.book)
         }
       })
     },
     getBook() {
-      let path = 'books/' + this.bookId
+      let path = 'books/' + this.bookId + '/stock'
       AuthApi(path, {}, 'GET').then((res) => {
         if (res.data.message == 'success') {
-          this.book = JSON.parse(JSON.stringify(res.data.result))
-          console.log(this.info)
+          this.bookL = JSON.parse(JSON.stringify(res.data.result))
         }
       })
     },
@@ -133,6 +155,15 @@ export default {
       AuthApi(path, {}).then((res) => {
         if (res.data.message == 'success') {
           message.success('You have sent request to friends')
+        }
+      })
+    },
+    goExchange(id) {
+      this.$router.push({
+        name: 'AboutPerson',
+        params: {
+          bookId: id,
+          userId: this.userId
         }
       })
     },

@@ -27,7 +27,12 @@
           To start, click the "Start" button. When finished, click the "Submit " button.
         </p>
         <div style="display: flex; justify-content: end">
-          <a-button style="width: 100px" size="large" type="primary" @click="onStart()"
+          <a-button style="width: 100px" size="large" @click="onDelete()">Delete</a-button>
+          <a-button
+            style="width: 100px; margin-left: 30px"
+            size="large"
+            type="primary"
+            @click="onStart()"
             >Start</a-button
           >
         </div>
@@ -67,6 +72,16 @@ export default {
         name: 'AnswerQuestion',
         params: {
           id: this.qId
+        }
+      })
+    },
+    onDelete() {
+      let path = 'quizzes/' + this.qId
+      AuthApi(path, {}, 'DELETE').then((res) => {
+        if (res) {
+          this.$router.push({
+            name: 'LendingPage'
+          })
         }
       })
     }

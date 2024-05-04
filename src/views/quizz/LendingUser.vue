@@ -159,10 +159,10 @@ export default {
   max-width: 1000px;
   margin: auto;
   z-index: -99;
-
   justify-content: space-between;
   .box3 {
     z-index: 1;
+    min-height: 800px;
     background-color: #fef7eb;
     border: 16px;
     text-align: center;

@@ -146,14 +146,14 @@ export default {
               // console.log(res.data)
               if (res.data.status_code === 200) {
                 this.$store.setUserInfo(res.data.result)
-                console.log(res.data.result)
+                //     console.log(res.data.result)
                 this.$router.replace({
                   name: 'HomePage'
                 })
                 //   console.log(res)
                 console.log(this.$store?.userInfo)
               } else if (res.data.status_code === 404) {
-                message.error(res.data)
+                //   message.error(res.data)
               }
             })
             .catch((err) => {

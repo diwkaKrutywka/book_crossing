@@ -7,8 +7,8 @@
           <img style="height: 150px" src="@/assets/images/word.svg" />
           <div style="margin-left: 40px">
             <h2>
-              Our collection will help your home looks better <br />
-              and we provide the best product for you.
+              Join us in building a community where the written word <br />
+              comes alive and imagination knows no bounds.
             </h2>
             <hr />
             <a-button style="margin-top: 50px; width: 170px; height: 40px" type="primary"
@@ -147,7 +147,7 @@ export default {
       return this.$store.state.isBigWin
     },
     currentQuestionList() {
-      console.log(this.$i18n.locale)
+      // console.log(this.$i18n.locale)
       return this.questionList[this.$i18n.locale] || []
     }
   },
@@ -160,7 +160,7 @@ export default {
         AuthApi('books', { query: { limit: 10, offset: 0 } }, 'GET').then((res) => {
           if (res.data.message === 'success') {
             this.bookList = res.data.result.books
-            console.log(this.bookList)
+            //      console.log(this.bookList)
           }
         })
       }

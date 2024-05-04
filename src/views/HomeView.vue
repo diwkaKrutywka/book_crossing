@@ -99,15 +99,20 @@
           <FooterPage></FooterPage>
         </a-layout-footer> -->
       </a-layout>
+      <!-- <NotificationModule ref="notiPage"></NotificationModule> -->
     </a-layout>
   </div>
 </template>
 
 <script>
+// import NotificationModule from '@/components/NotificationModule.vue'
 import FooterPage from '@/components/FooterPage.vue'
+//import AddEditBook from './user/books/AddEditBook.vue'
 export default {
   components: {
     FooterPage
+    // NotificationModule
+    // AddEditBook
   },
   data() {
     return {
@@ -166,6 +171,9 @@ export default {
       this.$router.push({
         name: name
       })
+    },
+    seeNotifications() {
+      this.$refs.modalView.show()
     }
     // -- end --
   }
