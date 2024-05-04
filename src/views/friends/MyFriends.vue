@@ -71,6 +71,7 @@ export default {
 .box {
   padding: 20px;
   max-width: 1200px;
+  height: 100vh;
   margin: auto;
   h2 {
     margin-left: 30px;
