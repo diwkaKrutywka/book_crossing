@@ -50,6 +50,10 @@
           </a-form>
         </a-tab-pane>
       </a-tabs>
+      <a-modal v-model:open="open" title="Basic Modal">
+        <template #footer></template>
+          <AddPhoto></AddPhoto>
+      </a-modal>
     </a-card>
     <div
       style="
@@ -85,7 +89,7 @@
             type="primary"
             html-type="submit"
             style="width: 100%; margin-top: 15px; text-align: center"
-            @click="onLogin()"
+            @click="open = true"
           >
             {{ $t('l_Login') }}
           </a-button>
@@ -101,7 +105,7 @@
             type="primary"
             html-type="submit"
             style="width: 100%; margin-top: 15px"
-            @click="onLogin()"
+            @click="open = true"
           >
             {{ $t('l_Signup') }}
           </a-button>
@@ -114,11 +118,16 @@
 <script>
 import { AuthApi } from '@/api/auth'
 import { message } from 'ant-design-vue'
+import AddPhoto from '@/components/AddPhoto.vue'
 
 export default {
+  components: {
+    AddPhoto
+  },
   data() {
     return {
       activeTab: 'signup',
+      open: false,
       info: {
         username: '',
         password: '',
@@ -164,10 +173,14 @@ export default {
           console.log(err)
         })
     },
+    handleOk(e){
+      this.open = false;
+    },
 
     onSignUp() {
       AuthApi('users', this.info).then((res) => {
         message.success('You registered successfully!')
+        this.open = true;
         console.log(res)
       })
     }

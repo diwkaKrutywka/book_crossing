@@ -21,14 +21,29 @@
         <img style="width: 500px" src="@/assets/images/books.jpeg" />
       </div>
     </div>
-    <div class="best">
+    <div class="best" style="display: flex; gap: 10px">
       <h1>
         New <br />
         Best book <br />
         2024.
       </h1>
-      <div class="scroll">
-        <div class="each"></div>
+      <div style="position: relative;">
+        <div class="carousel-container">
+          <div class="carousel" :style="{ transform: `translateX(-${currentIndex * 200}px)` }">
+            <div
+              v-for="(item, index) in newBookList"
+              :key="index"
+              class="carousel-item"
+              @click="aboutBook(index)"
+            >
+              <div class="border">
+                <img :src="item.image" alt="Book Image" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="material-symbols-outlined md-36 prev" @click="prev()"> west </span>
+        <span class="material-symbols-outlined md-36 next" @click="next()"> east </span>
       </div>
     </div>
     <div class="bestseller">
@@ -87,7 +102,10 @@ export default {
   data() {
     return {
       bookList: [],
+      newBookList: [],
       selectedQuestionIndex: null,
+      currentIndex: 0,
+      current: 0,
       questionList: {
         rus: [
           {
@@ -146,12 +164,30 @@ export default {
           }
         })
       }
+      if(this.newBookList.length == 0){
+        AuthApi('books', { query: { limit: 20, offset: 100 } }, 'GET').then((res) => {
+          if (res.data.message === 'success') {
+            this.newBookList = res.data.result.books
+            //      console.log(this.bookList)
+          }
+        })
+      }
     },
     toggleAnswer(index) {
       if (this.selectedQuestionIndex === index) {
         this.selectedQuestionIndex = null
       } else {
         this.selectedQuestionIndex = index
+      }
+    },
+    next() {
+      if (this.currentIndex < this.bookList.length - 1) {
+        this.currentIndex++
+      }
+    },
+    prev() {
+      if (this.currentIndex > 0) {
+        this.currentIndex--
       }
     },
     truncatedDescription(description) {
@@ -280,5 +316,66 @@ h2 {
     font-size: 50px;
     font-weight: bolder;
   }
+}
+
+.carousel-container {
+  position: relative;
+  width: 1200px;
+  overflow: hidden;
+}
+
+.carousel {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.carousel-item {
+  flex: 0 0 auto;
+  height: 260px;
+  max-width: 200px;
+  display: block;
+  text-align: center;
+  // background-color: aqua;
+  margin-right: 30px; /* Adjust spacing between items */
+}
+
+.border{
+  img{
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+  }
+  width: 100%;
+  height: 100%;
+}
+
+.prev{
+  position: absolute;
+  top: 35%;
+  left: -15px;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  background-color: #F89E0F;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  justify-content: center;
+  z-index: 10;
+}
+
+.next{
+  position: absolute;
+  top: 35%;
+  right: 5px;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  background-color: #F89E0F;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  justify-content: center;
+  z-index: 10;
 }
 </style>
