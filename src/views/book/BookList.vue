@@ -242,13 +242,20 @@ export default {
       })
     },
     allLoad() {
-      // const offset = (this.current + 2) * 6
+      const offset = (this.current + 1) * 6 - 6
       // AuthApi('books', { query: { limit: 6, offset: offset } }, 'GET').then((res) => {
       //   if (res.data.message === 'success') {
       //     this.allList = res.data.result.books
       //   }
       // })
-      AuthApi('books/stock', {}, 'GET').then((res) => {
+      AuthApi('books/stock/search', {
+        authors: [],
+        categories: [],
+        city: this.city,
+        limit: 6,
+        offset: offset,
+        query: this.query
+      }).then((res) => {
         if (res.data.message === 'success') {
           this.allList = res.data.result
         }
