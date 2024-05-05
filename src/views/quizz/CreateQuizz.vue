@@ -1,7 +1,7 @@
 import BookList from "../book/BookList.vue";
 
 <template>
-  <div>
+  <div style="height: 100vh;">
     <a-page-header
       title="Create a New quizz"
       @back="
@@ -83,38 +83,48 @@ import BookList from "../book/BookList.vue";
     </div> -->
 
     <!-- add QA -->
-    <div v-if="qId" style="max-width: 900px">
-      <div class="q-card">
-        <h1>Question {{ number }}</h1>
-        <a-form :model="info" layout="vertical" class="form">
-          <a-row :gutter="[16, 16]">
-            <a-col :xs="24" :sm="24" :lg="24">
-              <a-form-item :label="$t('l_Question')" name="question" required>
-                <a-textarea v-model:value="info.question" allow-clear></a-textarea>
-              </a-form-item>
-            </a-col>
-            <a-col :xs="24" :md="12" :lg="12">
-              <a-form-item :label="$t('l_Correct_answer')" required>
-                <a-input v-model:value="info.answer" allow-clear></a-input>
-              </a-form-item>
-            </a-col>
-            <a-col :xs="24" :md="12" :lg="12">
-              <a-form-item :label="$t('l_Options')" required>
-                <a-input v-model:value="info.options[0]" allow-clear></a-input>
-              </a-form-item>
-            </a-col>
-            <a-col :xs="24" :md="12" :lg="12">
-              <a-form-item :label="$t('l_Options')" required>
-                <a-input v-model:value="info.options[1]" allow-clear></a-input>
-              </a-form-item>
-            </a-col>
-            <a-col :xs="24" :md="12" :lg="12">
-              <a-form-item :label="$t('l_Options')" required>
-                <a-input v-model:value="info.options[2]" allow-clear></a-input>
-              </a-form-item>
-            </a-col>
-          </a-row>
-        </a-form>
+    <div v-if="qId">
+      <div style="display: flex; gap: 10px;">
+        <div class="q-card">
+          <h1>Question {{ number }}</h1>
+          <a-form :model="info" layout="vertical" class="form">
+            <a-row :gutter="[16, 16]">
+              <a-col :xs="24" :sm="24" :lg="24">
+                <a-form-item :label="$t('l_Question')" name="question" required>
+                  <a-textarea v-model:value="info.question" allow-clear></a-textarea>
+                </a-form-item>
+              </a-col>
+              <a-col :xs="24" :md="12" :lg="12">
+                <a-form-item :label="$t('l_Correct_answer')" required>
+                  <a-input v-model:value="info.answer" allow-clear></a-input>
+                </a-form-item>
+              </a-col>
+              <a-col :xs="24" :md="12" :lg="12">
+                <a-form-item :label="$t('l_Options')" required>
+                  <a-input v-model:value="info.options[0]" allow-clear></a-input>
+                </a-form-item>
+              </a-col>
+              <a-col :xs="24" :md="12" :lg="12">
+                <a-form-item :label="$t('l_Options')" required>
+                  <a-input v-model:value="info.options[1]" allow-clear></a-input>
+                </a-form-item>
+              </a-col>
+              <a-col :xs="24" :md="12" :lg="12">
+                <a-form-item :label="$t('l_Options')" required>
+                  <a-input v-model:value="info.options[2]" allow-clear></a-input>
+                </a-form-item>
+              </a-col>
+            </a-row>
+          </a-form>
+        </div>
+     
+        <a-table :data-source="questionList" :columns="questionColumns">
+          <template #bodyCell="{ column, text }">
+            <template v-if="column.dataIndex === 'options'">
+              <a>{{ text.join(" | ") }}</a>
+            </template>
+         </template>
+        </a-table>
       </div>
       <div class="flex">
         <a-button size="large" type="primary" @click="addCard()">Add more question</a-button>
@@ -141,7 +151,22 @@ export default {
         options: [],
         answer: '',
         question: ''
-      }
+      },
+      questionList: [],
+      questionColumns: [
+        {
+          title: 'Question',
+          dataIndex: 'question',
+        },
+        {
+          title: 'Correct Answer',
+          dataIndex: 'answer',
+        },
+        {
+          title: 'Other options',
+          dataIndex: 'options',
+        },
+      ]
     }
   },
   created() {
@@ -179,6 +204,7 @@ export default {
     },
     addCard() {
       let path = 'quizzes/' + this.qId + '/questions'
+      this.questionList.push(this.info);
       AuthApi(path, this.info).then((res) => {
         if (res.data.message == 'success') {
           this.number++
