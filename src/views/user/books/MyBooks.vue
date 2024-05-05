@@ -21,8 +21,8 @@
             </p>
 
             <p>{{ item.book.description }}</p>
-            <a-button type="primary" @click="onEdit()">Edit</a-button>
-            <a-button style="margin-left: 20px" type="primary" @click="onDelete(item.id)"
+            <a-button type="primary" @click="onEdit(item.book.id)">Edit</a-button>
+            <a-button style="margin-left: 20px" type="primary" danger @click="onDelete(item.id)"
               >Delete</a-button
             >
           </div>
@@ -55,7 +55,14 @@ export default {
     this.onLoad()
   },
   methods: {
-    onEdit() {},
+    onEdit(e) {
+      console.log(e)
+      this.$refs.modalView.editMeth({
+        query: {
+          id: e
+        }
+      })
+    },
     onUpload() {
       this.$refs.modalView.show()
     },

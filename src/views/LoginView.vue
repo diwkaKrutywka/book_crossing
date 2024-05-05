@@ -50,9 +50,9 @@
           </a-form>
         </a-tab-pane>
       </a-tabs>
-      <a-modal v-model:open="open" title="Basic Modal">
+      <a-modal v-model:open="open">
         <template #footer></template>
-          <AddPhoto></AddPhoto>
+        <AddPhoto></AddPhoto>
       </a-modal>
     </a-card>
     <div
@@ -89,7 +89,7 @@
             type="primary"
             html-type="submit"
             style="width: 100%; margin-top: 15px; text-align: center"
-            @click="open = true"
+            @click="onLogin()"
           >
             {{ $t('l_Login') }}
           </a-button>
@@ -105,7 +105,7 @@
             type="primary"
             html-type="submit"
             style="width: 100%; margin-top: 15px"
-            @click="open = true"
+            @click="onLogin()"
           >
             {{ $t('l_Signup') }}
           </a-button>
@@ -173,14 +173,14 @@ export default {
           console.log(err)
         })
     },
-    handleOk(e){
-      this.open = false;
+    handleOk(e) {
+      this.open = false
     },
 
     onSignUp() {
       AuthApi('users', this.info).then((res) => {
         message.success('You registered successfully!')
-        this.open = true;
+        this.open = true
         console.log(res)
       })
     }

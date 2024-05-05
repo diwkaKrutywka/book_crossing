@@ -82,6 +82,11 @@
                   <a-rate v-model:value="info.rating" allow-half />
                 </a-form-item>
               </a-col>
+              <a-col :xs="24" :sm="24" v-if="!edit">
+                <a-form-item class="input-box" :label="$t('l_City')" name="city" required>
+                  <a-select v-model:value="city" :options="cityList"></a-select>
+                </a-form-item>
+              </a-col>
             </a-row>
           </a-form>
         </div>
@@ -109,19 +114,32 @@ export default {
   data() {
     return {
       id: null,
+      edit: false,
       labelCol: {
         style: {
           width: '130px'
         }
       },
       info: {},
+      city: '',
       img: '',
+      bookL: [],
+      stockId: '',
       path: '',
       dataList: [],
       searchText: '',
       baseURL: config.baseURL,
       open: false,
-      file: null
+      file: null,
+      cityList: [
+        { value: 'Almaty', label: 'Almaty' },
+        { value: 'Astana', label: 'Astana' },
+        { value: 'Taraz', label: 'Taraz' },
+        { value: 'Kyzylorda', label: 'Kyzylorda' },
+        { value: 'Shymkent', label: 'Shymkent' },
+        { value: 'Aktobe', label: 'Aktobe' },
+        { value: 'Atyrau', label: 'Atyrau' }
+      ]
     }
   },
   computed: {
@@ -139,48 +157,116 @@ export default {
   },
 
   methods: {
-    getInfo() {},
+    getInfo() {
+      let path = 'books/' + this.stockId + '/stock'
+      AuthApi(path, {}, 'GET').then((res) => {
+        if (res.data.message == 'success') {
+          this.bookL = JSON.parse(JSON.stringify(res.data.result))
+          //this.id
+        }
+      })
+    },
     show() {
       this.open = true
     },
-    async onSubmit() {
-      if (!this.id) {
-        message.error(this.$t('l_Select_book_first'))
-        return
+    editMeth(e) {
+      if (e) {
+        this.stockId = e.query.id
+        this.getInfo()
       }
-      let param = new FormData()
-      param.append('image', this.file.file || this.file, this.file.name)
-      param.append('book_id', this.id)
-      try {
-        let res = await http({
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          },
-          url: '/books/stock/upload',
-          method: 'POST',
-          data: param,
-          onUploadProgress: function (e) {
-            file.onProgress = (e.loaded / e.total) * 100
+      this.edit = true
+      this.open = true
+    },
+    async onSubmit() {
+      if (!edit) {
+        if (!this.id) {
+          message.error(this.$t('l_Select_book_first'))
+          return
+        }
+        if (!this.city) {
+          message.error(this.$t('l_Select_city_first'))
+          return
+        }
+        this.setCity()
+        let param = new FormData()
+        param.append('image', this.file.file || this.file, this.file.name)
+        param.append('book_id', this.id)
+        try {
+          let res = await http({
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            },
+            url: '/books/stock/upload',
+            method: 'POST',
+            data: param,
+            onUploadProgress: function (e) {
+              this.file.onProgress = (e.loaded / e.total) * 100
+            }
+          })
+          if (res) {
+            this.path = res.data.result.image_url
+            message.success('You added successfully')
+
+            if (this.file.onSuccess) {
+              this.file.onSuccess(res.data, this.file)
+            }
+
+            return true
           }
-        })
-        if (res) {
-          file.onProgress = 100
+        } catch (error) {
+          console.error('Upload failed:', error)
+        }
+        return false
+      } else {
+        if (!this.id) {
+          message.error(this.$t('l_Select_book_first'))
+          return
+        }
+        if (!this.city) {
+          message.error(this.$t('l_Select_city_first'))
+          return
+        }
+        this.setCity()
+        let param = new FormData()
+        param.append('image', this.file.file || this.file, this.file.name)
+
+        try {
+          let res = await http({
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            },
+            url: '/books/stock/' + this.stockId + '/image',
+            method: 'PUT',
+            data: param,
+            onUploadProgress: function (e) {
+              this.file.onProgress = (e.loaded / e.total) * 100
+            }
+          })
+
           this.path = res.data.result.image_url
-          message.success('You added successfully')
+          message.success('You updated successfully')
 
           if (this.file.onSuccess) {
             this.file.onSuccess(res.data, this.file)
           }
-          this.onCancel()
+
           return true
+        } catch (error) {
+          console.error('Upload failed:', error)
         }
-      } catch (error) {
-        console.error('Upload failed:', error)
+        return false
       }
-      return false
     },
     handleSearch(value) {
       this.searchText = value
+    },
+    setCity() {
+      let path = 'users/' + this.$store.userInfo.user.id + '/city'
+      AuthApi(path, { city: this.city }, 'PATCH').then((res) => {
+        if (res) {
+          console.log(this.city)
+        }
+      })
     },
     onBack() {
       this.$router.back()
