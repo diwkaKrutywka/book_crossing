@@ -76,13 +76,18 @@
                     </a-menu>
                   </template>
                 </a-dropdown>
-                <span
-                  @click="seeNotifications()"
-                  class="icon material-symbols-outlined"
-                  style="margin-left: 30px"
-                >
-                  notifications
-                </span>
+                <div style="display: flex; gap: 5px;">
+                    <span
+                      @click="seeNotifications()"
+                      class="icon material-symbols-outlined"
+                      style="cursor: pointer;"
+                    >
+                      notifications
+                    </span>
+                    <span @click="$store.signOut()" class="material-symbols-outlined" style="cursor: pointer;">
+                        logout
+                    </span>
+                </div>
                 <div>
                   <a-modal
                     v-model:open="open"
@@ -314,6 +319,12 @@ h2 {
 
       .right-item {
         margin-left: 15px;
+        display: flex;
+        align-items: center;
+
+        span{
+          font-size: 16px;
+        }
       }
     }
   }

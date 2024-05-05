@@ -12,8 +12,25 @@
             </h2>
             <hr />
             <a-button style="margin-top: 50px; width: 170px; height: 40px" type="primary"
-              >Search book</a-button
+              @click="visible = true">Search book</a-button
             >
+            <a-popover v-model:open="visible" title="Search" trigger="click">
+              <template #content>
+                <div style="display: flex; gap: 5px;">
+                  <a-select
+                    v-model:value="id"
+                    placeholder="Search your book"
+                    style="width: 100%"
+                    :options="dataList"
+                    :filter-option="filterOption"
+                    show-search
+                    @change="getBookDetails"
+                    @input="handleSearch"
+                  ></a-select>
+                  <a-button type="primary" @click="aboutBook(id)">Go to details</a-button>
+                </div>
+              </template>
+            </a-popover>
           </div>
         </div>
       </div>
@@ -106,6 +123,11 @@ export default {
       selectedQuestionIndex: null,
       currentIndex: 0,
       current: 0,
+      visible: false,
+      info: {},
+      dataList: [],
+      searchText: '',
+      id: null,
       questionList: {
         rus: [
           {
@@ -172,6 +194,16 @@ export default {
           }
         })
       }
+      if (this.dataList.length == 0) {
+        AuthApi('books', { query: { limit: 120, offset: 0 } }, 'GET').then((res) => {
+          if (res.data.message === 'success') {
+            this.dataList = res.data.result.books.map((e) => ({
+              value: e.id,
+              label: e.title
+            }))
+          }
+        })
+      }
     },
     toggleAnswer(index) {
       if (this.selectedQuestionIndex === index) {
@@ -179,6 +211,29 @@ export default {
       } else {
         this.selectedQuestionIndex = index
       }
+    },
+    handleSearch(value) {
+      this.searchText = value
+    },
+    getBookDetails(bookId) {
+      let path = 'books/' + bookId
+      AuthApi(path, {}, 'GET').then((res) => {
+        if (res) {
+          this.info = JSON.parse(JSON.stringify(res.data.result))
+        }
+      })
+    },
+    aboutBook(id) {
+      console.log(id)
+      this.$router.push({
+        name: 'AboutBook',
+        params: {
+          id: id
+        }
+      })
+    },
+    filterOption(input, option) {
+      return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
     },
     next() {
       if (this.currentIndex < this.bookList.length - 1) {
