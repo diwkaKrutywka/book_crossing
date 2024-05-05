@@ -17,113 +17,119 @@
               {{ item.label }}
             </h2>
           </div>
-          <div v-if="!hasLogin">
-            <a-button class="button" @click="goToPage('LoginView')">
-              {{ $t('l_Signup') }}
-            </a-button>
-            <a-button class="button" @click="goToPage('LoginView')">
-              {{ $t('l_Login') }}
-            </a-button>
-          </div>
-
-          <!-- njj -->
-          <div style="display: flex">
-            <div class="align-center pointer" @click.prevent>
-              <div v-if="hasLogin" style="align-items: center">
-                Hi,
-                {{ this.$store.userInfo.user.username }}
-              </div>
+          <div style="max-width: 400px; display: flex">
+            <div v-if="!hasLogin">
+              <a-button class="button" @click="goToPage('LoginView')">
+                {{ $t('l_Signup') }}
+              </a-button>
+              <a-button class="button" @click="goToPage('LoginView')">
+                {{ $t('l_Login') }}
+              </a-button>
             </div>
-            <div class="header-right active">
-              <div class="right-item">
-                <a-dropdown>
-                  <span
-                    class="pointer"
-                    style="color: white; margin-right: 3px; white-space: nowrap"
-                  >
-                    <span v-if="langTag == 'kz'">Қазақша</span>
-                    <span v-if="langTag == 'rus'">Русский</span>
-                    <span v-if="langTag == 'en'">English</span>
-                  </span>
-                  <template #overlay>
-                    <a-menu>
-                      <a-menu-item>
-                        <a
-                          :style="{ color: langTag == 'kz' ? '#40a9ff' : '#000' }"
-                          href="#"
-                          @click="setLanguage('kz')"
-                          >Қазақша</a
-                        >
-                      </a-menu-item>
-                      <a-menu-item>
-                        <a
-                          :style="{
-                            color: langTag == 'rus' ? '#40a9ff' : '#000'
-                          }"
-                          href="#"
-                          @click="setLanguage('rus')"
-                          >Русский</a
-                        >
-                      </a-menu-item>
-                      <a-menu-item>
-                        <a
-                          :style="{ color: langTag == 'en' ? '#40a9ff' : '#000' }"
-                          href="#"
-                          @click="setLanguage('en')"
-                          >English</a
-                        >
-                      </a-menu-item>
-                    </a-menu>
-                  </template>
-                </a-dropdown>
-                <div style="display: flex; gap: 5px;">
+
+            <!-- njj -->
+            <div style="display: flex">
+              <div class="align-center pointer" @click.prevent>
+                <div v-if="hasLogin" style="align-items: center">
+                  Hi,
+                  {{ this.$store.userInfo.user.username }}
+                </div>
+              </div>
+              <div class="header-right active">
+                <div class="right-item">
+                  <a-dropdown>
+                    <span
+                      class="pointer"
+                      style="color: white; margin-right: 3px; white-space: nowrap"
+                    >
+                      <span v-if="langTag == 'kz'">Қазақша</span>
+                      <span v-if="langTag == 'rus'">Русский</span>
+                      <span v-if="langTag == 'en'">English</span>
+                    </span>
+                    <template #overlay>
+                      <a-menu>
+                        <a-menu-item>
+                          <a
+                            :style="{ color: langTag == 'kz' ? '#40a9ff' : '#000' }"
+                            href="#"
+                            @click="setLanguage('kz')"
+                            >Қазақша</a
+                          >
+                        </a-menu-item>
+                        <a-menu-item>
+                          <a
+                            :style="{
+                              color: langTag == 'rus' ? '#40a9ff' : '#000'
+                            }"
+                            href="#"
+                            @click="setLanguage('rus')"
+                            >Русский</a
+                          >
+                        </a-menu-item>
+                        <a-menu-item>
+                          <a
+                            :style="{ color: langTag == 'en' ? '#40a9ff' : '#000' }"
+                            href="#"
+                            @click="setLanguage('en')"
+                            >English</a
+                          >
+                        </a-menu-item>
+                      </a-menu>
+                    </template>
+                  </a-dropdown>
+                  <div style="display: flex; gap: 5px">
                     <span
                       @click="seeNotifications()"
                       class="icon material-symbols-outlined"
-                      style="cursor: pointer;"
+                      style="cursor: pointer"
                     >
                       notifications
                     </span>
-                    <span @click="$store.signOut()" class="material-symbols-outlined" style="cursor: pointer;">
-                        logout
+                    <span
+                      v-if="hasLogin"
+                      @click="$store.signOut()"
+                      class="material-symbols-outlined"
+                      style="cursor: pointer"
+                    >
+                      logout
                     </span>
-                </div>
-                <div>
-                  <a-modal
-                    v-model:open="open"
-                    title="Notifications"
-                    style="top: 0; right: 0"
-                    @ok="handleClose()"
-                    :footer="null"
-                  >
-                    <div>
-                      <div class="card" v-for="item in friendList">
-                        <div>
-                          <!-- <img
+                  </div>
+                  <div>
+                    <a-modal
+                      v-model:open="open"
+                      title="Notifications"
+                      style="top: 0; right: 0"
+                      @ok="handleClose()"
+                      :footer="null"
+                    >
+                      <div>
+                        <div class="card" v-for="item in friendList">
+                          <div>
+                            <!-- <img
                             :src="
                               item.profile_pic ? item.profile_pic : '@/assets/images.person.svg'
                             "
                           /> -->
-                          <img src="@/assets/images/person.svg" />
-                        </div>
-                        <div>
-                          <h1>@{{ item.username }} <span>sent request to friens</span></h1>
-
-                          <div>
-                            <a-button
-                              style="margin-right: 15px"
-                              type="primary"
-                              size="small"
-                              @click="onAccept(item.id)"
-                              >Accept</a-button
-                            >
-                            <!-- <a-button danger size="small">Decline</a-button> -->
+                            <img src="@/assets/images/person.svg" />
                           </div>
+                          <div>
+                            <h1>@{{ item.username }} <span>sent request to friens</span></h1>
+
+                            <div>
+                              <a-button
+                                style="margin-right: 15px"
+                                type="primary"
+                                size="small"
+                                @click="onAccept(item.id)"
+                                >Accept</a-button
+                              >
+                              <!-- <a-button danger size="small">Decline</a-button> -->
+                            </div>
+                          </div>
+                          <div style="height: 1px; background-color: #006b61"></div>
                         </div>
-                        <div style="height: 1px; background-color: #006b61"></div>
                       </div>
-                    </div>
-                    <!-- <div>
+                      <!-- <div>
                       <div class="card" v-for="item in exchangeList">
                         <div><img :src="item.profile_pic" /></div>
                         <div>
@@ -137,7 +143,8 @@
                         </div>
                       </div>
                     </div> -->
-                  </a-modal>
+                    </a-modal>
+                  </div>
                 </div>
               </div>
             </div>
@@ -322,7 +329,7 @@ h2 {
         display: flex;
         align-items: center;
 
-        span{
+        span {
           font-size: 16px;
         }
       }

@@ -145,6 +145,9 @@ export default {
           message.success('Thanks!')
         }
       })
+      this.$router.push({
+        name: 'LendingPage'
+      })
     },
     handleOk() {
       let path = 'quizzes/' + this.qId + '/check'

@@ -27,7 +27,9 @@
           To start, click the "Start" button. When finished, click the "Submit " button.
         </p>
         <div style="display: flex; justify-content: end">
-          <a-button style="width: 100px" size="large" @click="onDelete()">Delete</a-button>
+          <a-button style="width: 100px" size="large" type="primary" danger @click="onDelete()"
+            >Delete</a-button
+          >
           <a-button
             style="width: 100px; margin-left: 30px"
             size="large"

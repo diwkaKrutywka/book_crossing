@@ -11,16 +11,19 @@
               comes alive and imagination knows no bounds.
             </h2>
             <hr />
-            <a-button style="margin-top: 50px; width: 170px; height: 40px" type="primary"
-              @click="visible = true">Search book</a-button
+            <a-button
+              style="margin-top: 50px; width: 170px; height: 40px"
+              type="primary"
+              @click="visible = true"
+              >Search book</a-button
             >
             <a-popover v-model:open="visible" title="Search" trigger="click">
               <template #content>
-                <div style="display: flex; gap: 5px;">
+                <div style="display: flex; gap: 5px">
                   <a-select
                     v-model:value="id"
                     placeholder="Search your book"
-                    style="width: 100%"
+                    style="width: 220px"
                     :options="dataList"
                     :filter-option="filterOption"
                     show-search
@@ -44,7 +47,7 @@
         Best book <br />
         2024.
       </h1>
-      <div style="position: relative;">
+      <div style="position: relative">
         <div class="carousel-container">
           <div class="carousel" :style="{ transform: `translateX(-${currentIndex * 200}px)` }">
             <div
@@ -101,7 +104,7 @@
       </div>
     </div>
     <FAQSection></FAQSection>
-    <div style="text-align: center; margin-top: 50px;">
+    <div style="text-align: center; margin-top: 50px">
       <h2>
         Остались вопросы? <br />
         пишите bookers@gmail.com
@@ -186,7 +189,7 @@ export default {
           }
         })
       }
-      if(this.newBookList.length == 0){
+      if (this.newBookList.length == 0) {
         AuthApi('books', { query: { limit: 20, offset: 100 } }, 'GET').then((res) => {
           if (res.data.message === 'success') {
             this.newBookList = res.data.result.books
@@ -394,8 +397,8 @@ h2 {
   margin-right: 30px; /* Adjust spacing between items */
 }
 
-.border{
-  img{
+.border {
+  img {
     object-fit: contain;
     width: 100%;
     height: 100%;
@@ -404,14 +407,14 @@ h2 {
   height: 100%;
 }
 
-.prev{
+.prev {
   position: absolute;
   top: 35%;
   left: -15px;
   align-items: center;
   display: flex;
   justify-content: space-between;
-  background-color: #F89E0F;
+  background-color: #f89e0f;
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -419,14 +422,14 @@ h2 {
   z-index: 10;
 }
 
-.next{
+.next {
   position: absolute;
   top: 35%;
   right: 5px;
   align-items: center;
   display: flex;
   justify-content: space-between;
-  background-color: #F89E0F;
+  background-color: #f89e0f;
   width: 30px;
   height: 30px;
   border-radius: 50%;
