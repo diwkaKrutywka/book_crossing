@@ -69,6 +69,11 @@ const routes = [
         component: () => import('../views/friends/AboutPerson.vue')
       },
       {
+        path: '/user/info/:id',
+        name: 'SeePerson',
+        component: () => import('../views/friends/SeePerson.vue')
+      },
+      {
         path: '/book/my-collections',
         name: 'MyCollections',
         component: () => import('../views/collections/MyCollections.vue')

@@ -23,19 +23,30 @@
           </button>
         </div>
         <div style="display: flex; flex-direction: column">
-          <span style="display: flex; justify-content: space-between">
+          <span style="display: flex; justify-content: space-between; font-size: 15px">
             <b>Favourite genre of books:</b>
             <!-- <span>
-              <span v-for="fav in info.favs">{{ fav }}, </span></span
-            >-->
+                <span v-for="fav in info.favs">{{ fav }}, </span></span
+              >-->
           </span>
-          <span style="display: flex; justify-content: space-between">
+          <span
+            style="display: flex; justify-content: space-between; margin-top: 15px; font-size: 15px"
+          >
             <b>Friends:</b>
             <span>{{ info.friends }}</span>
           </span>
+          <span
+            style="display: flex; justify-content: space-between; margin-top: 15px; font-size: 15px"
+          >
+            <b>City:</b>
+            <span>{{ info.city }}</span>
+          </span>
         </div>
         <div>
-          <h3>Книжная полка <img src="@/assets/images/book-square.svg" style="width: 25px" /></h3>
+          <h3 style="font-size: 20px">
+            Книжная полка
+            <img src="@/assets/images/book-square.svg" style="width: 25px" />
+          </h3>
           <table>
             <tr>
               <td></td>
@@ -64,38 +75,28 @@
 
     <div class="friend-book">
       <div></div>
-      <div class="friend-book__current">
-        <h1>Книга, которая вы рассматриваете сейчас</h1>
-        <div class="book">
-          <span
-            style="color: black; display: flex; justify-content: end"
-            class="material-symbols-outlined"
-          >
-            favorite
-          </span>
-          <img style="height: 200px; width: 150px" :src="bookL.image_url" />
-          <h3 style="color: #393280; display: flex; justify-content: center">
-            {{ bookL.booktitle }}
-          </h3>
-        </div>
-        <button @click="reqExchange()" class="btn">Отправить запрос на обмен</button>
-      </div>
       <div class="friend-book__collections">
-        <h1>Еще больше книг этого пользователя:</h1>
-        <div class="friend-book__list">
-          <div class="book" v-for="item in stockList">
-            <span style="color: #393280">Michelle Obama</span>
-            <img
-              style="height: 200px; width: 150px"
-              :src="item.image_url"
-              @click="goExchange(item.book.id)"
-            />
-            <h3 style="color: #f89e0f; text-align: end" @click="goExchange(item.book.id)">
-              Go To Exchange
-            </h3>
-          </div>
+        <div style="display: flex; text-align: left; width: 100%">
+          <h1 style="font-size: 25px; font-weight: 900">{{ $t('l_Books') }}</h1>
         </div>
-        <button class="btn" style="align-self: flex-end">See more</button>
+        <div class="friend-book__list">
+          <a-row :gutter="[16, 16]">
+            <a-col :xs="8" :lg="8" :md="8" v-for="item in stockList">
+              <div class="book">
+                <span style="color: #393280">Michelle Obama</span>
+                <img
+                  style="height: 200px; width: 150px"
+                  :src="item.image_url"
+                  @click="goExchange(item.book.id)"
+                />
+                <h3 style="color: #f89e0f; text-align: end" @click="goExchange(item.book.id)">
+                  Go To Exchange
+                </h3>
+              </div>
+            </a-col>
+          </a-row>
+        </div>
+        <!-- <button class="btn" style="align-self: flex-end">See more</button> -->
       </div>
     </div>
   </div>
@@ -114,28 +115,12 @@ export default {
       info: {}
     }
   },
-  watch: {
-    '$route.params': {
-      immediate: true,
-      handler(params) {
-        if (params.userId && params.bookId) {
-          this.userId = params.userId
-          this.bookId = params.bookId
-          this.onLoad()
-          this.getBook()
-          this.getUserInfo()
-        }
-      }
-    }
-  },
   mounted() {
-    let userId = this.$route.params.userId
-    let bookId = this.$route.params.bookId
-    if (userId && bookId) {
+    let userId = this.$route.params.id
+    if (userId) {
       this.userId = userId
-      this.bookId = bookId
+      this.getUserInfo()
       this.onLoad()
-      this.getBook()
     }
   },
   methods: {
@@ -244,7 +229,7 @@ export default {
 
   &-book {
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1.7fr 1fr;
     padding: 30px;
     z-index: 5;
     align-items: center;
@@ -266,7 +251,7 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-top: 10px;
+
       gap: 10px;
     }
   }

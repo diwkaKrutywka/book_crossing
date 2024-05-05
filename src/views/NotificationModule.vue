@@ -18,6 +18,8 @@
 </template>
 <script>
 import { AuthApi } from '@/api/auth'
+
+// import { AuthApi } from '@/api/auth'
 export default {
   data() {
     return {
@@ -34,8 +36,10 @@ export default {
         }
       })
     },
+    onLoad() {},
     show() {
       this.open = true
+      this.getFriends()
     },
     handleClose() {
       this.open = false

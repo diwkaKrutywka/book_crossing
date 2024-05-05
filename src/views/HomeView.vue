@@ -83,6 +83,57 @@
                 >
                   notifications
                 </span>
+                <div>
+                  <a-modal
+                    v-model:open="open"
+                    title="Notifications"
+                    style="top: 0; right: 0"
+                    @ok="handleClose()"
+                    :footer="null"
+                  >
+                    <div>
+                      <div class="card" v-for="item in friendList">
+                        <div>
+                          <!-- <img
+                            :src="
+                              item.profile_pic ? item.profile_pic : '@/assets/images.person.svg'
+                            "
+                          /> -->
+                          <img src="@/assets/images/person.svg" />
+                        </div>
+                        <div>
+                          <h1>@{{ item.username }} <span>sent request to friens</span></h1>
+
+                          <div>
+                            <a-button
+                              style="margin-right: 15px"
+                              type="primary"
+                              size="small"
+                              @click="onAccept(item.id)"
+                              >Accept</a-button
+                            >
+                            <!-- <a-button danger size="small">Decline</a-button> -->
+                          </div>
+                        </div>
+                        <div style="height: 1px; background-color: #006b61"></div>
+                      </div>
+                    </div>
+                    <!-- <div>
+                      <div class="card" v-for="item in exchangeList">
+                        <div><img :src="item.profile_pic" /></div>
+                        <div>
+                          <h1>@{{ iten.username }}<span>sent request to exchange your book</span></h1>
+                          <h3>book</h3>
+                          <div>
+                            <a-button type="primary">Accept</a-button>
+                            <a-button danger>Decline</a-button>
+                          </div>
+                          <div style="height: 1px; background-color: #006b61"></div>
+                        </div>
+                      </div>
+                    </div> -->
+                  </a-modal>
+                </div>
               </div>
             </div>
           </div>
@@ -99,23 +150,25 @@
           <FooterPage></FooterPage>
         </a-layout-footer> -->
       </a-layout>
-      <!-- <NotificationModule ref="notiPage"></NotificationModule> -->
     </a-layout>
   </div>
 </template>
 
 <script>
-// import NotificationModule from '@/components/NotificationModule.vue'
 import FooterPage from '@/components/FooterPage.vue'
+import { AuthApi } from '@/api/auth'
+import { message } from 'ant-design-vue'
 //import AddEditBook from './user/books/AddEditBook.vue'
 export default {
   components: {
     FooterPage
-    // NotificationModule
     // AddEditBook
   },
   data() {
     return {
+      open: false,
+      friendList: [],
+      exchangeList: [],
       navList: [
         {
           label: 'Home',
@@ -163,6 +216,15 @@ export default {
     }
   },
   methods: {
+    onAccept(e) {
+      let path = 'users/friends/' + e + '/accept'
+      AuthApi(path, {}, 'PUT').then((res) => {
+        if (res) {
+          message.success('You have 1 more friend!')
+          this.getFriends()
+        }
+      })
+    },
     setLanguage(e) {
       this.$i18n.locale = e
       localStorage.setItem('currentLang', e)
@@ -173,7 +235,25 @@ export default {
       })
     },
     seeNotifications() {
-      this.$refs.modalView.show()
+      this.getFriends()
+      this.open = true
+    },
+    getFriends() {
+      AuthApi('users/friends/received', {}, 'GET').then((res) => {
+        if (res) {
+          this.friendList = JSON.parse(JSON.stringify(res.data.result.friends))
+        }
+      })
+    },
+    getExchanges() {
+      AuthApi('books/request', {}, 'GET').then((res) => {
+        if (res) {
+          this.exchangeList = JSON.parse(JSON.stringify(res.data.requests))
+        }
+      })
+    },
+    handleClose() {
+      this.open = false
     }
     // -- end --
   }
@@ -434,6 +514,13 @@ h2 {
         transform: scale(1);
       }
     }
+  }
+}
+.card {
+  display: flex;
+  justify-content: space-around;
+  img {
+    width: 80px;
   }
 }
 </style>

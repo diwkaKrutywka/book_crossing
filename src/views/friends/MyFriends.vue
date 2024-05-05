@@ -16,7 +16,7 @@
             </p>
           </div>
         </div>
-        <a-button @click="goTo()" style="width: 200px" size="large" type="primary"
+        <a-button @click="goTo(item.id)" style="width: 200px" size="large" type="primary"
           >Go to profile</a-button
         >
       </div>
@@ -24,9 +24,8 @@
   </div>
 </template>
 <script>
-import http from '@/utils/http';
+import http from '@/utils/http'
 export default {
-
   data() {
     return {
       friends: [],
@@ -46,21 +45,24 @@ export default {
       ]
     }
   },
-  mounted(){
+  mounted() {
     this.fetchFriends()
   },
   methods: {
-    goTo() {
+    goTo(e) {
       this.$router.push({
-        name: 'AboutPerson'
+        name: 'SeePerson',
+        params: {
+          id: e
+        }
       })
     },
-    async fetchFriends(){
+    async fetchFriends() {
       let res = await http({
         url: '/users/friends',
-        method: 'GET',
+        method: 'GET'
       })
-      if(res){
+      if (res) {
         this.friends = res.data.result.friends
       }
     }

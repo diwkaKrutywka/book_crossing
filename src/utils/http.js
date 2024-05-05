@@ -1,10 +1,8 @@
 import axios from 'axios'
-import { useAppStore } from '@/stores'
 import router from '@/router'
 import config from '@/config/index.js'
-// import i18n from '@/locales/index'
+import { useAppStore } from '@/stores'
 
-const store = useAppStore()
 const baseURL = config.baseURL + '/api/v1/'
 
 const Service = axios.create({
@@ -17,6 +15,7 @@ const Service = axios.create({
 
 Service.interceptors.request.use(
   async (config) => {
+    const store = useAppStore()
     const token = store.userInfo.access_token
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
@@ -33,6 +32,7 @@ Service.interceptors.response.use(
     return response
   },
   async (error) => {
+    const store = useAppStore()
     const originalRequest = error.config
     if (error.response && error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
@@ -43,7 +43,7 @@ Service.interceptors.response.use(
             url: baseURL + 'auth/refresh_token',
             headers: {
               'Content-Type': 'application/json;charset=UTF-8',
-              Authorization: 'Bearer ' + accessToken
+              Authorization: 'Bearer ' + refreshToken
             },
             method: 'POST',
             data: {
@@ -58,10 +58,10 @@ Service.interceptors.response.use(
               access_token: accessToken,
               refresh_token: newRefreshToken
             }
-            store.commit('setUserInfo', userInfo)
+            store.setUserInfo(userInfo)
             return Service(originalRequest)
           } else {
-            store.commit('setUserInfo', {})
+            store.setUserInfo({})
             router.push({ name: 'LoginView' })
           }
         } catch (error) {
