@@ -129,20 +129,19 @@
                           <div style="height: 1px; background-color: #006b61"></div>
                         </div>
                       </div>
-                      <!-- <div>
-                      <div class="card" v-for="item in exchangeList">
-                        <div><img :src="item.profile_pic" /></div>
-                        <div>
-                          <h1>@{{ iten.username }}<span>sent request to exchange your book</span></h1>
-                          <h3>book</h3>
+                      <div>
+                        <div class="card" v-for="item in exchangeList">
+                          <div style="width: 100px; height: 100%; margin-right: 10px;"><img v-if="item.sender_book" :src="item.sender_book.image" alt="No Img"/></div>
                           <div>
-                            <a-button type="primary">Accept</a-button>
-                            <a-button danger>Decline</a-button>
+                              <h1>@{{ item.sender.username }}<span> sent request to exchange your book</span></h1>
+                              <h3>book</h3>
+                              <div>
+                                <a-button type="primary" v-if="item.sender_book" @click="onBookAccept(item.sender_book.id)">Accept</a-button>
+                              </div>
+                              <div style="height: 1px; background-color: #006b61; margin-top: 10px;"></div>
                           </div>
-                          <div style="height: 1px; background-color: #006b61"></div>
                         </div>
                       </div>
-                    </div> -->
                     </a-modal>
                   </div>
                 </div>
@@ -237,6 +236,15 @@ export default {
         }
       })
     },
+    onBookAccept(e){
+      let path = 'books/request/'+ e + '/approve'
+      AuthApi(path, {}, 'PUT').then((res) => {
+        if(res){
+          message.success('You successfully exchanged!')
+          this.getExchanges()
+        }
+      })
+    },
     setLanguage(e) {
       this.$i18n.locale = e
       localStorage.setItem('currentLang', e)
@@ -248,6 +256,7 @@ export default {
     },
     seeNotifications() {
       this.getFriends()
+      this.getExchanges()
       this.open = true
     },
     getFriends() {
