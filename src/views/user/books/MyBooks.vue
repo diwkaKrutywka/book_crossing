@@ -5,7 +5,7 @@
         <div class="card">
           <div>
             <div class="img-border">
-              <img style="height: 250px" :src="item.book.image" />
+              <img style="height: 250px" :src="item.image_url || item.book.image" />
             </div>
             <h2 class="h2">
               {{ item.book.title }}
