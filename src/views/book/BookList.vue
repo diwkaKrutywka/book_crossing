@@ -275,7 +275,13 @@ export default {
     getImgUrl(pic) {
       return require(`@/assets/images/${pic}`)
     },
-    onSearch() {},
+    onSearch(e) {
+      AuthApi('send', {message: e}, 'POST').then((res) => {
+        if (res) {
+         console.log(res)
+        }
+      })
+    },
     next() {
       if (this.currentIndex < this.bestSellers.length - 1) {
         this.currentIndex++

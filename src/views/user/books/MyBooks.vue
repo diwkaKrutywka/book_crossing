@@ -1,11 +1,11 @@
 <template>
-  <div style="max-width: 1300px; margin: auto">
+  <div class="my-books" style=" ">
     <a-row>
       <a-col :span="12" v-for="item in dataList">
         <div class="card">
           <div>
             <div class="img-border">
-              <img style="height: 250px" :src="item.book.image" />
+              <img style="height: 250px" :src="item.image_url || item.book.image" />
             </div>
             <h2 class="h2">
               {{ item.book.title }}
@@ -21,7 +21,7 @@
             </p>
 
             <p>{{ item.book.description }}</p>
-            <a-button type="primary" @click="onEdit(item.book.id)">Edit</a-button>
+            <a-button type="primary" @click="onEdit(item.id)">Edit</a-button>
             <a-button style="margin-left: 20px" type="primary" danger @click="onDelete(item.id)"
               >Delete</a-button
             >
@@ -89,6 +89,18 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.my-books{
+  max-width: 1300px; 
+  margin: auto;
+  height: 100vh; 
+  overflow-y: scroll;  
+  margin: 50px;
+}
+
+.my-books::-webkit-scrollbar {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
 .card {
   display: flex;
   margin: 40px;

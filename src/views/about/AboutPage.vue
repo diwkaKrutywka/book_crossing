@@ -4,13 +4,7 @@
     <div style="max-width: 900px" class="box">
       <div class="content">
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lectus risus, finibus
-          ornare vestibulum et, feugiat quis dui. Vivamus sit amet dolor et magna facilisis rhoncus.
-          Curabitur maximus est sed porta scelerisque. Sed suscipit, arcu volutpat feugiat posuere,
-          eros nisi tristique nibh, mollis vehicula lectus tortor eu purus. Donec ut tortor blandit,
-          sagittis diam eget, suscipit eros. Quisque at magna neque. Nulla faucibus mi at nunc
-          mattis placerat. Pellentesque quis augue quis elit tristique auctor. Integer varius est
-          orci, vel egestas felis dictum nec.
+          Welcome to Bookers, a vibrant community where book lovers unite to share their passion for reading, exchange ideas, and foster connections through the power of literature. At Bookers, we believe in the transformative power of books. Whether you're a seasoned bibliophile or just beginning your literary journey, our platform offers a welcoming space to discover new stories, engage in thought-provoking discussions, and connect with fellow book enthusiasts from around the world.
         </p>
         <img src="@/assets/images/abt1.svg" />
       </div>
@@ -19,24 +13,13 @@
       <div class="content">
         <img src="@/assets/images/abt2.svg" />
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lectus risus, finibus
-          ornare vestibulum et, feugiat quis dui. Vivamus sit amet dolor et magna facilisis rhoncus.
-          Curabitur maximus est sed porta scelerisque. Sed suscipit, arcu volutpat feugiat posuere,
-          eros nisi tristique nibh, mollis vehicula lectus tortor eu purus. Donec ut tortor blandit,
-          sagittis diam eget, suscipit eros. Quisque at magna neque. Nulla faucibus mi at nunc
-          mattis placerat. Pellentesque quis augue quis elit tristique auctor. Integer varius est
-          orci, vel egestas felis dictum nec.
+          Share your favorite books with others and discover new titles recommended by fellow community members.
         </p>
       </div>
       <div class="content">
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lectus risus, finibus
-          ornare vestibulum et, feugiat quis dui. Vivamus sit amet dolor et magna facilisis rhoncus.
-          Curabitur maximus est sed porta scelerisque. Sed suscipit, arcu volutpat feugiat posuere,
-          eros nisi tristique nibh, mollis vehicula lectus tortor eu purus. Donec ut tortor blandit,
-          sagittis diam eget, suscipit eros. Quisque at magna neque. Nulla faucibus mi at nunc
-          mattis placerat. Pellentesque quis augue quis elit tristique auctor. Integer varius est
-          orci, vel egestas felis dictum nec.
+          Connect with fellow readers for encouragement, recommendations, and support on your reading journey.
+          Engage in lively discussions about literature, authors, and literary themes with like-minded individuals.
         </p>
         <img src="@/assets/images/abt3.svg" />
       </div>

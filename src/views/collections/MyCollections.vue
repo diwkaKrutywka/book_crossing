@@ -1,5 +1,5 @@
 <template>
-  <div style="max-width: 1200px; margin: auto">
+  <div class="collections">
     <div class="card" v-for="(item, index) in dataList">
       <div style="margin-right: 140px; text-align: center">
         <img :src="item.image" />
@@ -51,6 +51,19 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+
+.collections{
+  max-width: 1300px; 
+  height: 100vh; 
+  overflow-y: scroll;  
+  padding: 20px;
+  margin: 50px;
+}
+
+.collections::-webkit-scrollbar {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
 .card {
   display: flex;
   padding: 30px;
