@@ -1,5 +1,5 @@
 <template>
-  <div style="max-width: 1300px; margin: auto">
+  <div class="my-books" style=" ">
     <a-row>
       <a-col :span="12" v-for="item in dataList">
         <div class="card">
@@ -89,6 +89,18 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.my-books{
+  max-width: 1300px; 
+  margin: auto;
+  height: 100vh; 
+  overflow-y: scroll;  
+  margin: 50px;
+}
+
+.my-books::-webkit-scrollbar {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
 .card {
   display: flex;
   margin: 40px;
