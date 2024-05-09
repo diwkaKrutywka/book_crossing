@@ -91,7 +91,7 @@
               @click="goExchange(item.book.id)"
             />
             <h3 style="color: #f89e0f; text-align: end" @click="goExchange(item.book.id)">
-              Go To Exchange
+              {{$t('l_Go_to_exchange')}}
             </h3>
           </div>
         </div>

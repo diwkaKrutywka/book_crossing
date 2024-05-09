@@ -15,7 +15,7 @@
               >{{ item2.name }}
             </p>
 
-            <h2>Overview</h2>
+            <h2>{{$t('l_Overview')}}</h2>
             <p>
               {{ info.description }}
             </p>

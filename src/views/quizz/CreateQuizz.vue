@@ -11,8 +11,8 @@ import BookList from "../book/BookList.vue";
       "
     >
       <template #extra>
-        <a-button type="primary" @click="onAdd()"> Save as draft </a-button>
-        <a-button type="primary" @click="onAdd()"> Push </a-button>
+       
+        <a-button type="primary" @click="onAdd()">{{$t('l_Submit')}}</a-button>
       </template>
     </a-page-header>
     <div class="area">
@@ -117,7 +117,6 @@ import BookList from "../book/BookList.vue";
             </a-row>
           </a-form>
         </div>
-     
         <a-table :data-source="questionList" :columns="questionColumns">
           <template #bodyCell="{ column, text }">
             <template v-if="column.dataIndex === 'options'">
@@ -127,7 +126,7 @@ import BookList from "../book/BookList.vue";
         </a-table>
       </div>
       <div class="flex">
-        <a-button size="large" type="primary" @click="addCard()">Add more question</a-button>
+        <a-button size="large" type="primary" @click="addCard()">{{$t('l_Add_question')}}</a-button>
       </div>
     </div>
   </div>

@@ -11,14 +11,14 @@
             <h2>Available</h2>
             <LikedBooks :book-id="item.id"></LikedBooks>
           </div>
-          <h3><span>Author: </span>Denis Ramphil</h3>
-          <h3><span>Genre: </span>Драма</h3>
+          <h3><span>{{$t('l_Author')}} : </span>Denis Ramphil</h3>
+          <h3><span>{{$t('l_Genre')}} : </span>Драма</h3>
           <p>{{ item.description }}</p>
         </div>
         <div class="bottom">
           <!-- <a-progress :percent="99" style="width: 80%" /> -->
           <div style="background-color: #f89e0f; height: 7px; width: 70%"></div>
-          <h5>Go To Exchange</h5>
+          <h5>{{$t('l_Go_to_exchange')}}</h5>
         </div>
       </div>
     </div>
