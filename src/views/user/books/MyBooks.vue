@@ -21,7 +21,7 @@
             </p>
 
             <p>{{ item.book.description }}</p>
-            <a-button type="primary" @click="onEdit(item.book.id)">Edit</a-button>
+            <a-button type="primary" @click="onEdit(item.id)">Edit</a-button>
             <a-button style="margin-left: 20px" type="primary" danger @click="onDelete(item.id)"
               >Delete</a-button
             >
