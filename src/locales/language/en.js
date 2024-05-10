@@ -60,4 +60,7 @@ export default {
   l_Published: "Published",
 l_Name_of_the_book: "Name of the book",
 l_Name_of_the_quizz: "Name of the quizz",
+l_About: "About",
+l_Recently_viewed: "Recently viewed",
+l_Language: "Language",
 }

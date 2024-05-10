@@ -17,7 +17,7 @@
               @click="visible = true"
               >Search book</a-button
             >
-            <a-popover v-model:open="visible" title="Search" trigger="click">
+            <a-popover v-model:open="visible" title="{{$t('l_Search')}}" trigger="click">
               <template #content>
                 <div style="display: flex; gap: 5px">
                   <a-select
@@ -79,7 +79,7 @@
             <h3 v-for="i in item.authors">{{ i.name }}</h3>
             <h2>Writen date</h2>
             <h4>{{ item.pub_date }}</h4>
-            <h2>Overview</h2>
+            <h2>{{$t('l_Overview')}}</h2>
             <h4>{{ truncatedDescription(item.description) }}</h4>
           </div>
         </div>

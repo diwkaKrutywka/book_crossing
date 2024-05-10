@@ -1,7 +1,7 @@
 <template>
   <a-modal v-model:open="open" title="Notifications" style="top: 0" @ok="handleClose()">
     <div>
-      <div class="card">
+      <div class="card" v-for="item in friendList">
         <div><img src="@/assets/images/person.svg" /></div>
         <div>
           <h1>@aru<span>sent request to exchange your book</span></h1>

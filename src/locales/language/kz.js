@@ -23,7 +23,7 @@ export default {
   l_My_collections: 'Менің жинақтарым',
   l_My_friends: 'Менің достарым',
   l_Settings: 'Параметрлер',
-  l_About_us: 'Біз туралы',
+  l_About_us: 'Туралы',
   l_Home: 'Үй',
   l_Books: 'Кітаптар',
   l_Title: 'Тақырып',
@@ -60,5 +60,7 @@ export default {
   l_History_of_quizzes: "Сұрақтар жинағы",
   l_Published: "Жарияланған",
 l_Name_of_the_book: "Кітап аты",
-l_Name_of_the_quizz: "Сұраұ аты",
+l_Name_of_the_quizz: "Сұрақ аты",
+l_Recently_viewed: "Жақында көрілгендер",
+l_Language: "Тілі",
 }

@@ -5,7 +5,7 @@
         <div class="card">
           <div>
             <div class="img-border">
-              <img style="height: 250px" :src="item.image_url || item.book.image" />
+              <img style="height: 250px; width: 250px" :src="item.image_url || item.book.image" />
             </div>
             <h2 class="h2">
               {{ item.book.title }}
@@ -17,13 +17,13 @@
             <a-rate :value="item.book.rating" />
 
             <p style="margin-top: 20px">
-              <span>Language: {{ item.book.language }}</span>
+              <span>{{$t('l_Language')}}: {{ item.book.language }}</span>
             </p>
 
             <p>{{ item.book.description }}</p>
-            <a-button type="primary" @click="onEdit(item.id)">Edit</a-button>
+            <a-button type="primary" @click="onEdit(item.id)">{{$t('l_Edit')}}</a-button>
             <a-button style="margin-left: 20px" type="primary" danger @click="onDelete(item.id)"
-              >Delete</a-button
+              >{{$t('l_Delete')}}</a-button
             >
           </div>
         </div>
@@ -31,7 +31,7 @@
     </a-row>
     <div style="text-align: center">
       <a-button style="margin: 70px auto; height: 50px" type="primary" @click="onUpload()"
-        >Upload new book</a-button
+        >{{$t('l_Upload_new_book')}}</a-button
       >
     </div>
     <AddEditBook ref="modalView"></AddEditBook>
