@@ -42,7 +42,7 @@
       </div>
     </div>
     <div class="best" style="display: flex; gap: 10px">
-      <h1>
+      <h1 style="margin-right: 100px">
         New <br />
         Best book <br />
         2024.
@@ -54,7 +54,7 @@
               v-for="(item, index) in newBookList"
               :key="index"
               class="carousel-item"
-              @click="aboutBook(index)"
+              @click="aboutBook(item.id)"
             >
               <div class="border">
                 <img :src="item.image" alt="Book Image" />
@@ -72,7 +72,7 @@
         <h2 style="color: #005555">See all</h2>
       </div>
       <div class="scroll">
-        <div class="card" v-for="item in bookList">
+        <div class="card" v-for="item in bookList" @click="aboutBook(item.id)">
           <img :src="item.image" />
           <div style="margin-left: 20px; padding: 10px">
             <h2>{{ item.title }}</h2>
@@ -227,7 +227,7 @@ export default {
       })
     },
     aboutBook(id) {
-      console.log(id)
+      // console.log(id)
       this.$router.push({
         name: 'AboutBook',
         params: {
