@@ -11,13 +11,13 @@
           <div style="margin: 0 30px">
             <h1>{{ item.email }} ({{ item.username }})</h1>
             <p>
-              Город <br />
+             {{$t('l_City')}} <br />
               {{ item.city }}
             </p>
           </div>
         </div>
         <a-button @click="goTo(item.id)" style="width: 200px" size="large" type="primary"
-          >Go to profile</a-button
+          >{{$t('l_Go_to_profile')}}</a-button
         >
       </div>
     </div>

@@ -106,6 +106,7 @@ import config from '@/config/index.js'
 import { message } from 'ant-design-vue'
 import { PlusOutlined } from '@ant-design/icons-vue'
 import { AuthApi } from '@/api/auth'
+import { contentQuotesLinter } from 'ant-design-vue/es/_util/cssinjs/linters'
 
 export default {
   components: {
@@ -170,6 +171,7 @@ export default {
       this.open = true
     },
     editMeth(e) {
+      console.log(e+"IUUUUUUUU")
       if (e) {
         this.stockId = e.query.id
         this.getInfo()
@@ -178,7 +180,7 @@ export default {
       this.open = true
     },
     async onSubmit() {
-      if (!edit) {
+      if (!this.edit) {
         if (!this.id) {
           message.error(this.$t('l_Select_book_first'))
           return
@@ -222,11 +224,6 @@ export default {
           message.error(this.$t('l_Select_book_first'))
           return
         }
-        if (!this.city) {
-          message.error(this.$t('l_Select_city_first'))
-          return
-        }
-        this.setCity()
         let param = new FormData()
         param.append('image', this.file.file || this.file, this.file.name)
 

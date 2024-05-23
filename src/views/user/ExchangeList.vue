@@ -41,11 +41,10 @@ export default {
   },
   methods: {
     onLoad() {
-      AuthApi('users/liked-books', {}, 'GET').then((res) => {
-        if (res) {
-          this.dataList = JSON.parse(JSON.stringify(res.data.result))
-        }
-      })
+         if (res) {
+                this.exchangeList = res.data.requests.filter(exchange => {
+        return exchange.sender_status === 'sender_accepted';
+      });
     }
   }
 }

@@ -17,7 +17,7 @@
               @click="visible = true"
               >Search book</a-button
             >
-            <a-popover v-model:open="visible" title="Search" trigger="click">
+            <a-popover v-model:open="visible" title="{{$t('l_Search')}}" trigger="click">
               <template #content>
                 <div style="display: flex; gap: 5px">
                   <a-select
@@ -79,7 +79,7 @@
             <h3 v-for="i in item.authors">{{ i.name }}</h3>
             <h2>Writen date</h2>
             <h4>{{ item.pub_date }}</h4>
-            <h2>Overview</h2>
+            <h2>{{$t('l_Overview')}}</h2>
             <h4>{{ truncatedDescription(item.description) }}</h4>
           </div>
         </div>
@@ -111,6 +111,25 @@
       </h2>
     </div>
   </div>
+  <div class="chat">
+    <span class="material-symbols-outlined" @click="visibleChat = true">
+        account_circle
+    </span>
+    <a-popover v-model:open="visibleChat" title="Search" trigger="click">
+      <template #content>
+        <div style="display: flex; flex-direction: column; gap: 5px">
+          <div>{{ this.resultChatText }}</div>
+          <a-input-search
+            style="width: 300px;"
+            placeholder="input search book"
+            enter-button="Search"
+            size="default"
+            @search="onSearch"
+          />
+        </div>
+      </template>
+    </a-popover>
+  </div>
 </template>
 <script>
 import { AuthApi } from '@/api/auth'
@@ -122,14 +141,17 @@ export default {
   data() {
     return {
       bookList: [],
+      book: '',
       newBookList: [],
       selectedQuestionIndex: null,
       currentIndex: 0,
       current: 0,
       visible: false,
+      visibleChat: false,
       info: {},
       dataList: [],
       searchText: '',
+      resultChatText: '',
       id: null,
       questionList: {
         rus: [
@@ -207,6 +229,13 @@ export default {
           }
         })
       }
+    },
+    onSearch(e) {
+      AuthApi('send', {message: e}, 'POST').then((res) => {
+        if (res) {
+          this.resultChatText = res.data.result
+        }
+      })
     },
     toggleAnswer(index) {
       if (this.selectedQuestionIndex === index) {
@@ -362,6 +391,20 @@ h2 {
     max-height: 350px;
     width: 270px;
   }
+}
+
+.chat{
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  background-color: #f89e0f;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
 }
 
 .best {

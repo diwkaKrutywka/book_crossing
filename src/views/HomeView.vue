@@ -99,10 +99,12 @@
                       v-model:open="open"
                       title="Notifications"
                       style="top: 0; right: 0"
+                      :style="{ maxHeight: '500px', overflowY: 'auto' }"
                       @ok="handleClose()"
+                      height="500px"
                       :footer="null"
                     >
-                      <div>
+                      <div class="scrollable">
                         <div class="card" v-for="item in friendList">
                           <div>
                             <!-- <img
@@ -129,20 +131,21 @@
                           <div style="height: 1px; background-color: #006b61"></div>
                         </div>
                       </div>
-                      <!-- <div>
-                      <div class="card" v-for="item in exchangeList">
-                        <div><img :src="item.profile_pic" /></div>
-                        <div>
-                          <h1>@{{ iten.username }}<span>sent request to exchange your book</span></h1>
-                          <h3>book</h3>
+                      <div>
+                        <div class="card" v-for="item in exchangeList" >
+                        
+                          <div style="width: 100px; height: 100%; margin-right: 10px;"><img v-if="item.sender_book" :src="item.sender_book.image" alt="No Img"/></div>
                           <div>
-                            <a-button type="primary">Accept</a-button>
-                            <a-button danger>Decline</a-button>
+                              <h1>@{{ item.sender.username }}<span> sent request to exchange your book</span></h1>
+                              <h3>book</h3>
+                              <div>
+                                <a-button type="primary" v-if="item.sender_book" @click="onBookExchange(item.id, item.sender.id)">Accept</a-button>
+                              </div>
+                              <div style="height: 1px; background-color: #006b61; margin-top: 10px;"></div>
                           </div>
-                          <div style="height: 1px; background-color: #006b61"></div>
                         </div>
+                        
                       </div>
-                    </div> -->
                     </a-modal>
                   </div>
                 </div>
@@ -183,37 +186,37 @@ export default {
       exchangeList: [],
       navList: [
         {
-          label: 'Home',
+          label: this.$t('l_Home'),
           name: 'HomePage'
         },
         {
-          label: 'Books',
+          label: this.$t('l_Books'),
           name: 'BookList'
         },
         {
-          label: 'About',
+          label: this.$t('l_About_us'),
           name: 'AboutUs'
         },
         {
-          label: 'Quizzess',
+          label: this.$t('l_Quizzes'),
           name: 'LendingPage'
         }
       ],
       ownList: [
         {
-          label: 'My books',
+          label: this.$t('l_My_books'),
           name: 'MyBooks'
         },
         {
-          label: 'My collections',
+          label: this.$t('l_My_collections'),
           name: 'MyCollections'
         },
         {
-          label: 'My friends',
+          label: this.$t('l_My_friends'),
           name: 'MyFriends'
         },
         {
-          label: 'Settings',
+          label: this.$t('l_Settings'),
           name: 'Profile'
         }
       ]
@@ -237,8 +240,27 @@ export default {
         }
       })
     },
+    onBookAccept(e){
+      let path = 'books/request/'+ e + '/approve'
+      AuthApi(path, {}, 'PUT').then((res) => {
+        if(res){
+          message.success('You successfully exchanged!')
+          this.getExchanges()
+        }
+      })
+    },
+    onBookExchange(r_id, u_id){
+      this.open = false
+      this.$router.push({
+        name: "UserBook",
+        params:{
+          id: r_id,
+          u_id: u_id
+        }
+      })
+    },
     setLanguage(e) {
-      this.$i18n.locale = e
+      this.$i18n.locale = e,
       localStorage.setItem('currentLang', e)
     },
     goToPage(name) {
@@ -248,6 +270,7 @@ export default {
     },
     seeNotifications() {
       this.getFriends()
+      this.getExchanges()
       this.open = true
     },
     getFriends() {
@@ -260,7 +283,9 @@ export default {
     getExchanges() {
       AuthApi('books/request', {}, 'GET').then((res) => {
         if (res) {
-          this.exchangeList = JSON.parse(JSON.stringify(res.data.requests))
+                this.exchangeList = res.data.requests.filter(exchange => {
+        return (exchange.sender_status === 'created' || exchange.sender_status === 'receiver_requested') && exchange.sender.id !== exchange.receiver.id;
+      });
         }
       })
     },
@@ -295,7 +320,7 @@ h2 {
 
   .own {
     display: flex;
-    width: 50%;
+    width: 70%;
     justify-content: space-around;
     margin: 20px auto;
 
@@ -335,7 +360,12 @@ h2 {
       }
     }
   }
+.scrollable{
+  
+  height: 300px; /* Set a max height for scrollable content */
+  overflow-y: auto; /* Enable vertical scrolling */
 
+}
   .button {
     background-color: #006b61;
     color: #ffffff;
