@@ -1,9 +1,9 @@
 import BookList from "../book/BookList.vue";
 
 <template>
-  <div style="height: 100vh;">
+  <div style="height: 100vh; width: 90%; margin: auto">
     <a-page-header
-      title="Create a New quizz"
+      :title="$t('l_Create_new_quizz')"
       @back="
         () => {
           $router.back()
@@ -11,15 +11,14 @@ import BookList from "../book/BookList.vue";
       "
     >
       <template #extra>
-       
-        <a-button type="primary" @click="onAdd()">{{$t('l_Submit')}}</a-button>
+        <a-button type="primary" @click="onAdd()">{{ $t('l_Submit') }}</a-button>
       </template>
     </a-page-header>
     <div class="area">
       <a-form class="form">
         <a-row wrap :gutter="[32, 32]" class="filter-order-grid">
           <a-col :xs="24" :sm="24" :lg="24">
-            <a-form-item label="Name of the book" name="bookId">
+            <a-form-item :label="$t('l_Name_of_the_book')" name="bookId">
               <a-select
                 :allow-clear="true"
                 v-model:value="bookId"
@@ -29,7 +28,7 @@ import BookList from "../book/BookList.vue";
             </a-form-item>
           </a-col>
           <a-col :xs="24" :sm="24" :lg="24">
-            <a-form-item v-if="bookId" label="Name of the Quizz" name="name">
+            <a-form-item v-if="bookId" :label="$t('l_Name_of_q')" name="name">
               <a-input v-model:value="name"></a-input>
             </a-form-item>
           </a-col>
@@ -84,7 +83,7 @@ import BookList from "../book/BookList.vue";
 
     <!-- add QA -->
     <div v-if="qId">
-      <div style="display: flex; gap: 10px;">
+      <div style="display: flex; gap: 10px">
         <div class="q-card">
           <h1>Question {{ number }}</h1>
           <a-form :model="info" layout="vertical" class="form">
@@ -120,13 +119,15 @@ import BookList from "../book/BookList.vue";
         <a-table :data-source="questionList" :columns="questionColumns">
           <template #bodyCell="{ column, text }">
             <template v-if="column.dataIndex === 'options'">
-              <a>{{ text.join(" | ") }}</a>
+              <a>{{ text.join(' | ') }}</a>
             </template>
-         </template>
+          </template>
         </a-table>
       </div>
       <div class="flex">
-        <a-button size="large" type="primary" @click="addCard()">{{$t('l_Add_question')}}</a-button>
+        <a-button size="large" type="primary" @click="addCard()">{{
+          $t('l_Add_question')
+        }}</a-button>
       </div>
     </div>
   </div>
@@ -155,16 +156,16 @@ export default {
       questionColumns: [
         {
           title: 'Question',
-          dataIndex: 'question',
+          dataIndex: 'question'
         },
         {
           title: 'Correct Answer',
-          dataIndex: 'answer',
+          dataIndex: 'answer'
         },
         {
           title: 'Other options',
-          dataIndex: 'options',
-        },
+          dataIndex: 'options'
+        }
       ]
     }
   },
@@ -203,7 +204,7 @@ export default {
     },
     addCard() {
       let path = 'quizzes/' + this.qId + '/questions'
-      this.questionList.push(this.info);
+      this.questionList.push(this.info)
       AuthApi(path, this.info).then((res) => {
         if (res.data.message == 'success') {
           this.number++
@@ -213,7 +214,20 @@ export default {
         }
       })
     },
-    getQues() {}
+    getQues() {},
+    onAdd() {
+      let path = 'quizzes/' + this.qId + '/questions'
+      this.questionList.push(this.info)
+      AuthApi(path, this.info).then((res) => {
+        if (res.data.message == 'success') {
+          this.number++
+          this.info = {}
+          this.info.options = []
+          message.success('You created question successfully!')
+          this.$router.back()
+        }
+      })
+    }
   }
 }
 </script>

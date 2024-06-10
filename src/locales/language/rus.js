@@ -32,5 +32,10 @@ export default {
   l_Delete: 'Удалить',
   l_Update: 'Обновить',
   l_Add: 'Добавить',
-  l_Edit: 'Редактировать'
+  l_Edit: 'Редактировать',
+  l_Question: 'Вопрос',
+  l_Correct_answer: 'Правильный ответ',
+  l_Options: 'Выборы',
+  l_Name_of_book: 'Название книги',
+  l_Name_of_q: 'Название викторины'
 }

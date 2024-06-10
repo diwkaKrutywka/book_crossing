@@ -3,7 +3,7 @@
     <a-layout :style="{ height: 100 + '%' }">
       <a-layout class="layout-content">
         <a-layout-header class="header" style="height: 60px">
-          <div style="width: 40%; display: flex; align-items: center">
+          <div style="width: 80%; display: flex; align-items: center">
             <img
               style="padding: 10px; margin: 0 40px; height: 50px"
               src="@/assets/images/logo.svg"
@@ -132,19 +132,33 @@
                         </div>
                       </div>
                       <div>
-                        <div class="card" v-for="item in exchangeList" >
-                        
-                          <div style="width: 100px; height: 100%; margin-right: 10px;"><img v-if="item.sender_book" :src="item.sender_book.image" alt="No Img"/></div>
+                        <div class="card" v-for="item in exchangeList">
+                          <div style="width: 100px; height: 100%; margin-right: 10px">
+                            <img
+                              v-if="item.sender_book"
+                              :src="item.sender_book.image"
+                              alt="No Img"
+                            />
+                          </div>
                           <div>
-                              <h1>@{{ item.sender.username }}<span> sent request to exchange your book</span></h1>
-                              <h3>book</h3>
-                              <div>
-                                <a-button type="primary" v-if="item.sender_book" @click="onBookExchange(item.id, item.sender.id)">Accept</a-button>
-                              </div>
-                              <div style="height: 1px; background-color: #006b61; margin-top: 10px;"></div>
+                            <h1>
+                              @{{ item.sender.username
+                              }}<span> sent request to exchange your book</span>
+                            </h1>
+                            <h3>book</h3>
+                            <div>
+                              <a-button
+                                type="primary"
+                                v-if="item.sender_book"
+                                @click="onBookExchange(item.id, item.sender.id)"
+                                >Accept</a-button
+                              >
+                            </div>
+                            <div
+                              style="height: 1px; background-color: #006b61; margin-top: 10px"
+                            ></div>
                           </div>
                         </div>
-                        
                       </div>
                     </a-modal>
                   </div>
@@ -240,28 +254,27 @@ export default {
         }
       })
     },
-    onBookAccept(e){
-      let path = 'books/request/'+ e + '/approve'
+    onBookAccept(e) {
+      let path = 'books/request/' + e + '/approve'
       AuthApi(path, {}, 'PUT').then((res) => {
-        if(res){
+        if (res) {
           message.success('You successfully exchanged!')
           this.getExchanges()
         }
       })
     },
-    onBookExchange(r_id, u_id){
+    onBookExchange(r_id, u_id) {
       this.open = false
       this.$router.push({
-        name: "UserBook",
-        params:{
+        name: 'UserBook',
+        params: {
           id: r_id,
           u_id: u_id
         }
       })
     },
     setLanguage(e) {
-      this.$i18n.locale = e,
-      localStorage.setItem('currentLang', e)
+      ;(this.$i18n.locale = e), localStorage.setItem('currentLang', e)
     },
     goToPage(name) {
       this.$router.push({
@@ -283,9 +296,13 @@ export default {
     getExchanges() {
       AuthApi('books/request', {}, 'GET').then((res) => {
         if (res) {
-                this.exchangeList = res.data.requests.filter(exchange => {
-        return (exchange.sender_status === 'created' || exchange.sender_status === 'receiver_requested') && exchange.sender.id !== exchange.receiver.id;
-      });
+          this.exchangeList = res.data.requests.filter((exchange) => {
+            return (
+              (exchange.sender_status === 'created' ||
+                exchange.sender_status === 'receiver_requested') &&
+              exchange.sender.id !== exchange.receiver.id
+            )
+          })
         }
       })
     },
@@ -360,12 +377,10 @@ h2 {
       }
     }
   }
-.scrollable{
-  
-  height: 300px; /* Set a max height for scrollable content */
-  overflow-y: auto; /* Enable vertical scrolling */
-
-}
+  .scrollable {
+    height: 300px; /* Set a max height for scrollable content */
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
   .button {
     background-color: #006b61;
     color: #ffffff;
