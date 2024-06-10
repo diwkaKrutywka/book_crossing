@@ -161,16 +161,18 @@ export default {
                 })
                 //   console.log(res)
                 console.log(this.$store?.userInfo)
-              } else if (res.data.status_code === 404) {
-                //   message.error(res.data)
+              } else {
+                message.error('Username or password is incorrect')
               }
             })
             .catch((err) => {
               console.log(err)
+              message.error('Username or password is incorrect')
             })
         })
         .catch((err) => {
           console.log(err)
+          message.error('Username or password is incorrect')
         })
     },
     handleOk(e) {

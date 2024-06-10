@@ -17,7 +17,7 @@
               @click="visible = true"
               >Search book</a-button
             >
-            <a-popover v-model:open="visible" title="{{$t('l_Search')}}" trigger="click">
+            <a-popover v-model:open="visible" :title="$t('l_Search')" trigger="click">
               <template #content>
                 <div style="display: flex; gap: 5px">
                   <a-select
@@ -79,7 +79,7 @@
             <h3 v-for="i in item.authors">{{ i.name }}</h3>
             <h2>Writen date</h2>
             <h4>{{ item.pub_date }}</h4>
-            <h2>{{$t('l_Overview')}}</h2>
+            <h2>{{ $t('l_Overview') }}</h2>
             <h4>{{ truncatedDescription(item.description) }}</h4>
           </div>
         </div>
@@ -106,21 +106,19 @@
     <FAQSection></FAQSection>
     <div style="text-align: center; margin-top: 50px">
       <h2>
-        Остались вопросы? <br />
-        пишите bookers@gmail.com
+        {{ $t('l_Any_q') }} <br />
+        {{ $t('l_Write_to') }} bookers@gmail.com
       </h2>
     </div>
   </div>
   <div class="chat">
-    <span class="material-symbols-outlined" @click="visibleChat = true">
-        account_circle
-    </span>
+    <span class="material-symbols-outlined" @click="visibleChat = true"> account_circle </span>
     <a-popover v-model:open="visibleChat" title="Search" trigger="click">
       <template #content>
         <div style="display: flex; flex-direction: column; gap: 5px">
           <div>{{ this.resultChatText }}</div>
           <a-input-search
-            style="width: 300px;"
+            style="width: 300px"
             placeholder="input search book"
             enter-button="Search"
             size="default"
@@ -231,7 +229,7 @@ export default {
       }
     },
     onSearch(e) {
-      AuthApi('send', {message: e}, 'POST').then((res) => {
+      AuthApi('send', { message: e }, 'POST').then((res) => {
         if (res) {
           this.resultChatText = res.data.result
         }
@@ -393,7 +391,7 @@ h2 {
   }
 }
 
-.chat{
+.chat {
   width: 50px;
   height: 50px;
   position: absolute;

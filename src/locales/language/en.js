@@ -67,5 +67,7 @@ export default {
   l_Correct_answer: 'Correct answer',
   l_Options: 'Options',
   l_Name_of_book: 'Name of the book',
-  l_Name_of_q: 'Name of the Quizz'
+  l_Name_of_q: 'Name of the Quizz',
+  l_Any_q: 'Do you have any questions?',
+  l_Write_to: 'write to'
 }

@@ -37,5 +37,7 @@ export default {
   l_Correct_answer: 'Правильный ответ',
   l_Options: 'Выборы',
   l_Name_of_book: 'Название книги',
-  l_Name_of_q: 'Название викторины'
+  l_Name_of_q: 'Название викторины',
+  l_Any_q: 'Остались вопросы?',
+  l_Write_to: 'напишите нам'
 }

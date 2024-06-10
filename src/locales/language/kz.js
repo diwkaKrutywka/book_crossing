@@ -67,5 +67,7 @@ export default {
   l_Correct_answer: 'Дұрыс жауап',
   l_Options: 'Басқа нұсқа',
   l_Name_of_book: 'Кітаптың аты',
-  l_Name_of_q: 'Викторина аты'
+  l_Name_of_q: 'Викторина аты',
+  l_Any_q: 'Сұрақтарыңыз қалды ма?',
+  l_Write_to: 'жазыңыз'
 }

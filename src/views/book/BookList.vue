@@ -1,7 +1,7 @@
 <template>
   <div style="max-width: 1300px; margin: auto; padding: 100px 0; min-height: 100vh">
     <div style="text-align: center">
-      <h2 style="color: black; font-size: 25px; font-weight: 900">{{$t('l_Recently_viewed')}}</h2>
+      <h2 style="color: black; font-size: 25px; font-weight: 900">{{ $t('l_Recently_viewed') }}</h2>
       <div class="carousel-container">
         <div class="carousel" :style="{ transform: `translateX(-${currentIndex * 200}px)` }">
           <div
@@ -116,7 +116,7 @@
             style="width: 300px; margin-left: 30px"
             v-model:value="book"
             placeholder="input search book"
-            enter-button="Search"
+            :enter-button="$t('l_Search')"
             size="default"
             @search="onSearch"
           />
@@ -276,9 +276,9 @@ export default {
       return require(`@/assets/images/${pic}`)
     },
     onSearch(e) {
-      AuthApi('send', {message: e}, 'POST').then((res) => {
+      AuthApi('send', { message: e }, 'POST').then((res) => {
         if (res) {
-         console.log(res)
+          console.log(res)
         }
       })
     },
