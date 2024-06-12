@@ -15,7 +15,7 @@
               >{{ item2.name }}
             </p>
 
-            <h2>{{$t('l_Overview')}}</h2>
+            <h2>{{ $t('l_Overview') }}</h2>
             <p>
               {{ info.description }}
             </p>
@@ -147,7 +147,7 @@ export default {
       this.$router.push({
         name: 'AboutPerson',
         params: {
-          bookId: this.bookList[index].book_id,
+          bookId: this.bookList[index].id,
           userId: this.bookList[index].user_id
         }
       })

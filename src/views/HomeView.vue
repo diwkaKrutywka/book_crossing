@@ -140,7 +140,7 @@
                               alt="No Img"
                             />
                           </div>
-                          <div>
+                          <div v-if="this.$store.userInfo.user.id != item.sender.id">
                             <h1>
                               @{{ item.sender.username
                               }}<span> sent request to exchange your book</span>
@@ -149,7 +149,7 @@
                             <div>
                               <a-button
                                 type="primary"
-                                v-if="item.sender_book"
+                                v-if="item.sender"
                                 @click="onBookExchange(item.id, item.sender.id)"
                                 >Accept</a-button
                               >

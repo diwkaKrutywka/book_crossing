@@ -87,7 +87,7 @@
                 <img
                   style="height: 200px; width: 150px"
                   :src="item.image_url"
-                  @click="goExchange(item.book.id)"
+                  @click="goExchange(item.id)"
                 />
                 <h3 style="color: #f89e0f; text-align: end" @click="goExchange(item.book.id)">
                   Go To Exchange
