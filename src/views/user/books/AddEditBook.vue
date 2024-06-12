@@ -259,7 +259,7 @@ export default {
     },
     setCity() {
       let path = 'users/city'
-      AuthApi(path, { city: this.city }, 'PATCH').then((res) => {
+      AuthApi(path, { city: this.city }, 'PUT').then((res) => {
         if (res) {
           console.log(this.city)
         }
