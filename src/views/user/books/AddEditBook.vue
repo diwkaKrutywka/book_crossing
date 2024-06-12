@@ -258,7 +258,7 @@ export default {
       this.searchText = value
     },
     setCity() {
-      let path = 'users/' + this.$store.userInfo.user.id + '/city'
+      let path = 'users/city'
       AuthApi(path, { city: this.city }, 'PATCH').then((res) => {
         if (res) {
           console.log(this.city)
