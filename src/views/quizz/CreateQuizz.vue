@@ -216,6 +216,7 @@ export default {
     },
     getQues() {},
     onAdd() {
+      this.info.options[3] = this.info.answer
       let path = 'quizzes/' + this.qId + '/questions'
       this.questionList.push(this.info)
       AuthApi(path, this.info).then((res) => {

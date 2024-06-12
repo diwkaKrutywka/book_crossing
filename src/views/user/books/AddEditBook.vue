@@ -83,7 +83,7 @@
                 </a-form-item>
               </a-col>
               <a-col :xs="24" :sm="24" v-if="!edit">
-                <a-form-item class="input-box" :label="$t('l_City')" name="city" required>
+                <a-form-item class="input-box" :label="$t('l_City')" name="city">
                   <a-select v-model:value="city" :options="cityList"></a-select>
                 </a-form-item>
               </a-col>
@@ -171,7 +171,7 @@ export default {
       this.open = true
     },
     editMeth(e) {
-      console.log(e+"IUUUUUUUU")
+      console.log(e + 'IUUUUUUUU')
       if (e) {
         this.stockId = e.query.id
         this.getInfo()

@@ -6,19 +6,19 @@
         <div style="display: flex">
           <img
             style="height: 70px; width: 70px; border-radius: 50%"
-            src="@/assets/images/person.svg"
+            src="@/assets/images/person.png"
           />
           <div style="margin: 0 30px">
             <h1>{{ item.email }} ({{ item.username }})</h1>
             <p>
-             {{$t('l_City')}} <br />
+              {{ $t('l_City') }} <br />
               {{ item.city }}
             </p>
           </div>
         </div>
-        <a-button @click="goTo(item.id)" style="width: 200px" size="large" type="primary"
-          >{{$t('l_Go_to_profile')}}</a-button
-        >
+        <a-button @click="goTo(item.id)" style="width: 200px" size="large" type="primary">{{
+          $t('l_Go_to_profile')
+        }}</a-button>
       </div>
     </div>
   </div>

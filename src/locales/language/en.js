@@ -69,5 +69,6 @@ export default {
   l_Name_of_book: 'Name of the book',
   l_Name_of_q: 'Name of the Quizz',
   l_Any_q: 'Do you have any questions?',
-  l_Write_to: 'write to'
+  l_Write_to: 'write to',
+  l_My_exchanges: 'My Exchanges'
 }

@@ -4,7 +4,7 @@
     <div class="card">
       <div class="friend-info">
         <div class="friend-profile">
-          <img src="@/assets/images/person.svg" />
+          <img src="@/assets/images/person.png" />
           <h4>{{ info.username }}</h4>
           <h4>{{ info.email }}</h4>
           <button @click="addFriend()" v-if="info.friend_status == 'not_friends'" class="btn">
@@ -91,7 +91,7 @@
               @click="goExchange(item.book.id)"
             />
             <h3 style="color: #f89e0f; text-align: end" @click="goExchange(item.book.id)">
-              {{$t('l_Go_to_exchange')}}
+              {{ $t('l_Go_to_exchange') }}
             </h3>
           </div>
         </div>

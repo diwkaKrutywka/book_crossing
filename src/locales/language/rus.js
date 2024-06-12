@@ -39,5 +39,6 @@ export default {
   l_Name_of_book: 'Название книги',
   l_Name_of_q: 'Название викторины',
   l_Any_q: 'Остались вопросы?',
-  l_Write_to: 'напишите нам'
+  l_Write_to: 'напишите нам',
+  l_My_exchanges: 'Обменяемые книги'
 }

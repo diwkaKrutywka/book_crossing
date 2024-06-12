@@ -4,7 +4,7 @@
     <div class="card">
       <div class="friend-info">
         <div class="friend-profile">
-          <img src="@/assets/images/person.svg" />
+          <img src="@/assets/images/" />
           <h4>{{ info.username }}</h4>
           <h4>{{ info.email }}</h4>
         </div>

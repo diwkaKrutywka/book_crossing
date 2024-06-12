@@ -18,10 +18,7 @@
             </div>
             <a-radio
               style="display: flex; margin-top: 20px"
-              v-for="option in shuffledOptions(
-                info.questions[number - 1].options,
-                info.questions[number - 1].answer
-              )"
+              v-for="option in shuffledOptions(info.questions[number - 1].options)"
               :key="option"
               :checked="selectedAnswer === option"
               @change="selectedAnswer = option"
@@ -107,7 +104,7 @@ export default {
   },
   methods: {
     onLoad() {
-      let path = 'quizzes/' + this.qId
+      let path = 'quizzes/' + this.qId + '/view'
       AuthApi(path, {}, 'GET').then((res) => {
         if (res.data.message === 'success') {
           this.info = JSON.parse(JSON.stringify(res.data.result))
@@ -163,10 +160,10 @@ export default {
         }
       })
     },
-    shuffledOptions(options, answer) {
-      let wrongOptions = options.filter((option) => option !== answer)
+    shuffledOptions(options) {
+      // let wrongOptions = options.filter((option) => option !== answer)
+      let wrongOptions = options
       let shuffled = [...wrongOptions]
-      shuffled.push(answer)
       for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1))
         ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]

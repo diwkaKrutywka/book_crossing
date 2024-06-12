@@ -30,7 +30,10 @@
             <!-- njj -->
             <div style="display: flex">
               <div class="align-center pointer" @click.prevent>
-                <div v-if="hasLogin" style="align-items: center">
+                <div
+                  v-if="hasLogin"
+                  style="align-items: center; font-weight: bolder; font-size: 15px"
+                >
                   Hi,
                   {{ this.$store.userInfo.user.username }}
                 </div>
@@ -112,7 +115,7 @@
                               item.profile_pic ? item.profile_pic : '@/assets/images.person.svg'
                             "
                           /> -->
-                            <img src="@/assets/images/person.svg" />
+                            <img src="@/assets/images/person.png" style="width: 70px" />
                           </div>
                           <div>
                             <h1>@{{ item.username }} <span>sent request to friens</span></h1>
@@ -135,12 +138,21 @@
                         <div class="card" v-for="item in exchangeList">
                           <div style="width: 100px; height: 100%; margin-right: 10px">
                             <img
-                              v-if="item.sender_book"
+                              v-if="
+                                item.sender_book &&
+                                (this.$store.userInfo.user.id != item.sender.id ||
+                                  item.receiver_status == 'receiver_proved')
+                              "
                               :src="item.sender_book.image"
                               alt="No Img"
                             />
                           </div>
-                          <div v-if="this.$store.userInfo.user.id != item.sender.id">
+                          <div
+                            v-if="
+                              this.$store.userInfo.user.id != item.sender.id ||
+                              item.receiver_status == 'receiver_proved'
+                            "
+                          >
                             <h1>
                               @{{ item.sender.username
                               }}<span> sent request to exchange your book</span>
@@ -149,9 +161,12 @@
                             <div>
                               <a-button
                                 type="primary"
-                                v-if="item.sender"
+                                v-if="item.sender && item.sender_status != 'sender_accepted'"
                                 @click="onBookExchange(item.id, item.sender.id)"
                                 >Accept</a-button
+                              >
+                              <a-button type="primary" v-else @click="onBookAccept(item.id)"
+                                >Approve</a-button
                               >
                             </div>
                             <div
@@ -230,6 +245,10 @@ export default {
           name: 'MyFriends'
         },
         {
+          label: this.$t('l_My_exchanges'),
+          name: 'ExchangedBooks'
+        },
+        {
           label: this.$t('l_Settings'),
           name: 'Profile'
         }
@@ -254,6 +273,7 @@ export default {
         }
       })
     },
+
     onBookAccept(e) {
       let path = 'books/request/' + e + '/approve'
       AuthApi(path, {}, 'PUT').then((res) => {
@@ -296,13 +316,8 @@ export default {
     getExchanges() {
       AuthApi('books/request', {}, 'GET').then((res) => {
         if (res) {
-          this.exchangeList = res.data.requests.filter((exchange) => {
-            return (
-              (exchange.sender_status === 'created' ||
-                exchange.sender_status === 'receiver_requested') &&
-              exchange.sender.id !== exchange.receiver.id
-            )
-          })
+          this.exchangeList = JSON.parse(JSON.stringify(res.data.requests))
+          console.log(this.exchangeList)
         }
       })
     },

@@ -4,7 +4,7 @@
     <div class="card">
       <div class="friend-info">
         <div class="friend-profile">
-          <img src="@/assets/images/person.svg" />
+          <img src="@/assets/images/person.png" style="width: 70px" />
           <h4>{{ info.username }}</h4>
           <h4>{{ info.email }}</h4>
           <button @click="addFriend()" v-if="info.friend_status == 'not_friends'" class="btn">
@@ -229,7 +229,7 @@ export default {
 
   &-book {
     display: grid;
-    grid-template-rows: 1fr 1.7fr 1fr;
+    grid-template-rows: 2fr 1.7fr 1fr;
     padding: 30px;
     z-index: 5;
     align-items: center;

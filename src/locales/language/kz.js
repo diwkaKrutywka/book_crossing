@@ -69,5 +69,6 @@ export default {
   l_Name_of_book: 'Кітаптың аты',
   l_Name_of_q: 'Викторина аты',
   l_Any_q: 'Сұрақтарыңыз қалды ма?',
-  l_Write_to: 'жазыңыз'
+  l_Write_to: 'жазыңыз',
+  l_My_exchanges: ' Ауысқан кітаптар'
 }
