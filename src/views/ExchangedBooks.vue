@@ -53,7 +53,7 @@
             text-decoration: none;
             color: #fff;
           "
-          href="{{item.user.phone}}"
+          :href="`${item.user.phone}`"
           target="_blank"
           ><svg
             style="width: 30px; height: 20px; vertical-align: middle; margin: 0px 5px"
